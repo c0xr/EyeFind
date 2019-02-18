@@ -18,7 +18,7 @@ import com.csti.eyefind.R;
 
 public class SplashActivity extends Activity {
 
-    private final int SPLASH_DISPLAY_TIME_LENGH = 6000;//设置闪屏时间三秒
+    private final int SPLASH_DISPLAY_TIME_LENGH = 3000;//设置闪屏时间三秒
     private Handler jumpHandler;//延迟执行，用于跳转
     private int SCREEN_WIDTH;//屏幕长宽
     private int SCREEN_HEIGHT;
