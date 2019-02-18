@@ -1,4 +1,4 @@
-package com.csti.eyefind;
+package com.csti.eyefind.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.csti.eyefind.R;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
