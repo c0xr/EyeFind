@@ -14,6 +14,12 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
+/**I add this activity to be a animation for our project,
+ * if you have other ideas, you can change it freely!
+ *
+ * Author： FishInWater
+ */
+
 public class ItemListActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
