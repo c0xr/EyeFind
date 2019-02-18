@@ -60,13 +60,13 @@ public class SplashActivity extends Activity {
             public void run() {
                 while (SHOW_SIZE_WIDTH <= SCREEN_WIDTH || SHOW_SIZE_HEIGHT <= SCREEN_HEIGHT){
                     try {
-                        sleep(10);
+                        sleep(5);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     if (SHOW_SIZE_WIDTH <= SCREEN_WIDTH){
-                        SHOW_SIZE_WIDTH += 10;
+                        SHOW_SIZE_WIDTH += 5;
                     }
                     if (SHOW_SIZE_HEIGHT <= SCREEN_HEIGHT){
                         SHOW_SIZE_HEIGHT += 10;
