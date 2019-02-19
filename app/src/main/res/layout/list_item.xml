@@ -39,13 +39,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="test"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/place_text_view"
             app:layout_constraintEnd_toStartOf="@+id/date_text_view"
             app:layout_constraintStart_toEndOf="@+id/card_view"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ndfgndfgndfg" />
 
         <TextView
             android:id="@+id/date_text_view"
@@ -54,10 +54,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="end"
-            android:text="test"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="dfgn" />
 
         <TextView
             android:id="@+id/place_text_view"
@@ -67,7 +67,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="bottom"
-            android:text="阿斯顿那可是女乘客蓝色看v夫尼克拉的身份"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
