@@ -4,4 +4,15 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="overview_activity_subtitle">查找你的物品</string>
+    <string name="overview_menu_help_title">帮助</string>
+    <string-array name="indicator_strings">
+        <item>手机</item>
+        <item>书籍</item>
+        <item>钥匙"</item>
+        <item>磁卡</item>
+        <item>包类</item>
+        <item>耳机</item>
+        <item>移动电源</item>
+    </string-array>
 </resources>
