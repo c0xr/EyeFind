@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 
 import java.util.UUID;
 
-public class LostItem {
+import cn.bmob.v3.BmobObject;
+
+public class LostItem extends BmobObject {
     private UUID mId;//用于识别LostItem对象的Id,在构造方法中已经初始化
     private Bitmap mBitmapA;//图片1
     private Bitmap mBitmapB;//图片2
@@ -16,7 +18,7 @@ public class LostItem {
     private String mWeChat;//微信
     private String mPickedPlace;//拾取地点
     private String mPickedDate;//拾取日期
-    private int mOption;//转交他人
+    private int mOption;//转交他人（暂存门卫）
     private String mUserAccount;//用户账号
 
     public LostItem() {
