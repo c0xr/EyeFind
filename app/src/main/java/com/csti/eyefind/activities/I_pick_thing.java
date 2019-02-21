@@ -1,5 +1,7 @@
 package com.csti.eyefind.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,29 +39,32 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.http.I;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 public class I_pick_thing extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static final int sTAKE_PHOTO1 = 1;
     public static final int sTAKE_PHOTO2 = 2;
-    private File photo1_File, photo2_File;
+    private File photo1_File = null, photo2_File = null;
     private Uri imageUri;
     private ImageView addphoto1;
     private ImageView addphoto2;
-    private EditText pick_thing_name,pick_thing_place,pick_thing_people,pick_thing_tel,pick_thing_QQ,pick_thing_VX;
+    private EditText pick_thing_name, pick_thing_place, pick_thing_people, pick_thing_tel, pick_thing_QQ, pick_thing_VX;
     private RadioGroup pick_thing_option;
     private RadioButton radioButton;
     private Button find_time;
     private Button submit_information;
     private Spinner indicator_thing;
     private ArrayAdapter<CharSequence> adapter;
-    private Bitmap photo1, photo2;//捡到东西的两张图
     private String mName;//名称
     private String mLabel;//标签(类别)
     private String mFounder;//拾取人
@@ -68,27 +73,49 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     private String mWeChat;//微信
     private String mPickedPlace;//拾取地点
     private String mPickedDate;//拾取日期
-    private int mOption;//转交他人（暂存门卫）
+    private String mUserAccount;//用户账号//学号
+    private int mOption = 0;//转交他人（暂存门卫）
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_i_pick_thing);
-        Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
 
+        Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
         final LostItem lostItem = new LostItem();
-        pick_thing_name=findViewById(R.id.pick_thing_name);
-        pick_thing_people=findViewById(R.id.pick_thing_people);
-        pick_thing_place=findViewById(R.id.pick_thing_place);
-        pick_thing_tel=findViewById(R.id.pick_thing_tel);
-        pick_thing_QQ=findViewById(R.id.pick_thing_QQ);
-        pick_thing_VX=findViewById(R.id.pick_thing_VX);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setSubtitle("添加拾取物信息");
+
+
+        pick_thing_name = findViewById(R.id.pick_thing_name);
+        pick_thing_people = findViewById(R.id.pick_thing_people);
+        pick_thing_place = findViewById(R.id.pick_thing_place);
+        pick_thing_tel = findViewById(R.id.pick_thing_tel);
+        pick_thing_QQ = findViewById(R.id.pick_thing_QQ);
+        pick_thing_VX = findViewById(R.id.pick_thing_VX);
         addphoto1 = findViewById(R.id.addphoto1);
-        pick_thing_option=findViewById(R.id.pick_thing_option);
+        addphoto2 = findViewById(R.id.addphoto2);
+        pick_thing_option = findViewById(R.id.pick_thing_option);
+        submit_information = findViewById(R.id.submit_information);
+        indicator_thing = findViewById(R.id.indicator_thing);
+        find_time = findViewById(R.id.find_time);
+
+
+
+
+
+
+
+
+
+
+
         pick_thing_option.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                //Toast.makeText(I_pick_thing.this,checkedId+"",Toast.LENGTH_SHORT).show();
+                mOption = checkedId;
             }
         });
 
@@ -99,8 +126,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-
-        addphoto2 = findViewById(R.id.addphoto2);
         addphoto2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,57 +133,140 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
-        actionBar.setSubtitle("添加拾取物信息");
 
-        find_time = findViewById(R.id.find_time);
         find_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 replaceFragment(new DatapickerFragment());
             }
         });
-
-        indicator_thing = findViewById(R.id.indicator_thing);
-        adapter = ArrayAdapter.createFromResource(I_pick_thing.this,
-                R.array.indicator_strings, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        indicator_thing.setAdapter(adapter);
-        //注册监听器
-        indicator_thing.setOnItemSelectedListener(this);
-
-        submit_information = findViewById(R.id.submit_information);
+        initSpinner();
         submit_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                String user_Id = sharedPreferences.getString("account", "");
+                String objectId = sharedPreferences.getString("objectId", "");
+                mUserAccount = sharedPreferences.getString("account", "");
                 //根据账号是否在本地存在判断是否登录
-                if (!(user_Id.equals(""))) {
+                if (!(objectId.equals(" "))) {
 
-                    Toast.makeText(I_pick_thing.this, user_Id, Toast.LENGTH_SHORT).show();
+                    mName = pick_thing_name.getText().toString();
+                    mFounder = pick_thing_people.getText().toString();
+                    mTel = pick_thing_tel.getText().toString();
+                    mQQ = pick_thing_QQ.getText().toString();
+                    mWeChat = pick_thing_VX.getText().toString();
+                    mPickedPlace = pick_thing_place.getText().toString();
+                    mPickedDate = find_time.getText().toString();
 
 
-                } else {
-                    AlertDialog.Builder dia = new AlertDialog.Builder(I_pick_thing.this);
-                    dia.setTitle("请登录！");
-                    dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
+
+                    if (!(mName.equals("")) && !(mFounder.equals("")) && !(mPickedPlace.equals(""))
+                            && !(mPickedDate.equals("添加拾取时间")) && mOption != 0 && photo1_File != null && photo2_File != null) {
+
+                        if (!(mTel.equals("")) || !(mQQ.equals("")) || !(mWeChat.equals(""))) {
+                            push_information(lostItem, mName, mLabel, mFounder, mTel, mQQ,
+                                    mWeChat, mPickedPlace, mPickedDate, mUserAccount, mOption,
+                                    photo1_File, photo2_File);
+
+                        } else {
+                            showDialog("请完善您的联系方式！", null, I_pick_thing.this);
                         }
-                    });
-                    dia.show();
-
+                    } else {
+                        showDialog("拾取物信息不完善！", null, I_pick_thing.this);
+                    }
+                } else {
+                    showDialog("请登录!", null, I_pick_thing.this);
                 }
-
             }
         });
 
 
     }
 
+    //所有信息上传云端
+    private void push_information(final LostItem lostItem, String mName, String mLabel, String mFounder, String mTel, String mQQ,
+                                  String mWeChat, String mPickedPlace, String mPickedDate, String mUserAccount, int mOption,
+                                  File photo1_File, File photo2_File) {
+        lostItem.setName(mName);
+        lostItem.setLabel(mLabel);
+        lostItem.setFounder(mFounder);
+        lostItem.setTel(mTel);
+        lostItem.setQQ(mQQ);
+        lostItem.setWeChat(mWeChat);
+        lostItem.setPickedPlace(mPickedPlace);
+        lostItem.setPickedDate(mPickedDate);
+        lostItem.setUserAccount(mUserAccount);
+        lostItem.setOption(mOption);
+
+
+
+        String filePath_mp3 = photo1_File.toString();
+        String filePath_lrc = photo2_File.toString();
+        final String[] filePaths = new String[2];
+        filePaths[0] = filePath_mp3;
+        filePaths[1] = filePath_lrc;
+        BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
+            @Override
+            public void onSuccess(List<BmobFile> list, List<String> list1) {
+                if(list.size()==filePaths.length){//如果数量相等，则代表文件全部上传完成
+                    //do something
+                    lostItem.setImageA(list.get(0));
+                    lostItem.setImageB(list.get(1));
+                    lostItem.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(I_pick_thing.this, "添加数据成功", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                //Toast.makeText(I_pick_thing.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.d("I_pick_thing", "添加数据失败" + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onProgress(int i, int i1, int i2, int i3) {
+                ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
+                progressDialo.setTitle("信息正在上传");
+                progressDialo.setMessage("Loading...");
+                progressDialo.incrementProgressBy(i);
+                progressDialo.show();
+
+
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+
+    }
+
+
+    //初始化Spinner
+    private void initSpinner() {
+        adapter = ArrayAdapter.createFromResource(I_pick_thing.this,
+                R.array.indicator_strings, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        indicator_thing.setAdapter(adapter);
+        indicator_thing.setOnItemSelectedListener(this);
+    }
+
+
+    //显示提示框
+    private static void showDialog(String title, String Message, Context context) {
+        AlertDialog.Builder dia = new AlertDialog.Builder(context);
+        dia.setTitle(title);
+        dia.setMessage(Message);
+        dia.setPositiveButton("确定", null);
+        dia.show();
+    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -175,8 +283,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mLabel = (String) indicator_thing.getItemAtPosition(position);
-        //在这得到选中信息
-        //Toast.makeText(I_pick_thing.this, "您选中了" + item + "选项", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -191,23 +297,9 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 if (resultCode == RESULT_OK) {
                     //如果成功
                     try {
-
-
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-
-/*                        float ratio=800f/bitmap.getHeight();
-                        bitmap=Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*ratio),800,false);
-                        try {
-                            FileOutputStream fos=new FileOutputStream(photo1_File);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
-                            fos.flush();
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
-
-                        photo1 = bitmap;
+                        compressPhoto(bitmap, photo1_File);
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -220,7 +312,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     try {
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        photo2 = bitmap;
+                        compressPhoto(bitmap, photo2_File);
                         addphoto2.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -229,7 +321,22 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private File takePhoto(String photoName, int flag_TAKE_PHOTO) {//////////////////
+    //图片压缩
+    private static void compressPhoto(Bitmap bitmap, File photoFile) {
+        float ratio = 800f / bitmap.getHeight();
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * ratio), 800, false);
+        try {
+            FileOutputStream fos = new FileOutputStream(photoFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //拍照
+    private File takePhoto(String photoName, int flag_TAKE_PHOTO) {
         //创建File对象，用于储存拍照后的图片
         File outputImage = new File(getExternalCacheDir(), photoName);
         try {
@@ -258,29 +365,9 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private static void push_Photo(File photo_file) {
-        final BmobFile file = new BmobFile(photo_file);
-        file.uploadblock(new UploadFileListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    PhotoTest photoTest = new PhotoTest();
-                    photoTest.setImg(file);
-                    photoTest.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String s, BmobException e) {
-                            if (e == null) {
-                                //Toast.makeText(I_pick_thing.this, "添加数据成功，返回objectId为：", Toast.LENGTH_SHORT).show();
-                                Log.d("I_pick_thing", "添加数据成功");
-                            } else {
-                                //Toast.makeText(I_pick_thing.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                Log.d("I_pick_thing", "添加数据失败" + e.getMessage());
-                            }
-                        }
-                    });
-                }
-            }
-        });
+    //图片上传云端
+    private void push_Photo(File photo_file, LostItem lostItem) {
+
     }
 
 }
