@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/login"
+    android:orientation="vertical"
     tools:context=".activities.LoginActivity">
 
     <LinearLayout
@@ -23,7 +23,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="用户名："
+                android:text="学号："
                 android:textSize="20sp" />
 
             <EditText
@@ -75,8 +75,16 @@
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:background="#00000"
-            android:text="登录" />
+            android:background="#00000000"
+            android:text="登录"
+            android:textSize="24dp" />
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="#00000000"
+            android:text="注册" />
     </LinearLayout>
 </RelativeLayout>
