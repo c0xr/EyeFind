@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">EyeFind</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">代办事项</string>
+    <string name="title_notifications">我的信息</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="overview_activity_subtitle">查找你的物品</string>
     <string name="overview_menu_help_title">帮助</string>
@@ -14,5 +14,9 @@
         <item>包类</item>
         <item>耳机</item>
         <item>移动电源</item>
+    </string-array>
+    <string-array name="register_strings">
+        <item>男</item>
+        <item>女</item>
     </string-array>
 </resources>

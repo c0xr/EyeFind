@@ -27,6 +27,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/pick_thing_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -50,6 +51,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/pick_thing_place"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,6 +68,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/pick_thing_people"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -80,6 +83,7 @@
             android:textSize="22sp" />
 
         <RadioGroup
+            android:id="@+id/pick_thing_option"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -113,18 +117,21 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/pick_thing_tel"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:hint="电话(填一即可)" />
 
             <EditText
+                android:id="@+id/pick_thing_QQ"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:hint="QQ(填一即可)" />
 
             <EditText
+                android:id="@+id/pick_thing_VX"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
