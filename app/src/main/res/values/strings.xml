@@ -8,7 +8,7 @@
     <string name="overview_menu_help_title">帮助</string>
     <string-array name="indicator_strings">
         <item>手机</item>
-<!--        <item>书籍</item>
+        <!--        <item>书籍</item>
         <item>钥匙"</item>
         <item>磁卡</item>
         <item>包类</item>
@@ -19,4 +19,7 @@
         <item>男</item>
         <item>女</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
