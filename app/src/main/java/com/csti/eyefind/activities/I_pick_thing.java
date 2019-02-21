@@ -338,7 +338,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     //拍照
     private File takePhoto(String photoName, int flag_TAKE_PHOTO) {
         //创建File对象，用于储存拍照后的图片
-        File outputImage = new File(getExternalCacheDir(), photoName);
+        File outputImage = new File(getFilesDir(), photoName);
         try {
             //进行判断，如果outputImage文件已经存在，则把它删除，不存在，则创建这样一个文件
             if (outputImage.exists()) {
