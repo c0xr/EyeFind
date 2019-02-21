@@ -128,9 +128,11 @@ public class ItemListFragment extends Fragment {
     }
 
     private class NetworkHandler extends Handler{
+        private int i=0;
+
         @Override
         public void handleMessage(Message msg) {
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemInserted(i++);
             Log.d("mytag","done");
         }
     }
