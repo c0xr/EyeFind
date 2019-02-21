@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -31,6 +32,8 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 public class ItemListFragment extends Fragment {
+    private final static String ARG_ADAPTER_TYPE="adapter type";
+
     private RecyclerView mRecyclerView;
     private ItemListAdapter mAdapter;
     private List<LostItem> mLostItems;
@@ -39,6 +42,8 @@ public class ItemListFragment extends Fragment {
     private TextView mDateTextView;
     private TextView mPlaceTextView;
     private NetworkHandler mNetworkHandler=new NetworkHandler();
+    private String mAdapterType;
+    private ImageLoader mImageLoader;
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -83,13 +88,23 @@ public class ItemListFragment extends Fragment {
         }
     }
 
-    public static ItemListFragment newInstance() {
+    public static ItemListFragment newInstance(String adapterType) {
 
         Bundle args = new Bundle();
+        args.putString(ARG_ADAPTER_TYPE,adapterType);
 
         ItemListFragment fragment = new ItemListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAdapterType=getArguments().getString(ARG_ADAPTER_TYPE);
+        mNetworkHandler=new NetworkHandler();
+        mLostItems=new ArrayList<>();
+        mImageLoader=new ImageLoader(mAdapterType,mNetworkHandler,mLostItems);
     }
 
     @Nullable
@@ -98,7 +113,6 @@ public class ItemListFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_item_list,container,false);
         mRecyclerView=v.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mLostItems=LostItemLab.getInstance(getActivity()).getLostItems();
         updateUI();
         return v;
     }
@@ -107,63 +121,17 @@ public class ItemListFragment extends Fragment {
         if(mAdapter==null){
             mAdapter=new ItemListAdapter();
             mRecyclerView.setAdapter(mAdapter);
-            LostItemLab.getInstance(getActivity()).clearAllLostItem();
-            loadImages();
+            mImageLoader.load();
         }else{
             mAdapter.notifyDataSetChanged();
         }
     }
 
-    private void loadImages(){
-        BmobQuery<LostItem> bmobQuery=new BmobQuery<>();
-        bmobQuery.findObjects(new FindListener<LostItem>() {
-            @Override
-            public void done(final List<LostItem> list, BmobException e) {
-                if(e==null){
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            int i=0;
-                            int end=list.size();
-                            while(i!=end){
-                                LostItem lostItem=new LostItem();
-                                lostItem.setName("数据线");
-                                lostItem.setPickedDate("99天前");
-                                lostItem.setPickedPlace("C11");
-                                lostItem.setBitmapA(getBitmap(list.get(i).getImageA().getUrl()));
-                                mLostItems.add(lostItem);Log.d("mytag",lostItem.getBitmapA()+"");
-                                mNetworkHandler.sendMessage(new Message());
-                                i++;
-                            }
-                        }
-                    }.start();
-                }else{
-                    Log.d("mytag",e+"");
-                }
-            }
-        });
-    }
-
-    public Bitmap getBitmap(String path){
-        Bitmap bitmap=null;
-        try{
-            URL url=new URL(path);
-            URLConnection connection=url.openConnection();
-            connection.connect();
-            InputStream inputStream=connection.getInputStream();
-            bitmap= BitmapFactory.decodeStream(inputStream);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-
     private class NetworkHandler extends Handler{
         @Override
         public void handleMessage(Message msg) {
-            mAdapter.notifyDataSetChanged();Log.d("mytag","done");
+            mAdapter.notifyDataSetChanged();
+            Log.d("mytag","done");
         }
     }
 }

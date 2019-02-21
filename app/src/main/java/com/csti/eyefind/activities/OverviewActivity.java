@@ -35,8 +35,6 @@ public class OverviewActivity extends AppCompatActivity {
         ActionBar actionBar= getSupportActionBar();
         actionBar.setElevation(0);
         actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
-
-        LostItemLab.getInstance(this);
     }
 
     @Override
