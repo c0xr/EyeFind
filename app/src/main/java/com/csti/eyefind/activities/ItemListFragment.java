@@ -1,21 +1,34 @@
 package com.csti.eyefind.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class ItemListFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -25,6 +38,7 @@ public class ItemListFragment extends Fragment {
     private TextView mNameTextView;
     private TextView mDateTextView;
     private TextView mPlaceTextView;
+    private NetworkHandler mNetworkHandler=new NetworkHandler();
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -93,8 +107,63 @@ public class ItemListFragment extends Fragment {
         if(mAdapter==null){
             mAdapter=new ItemListAdapter();
             mRecyclerView.setAdapter(mAdapter);
+            LostItemLab.getInstance(getActivity()).clearAllLostItem();
+            loadImages();
         }else{
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
+    private void loadImages(){
+        BmobQuery<LostItem> bmobQuery=new BmobQuery<>();
+        bmobQuery.findObjects(new FindListener<LostItem>() {
+            @Override
+            public void done(final List<LostItem> list, BmobException e) {
+                if(e==null){
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            int i=0;
+                            int end=list.size();
+                            while(i!=end){
+                                LostItem lostItem=new LostItem();
+                                lostItem.setName("数据线");
+                                lostItem.setPickedDate("99天前");
+                                lostItem.setPickedPlace("C11");
+                                lostItem.setBitmapA(getBitmap(list.get(i).getImageA().getUrl()));
+                                mLostItems.add(lostItem);Log.d("mytag",lostItem.getBitmapA()+"");
+                                mNetworkHandler.sendMessage(new Message());
+                                i++;
+                            }
+                        }
+                    }.start();
+                }else{
+                    Log.d("mytag",e+"");
+                }
+            }
+        });
+    }
+
+    public Bitmap getBitmap(String path){
+        Bitmap bitmap=null;
+        try{
+            URL url=new URL(path);
+            URLConnection connection=url.openConnection();
+            connection.connect();
+            InputStream inputStream=connection.getInputStream();
+            bitmap= BitmapFactory.decodeStream(inputStream);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    private class NetworkHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            mAdapter.notifyDataSetChanged();Log.d("mytag","done");
         }
     }
 }

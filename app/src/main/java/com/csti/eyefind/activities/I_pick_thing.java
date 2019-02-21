@@ -35,6 +35,7 @@ import com.csti.eyefind.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cn.bmob.v3.Bmob;
@@ -194,6 +195,18 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
 
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+
+/*                        float ratio=800f/bitmap.getHeight();
+                        bitmap=Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*ratio),800,false);
+                        try {
+                            FileOutputStream fos=new FileOutputStream(photo1_File);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                            fos.flush();
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
+
                         photo1 = bitmap;
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {

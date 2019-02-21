@@ -3,7 +3,6 @@ package com.csti.eyefind.activities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.csti.eyefind.R;
 
@@ -19,7 +18,7 @@ public class LostItemLab {
 
     public static LostItemLab getInstance(Context context){
         if(sLostItemLab==null){
-            bitmaps=new ArrayList<>();
+/*            bitmaps=new ArrayList<>();
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img1));
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img2));
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img3));
@@ -29,24 +28,24 @@ public class LostItemLab {
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img7));
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img8));
             bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img9));
-            bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img10));
-            sLostItemLab=new LostItemLab(context);
+            bitmaps.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.img10));*/
+            sLostItemLab=new LostItemLab();
         }
         return sLostItemLab;
     }
 
-    private LostItemLab(Context context){
+    private LostItemLab(){
         mLostItems=new ArrayList<>();
-        Random r=new Random();
+/*        Random r=new Random();
         for(int i=0;i<30;i++){
-            int j=r.nextInt(10);Log.d("mytag",j+"");
+            int j=r.nextInt(10);
             LostItem lostItem=new LostItem();
             lostItem.setBitmapA(bitmaps.get(j));
             lostItem.setName("一根白色type-c数据线");
             lostItem.setPickedDate("2天前");
             lostItem.setPickedPlace("挂在C11门口球场篮筐顶上");
             mLostItems.add(lostItem);
-        }
+        }*/
     }
 
     public List<LostItem> getLostItems() {
@@ -62,7 +61,11 @@ public class LostItemLab {
         return null;
     }
 
-    public void addLostItem(LostItem c){
-        mLostItems.add(c);
+    public void addLostItem(LostItem lostItem){
+        mLostItems.add(lostItem);
+    }
+
+    public void clearAllLostItem(){
+        mLostItems.clear();
     }
 }
