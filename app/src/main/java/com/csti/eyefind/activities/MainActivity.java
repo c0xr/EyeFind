@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     //mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
+                    startActivity(new Intent(MainActivity.this, MyProperty.class));
 //                    SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 //                    editor.putString("objectId", "3533107f3e");
 //                    editor.apply();
