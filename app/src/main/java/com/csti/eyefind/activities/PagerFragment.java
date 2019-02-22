@@ -51,7 +51,7 @@ public class PagerFragment extends Fragment {
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fm) {
             @Override
             public Fragment getItem(int position) {
-                String adapterTypes[]=getResources().getStringArray(R.array.indicator_strings);
+                String[] adapterTypes=getResources().getStringArray(R.array.indicator_strings);
                 String adapterType=adapterTypes[position];
                 return ItemListFragment.newInstance(adapterType);
             }

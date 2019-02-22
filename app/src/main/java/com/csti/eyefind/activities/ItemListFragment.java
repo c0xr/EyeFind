@@ -67,11 +67,13 @@ public class ItemListFragment extends Fragment {
                 params.setMargins(0,px,0,px);
                 cardView.setLayoutParams(params);
             }
+            itemView.setTag(position);
         }
 
         @Override
         public void onClick(View v) {
-
+            int position=(int)v.getTag();
+            startActivity(DetailActivity.newIntent(getActivity(),mLostItems.get(position)));
         }
     }
 

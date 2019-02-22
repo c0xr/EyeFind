@@ -38,6 +38,7 @@
         <activity
             android:name=".activities.OverviewActivity"
             android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.DetailActivity" />
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

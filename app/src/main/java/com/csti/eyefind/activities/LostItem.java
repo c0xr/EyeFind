@@ -11,6 +11,7 @@ public class LostItem extends BmobObject {
     private UUID mId;//用于识别LostItem对象的Id,在构造方法中已经初始化
     private Bitmap mBitmapA;//图片1
     private Bitmap mBitmapB;//图片2
+    private Bitmap mThumbnail;//缩略图
     private String mName;//名称
     private String mLabel;//标签(类别)
     private String mFounder;//拾取人
