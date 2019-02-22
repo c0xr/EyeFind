@@ -45,12 +45,10 @@ public class ImageLoader {
                                 lostItem.setName(_lostItem.getName());
                                 lostItem.setPickedDate(_lostItem.getPickedDate());
                                 lostItem.setPickedPlace(_lostItem.getPickedPlace());
+                                lostItem.setUpdatedAt(_lostItem.getUpdatedAt());
                                 lostItem.setBitmapA(getBitmap(_lostItem.getImageA().getUrl()));
                                 mLostItems.add(lostItem);
-//                                Log.d("mytag",lostItem.getBitmapA()+"");
-                                mNetworkHandler.sendEmptyMessage(0);
                             }
-                            mLostItems.add(new LostItem());
                             mNetworkHandler.sendEmptyMessage(0);
                         }
                     }.start();

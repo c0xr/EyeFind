@@ -25,6 +25,7 @@ public class LostItem extends BmobObject {
     private BmobFile mImageB;//图片bmob文件2
     private BmobFile mImageThumbnail;//bmob缩略图
     private String mUserAccount;//用户账号//学号
+    private long mTimeFromUpdate;
 
     public LostItem() {
         mId=UUID.randomUUID();
@@ -144,5 +145,29 @@ public class LostItem extends BmobObject {
 
     public void setImageB(BmobFile imageB) {
         mImageB = imageB;
+    }
+
+    public Bitmap getThumbnail() {
+        return mThumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        mThumbnail = thumbnail;
+    }
+
+    public BmobFile getImageThumbnail() {
+        return mImageThumbnail;
+    }
+
+    public void setImageThumbnail(BmobFile imageThumbnail) {
+        mImageThumbnail = imageThumbnail;
+    }
+
+    public long getTimeFromUpdate() {
+        return mTimeFromUpdate;
+    }
+
+    public void setTimeFromUpdate(long timeFromUpdate) {
+        mTimeFromUpdate = timeFromUpdate;
     }
 }

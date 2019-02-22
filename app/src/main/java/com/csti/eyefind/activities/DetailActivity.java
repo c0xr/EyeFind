@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 
 import com.csti.eyefind.R;
 
@@ -14,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext,LostItem lostItem){
         Intent intent=new Intent(packageContext,DetailActivity.class);
-        intent.putExtra(EXTRA_LOSTITEM,lostItem);
+//        intent.putExtra(EXTRA_LOSTITEM,lostItem);
         return intent;
     }
 
@@ -23,6 +25,18 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mLostItem=(LostItem) getIntent().getSerializableExtra(EXTRA_LOSTITEM);
+//        mLostItem=(LostItem) getIntent().getSerializableExtra(EXTRA_LOSTITEM);
+        findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

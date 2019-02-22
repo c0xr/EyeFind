@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="@string/overview_menu_help_title"
-        android:icon="@drawable/ic_action_help"
+        android:icon="@drawable/ic_action_refresh"
         app:showAsAction="ifRoom|withText"/>
 </menu>
