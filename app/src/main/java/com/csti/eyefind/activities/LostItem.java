@@ -23,6 +23,7 @@ public class LostItem extends BmobObject {
     private int mOption;//转交他人（暂存门卫）
     private BmobFile mImageA;//图片bmob文件1
     private BmobFile mImageB;//图片bmob文件2
+    private BmobFile mImageThumbnail;//bmob缩略图
     private String mUserAccount;//用户账号//学号
 
     public LostItem() {
