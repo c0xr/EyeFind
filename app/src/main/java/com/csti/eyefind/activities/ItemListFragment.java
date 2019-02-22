@@ -1,13 +1,13 @@
 package com.csti.eyefind.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,17 +19,8 @@ import android.widget.TextView;
 
 import com.csti.eyefind.R;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 public class ItemListFragment extends Fragment {
     private final static String ARG_ADAPTER_TYPE="adapter type";
@@ -44,22 +35,38 @@ public class ItemListFragment extends Fragment {
     private NetworkHandler mNetworkHandler=new NetworkHandler();
     private String mAdapterType;
     private ImageLoader mImageLoader;
+    private final static int VIEW_TYPE_ITEM=1;
+    private final static int VIEW_TYPE_TIP=2;
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ItemHolder(LayoutInflater inflater,ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item,parent,false));
-            mImageView=itemView.findViewById(R.id.bitmap_a);
-            mNameTextView=itemView.findViewById(R.id.name_text_view);
-            mDateTextView=itemView.findViewById(R.id.date_text_view);
-            mPlaceTextView=itemView.findViewById(R.id.place_text_view);
+        public ItemHolder(LayoutInflater inflater,ViewGroup parent,int viewType) {
+            super(inflater.inflate(isViewTypeTip(viewType)?R.layout.list_item_bottom_tip:R.layout.list_item,
+                    parent,false));
+            if(isViewTypeTip(viewType)) {
+                return;
+            }
+            mImageView = itemView.findViewById(R.id.bitmap_a);
+            mNameTextView = itemView.findViewById(R.id.name_text_view);
+            mDateTextView = itemView.findViewById(R.id.date_text_view);
+            mPlaceTextView = itemView.findViewById(R.id.place_text_view);
         }
 
-        public void bind(LostItem lostItem){
+        public void bind(LostItem lostItem,int position){
+            if(isPositionTip(position)) {
+                return;
+            }
             mImageView.setImageBitmap(lostItem.getBitmapA());
             mNameTextView.setText(lostItem.getName());
             mDateTextView.setText(lostItem.getPickedDate());
             mPlaceTextView.setText(lostItem.getPickedPlace());
+            if(position==mImageLoader.getSize()-1){
+                CardView cardView=itemView.findViewById(R.id.list_item_card_external);
+                ViewGroup.MarginLayoutParams params=(ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
+                int px=dp2px(12,getActivity());
+                params.setMargins(0,px,0,px);
+                cardView.setLayoutParams(params);
+            }
         }
 
         @Override
@@ -74,17 +81,26 @@ public class ItemListFragment extends Fragment {
         @Override
         public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater=LayoutInflater.from(getActivity());
-            return new ItemHolder(inflater,parent);
+            return new ItemHolder(inflater,parent,viewType);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ItemHolder itemHolder, int position) {
-            itemHolder.bind(mLostItems.get(position));
+            itemHolder.bind(mLostItems.get(position),position);
+            itemHolder.setIsRecyclable(false);
         }
 
         @Override
         public int getItemCount() {
             return mLostItems.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(isPositionTip(position)){
+                return VIEW_TYPE_TIP;
+            }
+            return VIEW_TYPE_ITEM;
         }
     }
 
@@ -128,12 +144,30 @@ public class ItemListFragment extends Fragment {
     }
 
     private class NetworkHandler extends Handler{
-        private int i=0;
+        private int count =0;
 
         @Override
         public void handleMessage(Message msg) {
-            mAdapter.notifyItemInserted(i++);
-            Log.d("mytag","done");
+            if(count ==0){
+                mAdapter.notifyItemRangeInserted(0,1);
+            }else {
+                mAdapter.notifyItemInserted(count);
+            }
+            count++;
+//            Log.d("mytag","done");
         }
+    }
+
+    private int dp2px(int dip, Context context){
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dip * scale + 0.5f);
+    }
+
+    private boolean isPositionTip(int position){
+        return position==mImageLoader.getSize();
+    }
+
+    private boolean isViewTypeTip(int viewType){
+        return viewType==VIEW_TYPE_TIP;
     }
 }

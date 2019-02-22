@@ -22,4 +22,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item_list_bottom_tip">没有找到你的物品?</string>
+    <string name="item_list_bottom_tip2">点击右侧按钮可提交挂失</string>
 </resources>

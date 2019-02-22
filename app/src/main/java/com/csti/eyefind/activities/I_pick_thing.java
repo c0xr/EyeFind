@@ -84,7 +84,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
         final LostItem lostItem = new LostItem();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
         actionBar.setSubtitle("添加拾取物信息");
 
 

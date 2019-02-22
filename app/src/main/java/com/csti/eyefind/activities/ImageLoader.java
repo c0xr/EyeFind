@@ -21,6 +21,7 @@ public class ImageLoader {
     private String mAdapterType;
     private Handler mNetworkHandler;
     private List<LostItem> mLostItems;
+    private int mSize;
 
     public ImageLoader(String adapterType, Handler networkHandler, List<LostItem> lostItems) {
         mAdapterType = adapterType;
@@ -35,6 +36,7 @@ public class ImageLoader {
             @Override
             public void done(final List<LostItem> list, BmobException e) {
                 if(e==null){
+                    mSize=list.size();
                     new Thread(){
                         @Override
                         public void run() {
@@ -45,9 +47,11 @@ public class ImageLoader {
                                 lostItem.setPickedPlace(_lostItem.getPickedPlace());
                                 lostItem.setBitmapA(getBitmap(_lostItem.getImageA().getUrl()));
                                 mLostItems.add(lostItem);
-                                Log.d("mytag",lostItem.getBitmapA()+"");
-                                mNetworkHandler.sendMessage(new Message());
+//                                Log.d("mytag",lostItem.getBitmapA()+"");
+                                mNetworkHandler.sendEmptyMessage(0);
                             }
+                            mLostItems.add(new LostItem());
+                            mNetworkHandler.sendEmptyMessage(0);
                         }
                     }.start();
                 }else{
@@ -71,5 +75,9 @@ public class ImageLoader {
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    public int getSize() {
+        return mSize;
     }
 }
