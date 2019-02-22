@@ -102,15 +102,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         find_time = findViewById(R.id.find_time);
 
 
-
-
-
-
-
-
-
-
-
         pick_thing_option.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -160,8 +151,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     mPickedDate = find_time.getText().toString();
 
 
-
-
                     if (!(mName.equals("")) && !(mFounder.equals("")) && !(mPickedPlace.equals(""))
                             && !(mPickedDate.equals("添加拾取时间")) && mOption != 0 && photo1_File != null && photo2_File != null) {
 
@@ -201,7 +190,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         lostItem.setOption(mOption);
 
 
-
         String filePath_mp3 = photo1_File.toString();
         String filePath_lrc = photo2_File.toString();
         final String[] filePaths = new String[2];
@@ -210,7 +198,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
             public void onSuccess(List<BmobFile> list, List<String> list1) {
-                if(list.size()==filePaths.length){//如果数量相等，则代表文件全部上传完成
+                if (list.size() == filePaths.length) {//如果数量相等，则代表文件全部上传完成
                     //do something
                     lostItem.setImageA(list.get(0));
                     lostItem.setImageB(list.get(1));
@@ -338,7 +326,12 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     //拍照
     private File takePhoto(String photoName, int flag_TAKE_PHOTO) {
         //创建File对象，用于储存拍照后的图片
-        File outputImage = new File(getFilesDir(), photoName);
+        File outputImage = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            outputImage = new File(getFilesDir(), photoName);
+        } else {
+            outputImage = new File(getExternalCacheDir(), photoName);
+        }
         try {
             //进行判断，如果outputImage文件已经存在，则把它删除，不存在，则创建这样一个文件
             if (outputImage.exists()) {
