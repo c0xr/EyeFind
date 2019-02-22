@@ -57,8 +57,8 @@ public class MyProperty extends AppCompatActivity {
         listTitles.add("我丢的宝贝");
 
         for (int i = 0; i < listTitles.size(); i++) {
-//            Fragment fragment = MyPropertyContentFragment.newInstance(i,listTitles.get(i));
-//            fragments.add(fragment);
+            Fragment fragment = MyPropertyContentFragment.newInstance(i,listTitles.get(i));
+            fragments.add(fragment);
         }
         //mTabLayout.setTabMode(TabLayout.SCROLL_AXIS_HORIZONTAL);//设置tab模式，当前为系统默认模式
         for (int i=0;i<listTitles.size();i++){
