@@ -25,6 +25,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -165,7 +166,7 @@ public class ItemListFragment extends Fragment {
                 LostItem lostItem=mLostItems.get(i);
                 lostItem.setTimeFromUpdate(getTimeFromUpdate(lostItem.getUpdatedAt()));
             }
-            mLostItems.sort(new Comparator<LostItem>() {
+            Collections.sort(mLostItems,new Comparator<LostItem>() {
                 @Override
                 public int compare(LostItem o1, LostItem o2) {
                     if(o1.getTimeFromUpdate()>o2.getTimeFromUpdate()){

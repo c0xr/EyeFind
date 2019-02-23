@@ -40,7 +40,7 @@ public class OverviewActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(OverviewActivity.this,I_pick_thing.class);
+                Intent intent=new Intent(OverviewActivity.this,I_push_thing.class);
                 startActivity(intent);
             }
         });
