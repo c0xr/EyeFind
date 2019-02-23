@@ -25,11 +25,48 @@ public class LostItem extends BmobObject {
     private BmobFile mImageB;//图片bmob文件2
     private BmobFile mImageThumbnail;//bmob缩略图
     private String mUserAccount;//用户账号//学号
+    private Person mPerson;//关联表用
     private long mTimeFromUpdate;
 
-    public LostItem() {
-        mId=UUID.randomUUID();
+    public BmobFile getImageThumbnail() {
+        return mImageThumbnail;
     }
+
+    public void setImageThumbnail(BmobFile imageThumbnail) {
+        mImageThumbnail = imageThumbnail;
+    }
+
+    public long getTimeFromUpdate() {
+        return mTimeFromUpdate;
+    }
+
+    public void setTimeFromUpdate(long timeFromUpdate) {
+        mTimeFromUpdate = timeFromUpdate;
+    }
+
+    public LostItem() {
+        mId = UUID.randomUUID();
+    }
+
+
+
+
+    public Person getmPerson() {
+        return mPerson;
+    }
+
+    public void setmThumbnail(Bitmap mThumbnail) {
+        this.mThumbnail = mThumbnail;
+    }
+
+    public Bitmap getmThumbnail() {
+        return mThumbnail;
+    }
+
+    public void setmPerson(Person mPerson) {
+        this.mPerson = mPerson;
+    }
+
 
     public UUID getId() {
         return mId;
@@ -155,19 +192,4 @@ public class LostItem extends BmobObject {
         mThumbnail = thumbnail;
     }
 
-    public BmobFile getImageThumbnail() {
-        return mImageThumbnail;
-    }
-
-    public void setImageThumbnail(BmobFile imageThumbnail) {
-        mImageThumbnail = imageThumbnail;
-    }
-
-    public long getTimeFromUpdate() {
-        return mTimeFromUpdate;
-    }
-
-    public void setTimeFromUpdate(long timeFromUpdate) {
-        mTimeFromUpdate = timeFromUpdate;
-    }
 }

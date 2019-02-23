@@ -23,7 +23,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private EditText register_name, register_college, register_major, register_id, register_password,register_password1;
+    private EditText register_name, register_college, register_major, register_id, register_password, register_password1;
     Spinner register_sex;
     private String input_sex;
     private ArrayAdapter<CharSequence> adapter;
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         register_major = findViewById(R.id.register_major);
         register_sex = findViewById(R.id.register_sex);
         register_password = findViewById(R.id.register_password);
-        register_password1=findViewById(R.id.register_password1);
+        register_password1 = findViewById(R.id.register_password1);
         register_push = findViewById(R.id.register_push);
         adapter = ArrayAdapter.createFromResource(RegisterActivity.this,
                 R.array.register_strings, android.R.layout.simple_spinner_dropdown_item);
@@ -77,85 +77,56 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 } else {
                     final String input_name = register_name.getText().toString();
                     final String input_password = register_password.getText().toString();
-                    final String input_password1=register_password1.getText().toString();
+                    final String input_password1 = register_password1.getText().toString();
                     //判断学号是否为数字,是否为空
-                    if (isNumeric(register_id.getText().toString()) &&!(register_id.getText().toString().equals(""))) {
+                    if (isNumeric(register_id.getText().toString()) && !(register_id.getText().toString().equals(""))) {
                         final int input_id = Integer.parseInt(register_id.getText().toString());
-                        BmobQuery<Person> bmobQuery = new BmobQuery<>();
-                        bmobQuery.addWhereEqualTo("mId", input_id);
-                        bmobQuery.findObjects(new FindListener<Person>() {
-                            @Override
-                            public void done(List<Person> list, BmobException e) {
-                                //判断学号是否被注册
-                                if (e == null) {
-
-                                    if (input_name.equals("")) {
-                                        AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
-                                        dia.setTitle("请输入姓名！");
-                                        dia.setPositiveButton("确定", null);
-                                        dia.show();
-                                    } else {
-                                        //判断两次密码是否相等以及两次密码是否都为空
-                                        if(input_password.equals(input_password1)&&!(input_password.equals(""))&&!(input_password1.equals(""))) {
-                                            AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
-                                            dia.setTitle("请确认您的信息！");
-                                            dia.setMessage("学院：" + register_college.getText().toString() + "\n" + "专业：" + register_major.getText().toString());
-                                            dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Person p2 = new Person();
-                                                    p2.setmName(input_name);
-                                                    p2.setmSex(input_sex);
-                                                    p2.setmCollege(register_college.getText().toString());
-                                                    p2.setmMajor(register_major.getText().toString());
-                                                    p2.setmId(input_id);
-                                                    p2.setmPassword(input_password);
-                                                    p2.save(new SaveListener<String>() {
-                                                        @Override
-                                                        public void done(String objectId, BmobException e) {
-                                                            if (e == null) {
-                                                                finish();
-                                                                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                                            } else {
-                                                                Toast.makeText(RegisterActivity.this, "注册成功：" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    });
+                        if (input_name.equals("")) {
+                            AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
+                            dia.setTitle("请输入姓名！");
+                            dia.setPositiveButton("确定", null);
+                            dia.show();
+                        } else {
+                            //判断两次密码是否相等以及两次密码是否都为空
+                            if (input_password.equals(input_password1) && !(input_password.equals("")) && !(input_password1.equals(""))) {
+                                AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
+                                dia.setTitle("请确认您的信息！");
+                                dia.setMessage("学院：" + register_college.getText().toString() + "\n" + "专业：" + register_major.getText().toString());
+                                dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Person p2 = new Person();
+                                        p2.setmName(input_name);////////////////////////////////////////////////
+                                        p2.setmSex(input_sex);
+                                        p2.setmCollege(register_college.getText().toString());
+                                        p2.setmMajor(register_major.getText().toString());
+                                        p2.setUsername(input_id + "");          /////////////////////////////////
+                                        p2.setPassword(input_password);////////////////////////////////
+                                        p2.setmPassword(input_password);/////////////////
+                                        p2.signUp(new SaveListener<Person>() {
+                                            @Override
+                                            public void done(Person user, BmobException e) {
+                                                if (e == null) {
+                                                    finish();
+                                                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(RegisterActivity.this, "注册失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
-                                            });
-                                            dia.setNegativeButton("取消", null);
-                                            dia.show();
-                                        }else{
-                                            AlertDialog.Builder dia=new AlertDialog.Builder(RegisterActivity.this);
-                                            dia.setTitle("请确认密码输入无误！");
-                                            dia.setPositiveButton("确定",null);
-                                            dia.show();
-                                        }
-
+                                            }
+                                        });
                                     }
-
-
-
-
-
-
-
-
-
-                                } else {
-                                    AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
-                                    dia.setTitle("您的学号已被注册！");
-                                    dia.setMessage("详情请询问后台管理员");
-                                    dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    });
-                                    dia.show();
-                                }
+                                });
+                                dia.setNegativeButton("取消", null);
+                                dia.show();
+                            } else {
+                                AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
+                                dia.setTitle("请确认密码输入无误！");
+                                dia.setPositiveButton("确定", null);
+                                dia.show();
                             }
-                        });
+
+                        }
+
                     } else {
                         AlertDialog.Builder dia = new AlertDialog.Builder(RegisterActivity.this);
                         dia.setTitle("请输入正确的学号！");
