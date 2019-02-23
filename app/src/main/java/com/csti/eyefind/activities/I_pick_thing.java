@@ -201,7 +201,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     //do something
                     lostItem.setImageA(list.get(0));
                     lostItem.setImageB(list.get(1));
-                    lostItem.setmImage_Thumbnail(list.get(2));
+                    lostItem.setImageThumbnail(list.get(2));
                     savePost();
 
                 }
