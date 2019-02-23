@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MyProperty"></activity>
+        <activity android:name=".activities.I_push_thing"></activity>
+        <activity android:name=".activities.MyProperty" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.UserActivity" />
         <activity android:name=".activities.LoginActivity" />

@@ -11,6 +11,7 @@ public class LostItem extends BmobObject {
     private UUID mId;//用于识别LostItem对象的Id,在构造方法中已经初始化
     private Bitmap mBitmapA;//图片1
     private Bitmap mBitmapB;//图片2
+    private Bitmap mThumbnail;//缩略图
     private String mName;//名称
     private String mLabel;//标签(类别)
     private String mFounder;//拾取人
@@ -22,11 +23,39 @@ public class LostItem extends BmobObject {
     private int mOption;//转交他人（暂存门卫）
     private BmobFile mImageA;//图片bmob文件1
     private BmobFile mImageB;//图片bmob文件2
+    private BmobFile mImage_Thumbnail;//缩略图
     private String mUserAccount;//用户账号//学号
+    private Person mPerson;//关联表用
 
     public LostItem() {
-        mId=UUID.randomUUID();
+        mId = UUID.randomUUID();
     }
+
+    public BmobFile getmImage_Thumbnail() {
+        return mImage_Thumbnail;
+    }
+
+    public void setmImage_Thumbnail(BmobFile mImage_Thumbnail) {
+        this.mImage_Thumbnail = mImage_Thumbnail;
+    }
+
+
+    public Person getmPerson() {
+        return mPerson;
+    }
+
+    public void setmThumbnail(Bitmap mThumbnail) {
+        this.mThumbnail = mThumbnail;
+    }
+
+    public Bitmap getmThumbnail() {
+        return mThumbnail;
+    }
+
+    public void setmPerson(Person mPerson) {
+        this.mPerson = mPerson;
+    }
+
 
     public UUID getId() {
         return mId;

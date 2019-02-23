@@ -45,9 +45,9 @@ public class UserActivity extends AppCompatActivity {
             public void done(Person object, BmobException e) {
                 if (e == null) {
                     user_college.setText(object.getmCollege());
-                    user_id.setText(object.getmId() + "");
+                    user_id.setText(object.getUsername() + "");/////////////////////
                     user_major.setText(object.getmMajor());
-                    user_name.setText(object.getmName());
+                    user_name.setText(object.getmName());//////////////////////////
                     user_sex.setText(object.getmSex());
                 } else {
                     //toast("查询失败：" + e.getMessage());

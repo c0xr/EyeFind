@@ -14,9 +14,14 @@ import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.util.List;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -34,27 +39,26 @@ public class MainActivity extends AppCompatActivity {
                     //mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
-                    startActivity(new Intent(MainActivity.this, MyProperty.class));
-//                    SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-//                    editor.putString("objectId", "3533107f3e");
-//                    editor.apply();
-//                    Person p2 = new Person();
-//                    p2.setmName("黄元昊");
-//                    p2.setmSex("男");
-//                    p2.setmCollege("软件学院");
-//                    p2.setmMajor("软件工程");
-//                    p2.setmId(20175999);
-//                    p2.setmPassword("123456");
-//                    p2.save(new SaveListener<String>() {
-//                        @Override
-//                        public void done(String objectId,BmobException e) {
-//                            if(e==null){
-//                                Toast.makeText(MainActivity.this,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show();
-//                            }else{
-//                                Toast.makeText(MainActivity.this,"创建数据失败：" + e.getMessage(),Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
+                    /*一对多表查询
+                    Person user = BmobUser.getCurrentUser(Person.class);
+                    BmobQuery<LostItem> query = new BmobQuery<>();
+                    query.addWhereEqualTo("mPerson", user);
+                    query.findObjects(new FindListener<LostItem>() {
+
+                        @Override
+                        public void done(List<LostItem> object,BmobException e) {
+                            if(e==null){
+                                Toast.makeText(MainActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
+*/
+
+                    //startActivity(new Intent(MainActivity.this, MyProperty.class));
                     return true;
                 case R.id.navigation_notifications:
                     SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
@@ -109,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(OverviewActivity.newIntent(MainActivity.this));
+            }
+        });
+        //添加我的失物信息测试按钮
+        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, I_push_thing.class);
+                startActivity(intent);
             }
         });
     }

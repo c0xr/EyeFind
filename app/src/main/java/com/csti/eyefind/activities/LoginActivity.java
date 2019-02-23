@@ -16,8 +16,10 @@ import com.csti.eyefind.R;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText account;
@@ -53,37 +55,34 @@ public class LoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BmobQuery<Person> categoryBmobQuery = new BmobQuery<>();
-                categoryBmobQuery.addWhereEqualTo("mId", Integer.parseInt(account.getText().toString()));
-                categoryBmobQuery.findObjects(new FindListener<Person>() {
+
+                final Person user = new Person();
+                //此处替换为你的用户名
+                user.setUsername(account.getText().toString());
+                //此处替换为你的密码
+                user.setPassword(password.getText().toString());
+                user.login(new SaveListener<Person>() {
                     @Override
-                    public void done(List<Person> object, BmobException e) {
+                    public void done(Person bmobUser, BmobException e) {
                         if (e == null) {
-                            //Toast.makeText(LoginActivity.this,"查询成功",Toast.LENGTH_SHORT).show();
-                            String input_password = password.getText().toString();
-                            String real_password = object.get(0).getmPassword() + "";
-                            if (input_password.equals(real_password)) {
-                                editor=sharedPreferences.edit();
-                                if (checkBox.isChecked()) {
-                                    editor.putString("account",object.get(0).getmId()+"");
-                                    editor.putString("password",real_password);
-                                    editor.putBoolean("isremember",true);
-                                }else {
-                                    editor.clear();
-                                }
-                                editor.apply();
-                                String objectId = object.get(0).getObjectId();
-                                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                                intent.putExtra("objectId", objectId);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+                            Person user = BmobUser.getCurrentUser(Person.class);
+                            Toast.makeText(LoginActivity.this,"欢迎回来"+user.getmName(),Toast.LENGTH_SHORT).show();
+                            editor=sharedPreferences.edit();
+                            if (checkBox.isChecked()) {
+                                editor.putString("account",user.getUsername());/////////////////////////////////
+                                editor.putString("password",user.getmPassword());
+                                editor.putBoolean("isremember",true);
+                            }else {
+                                editor.clear();
                             }
-
+                            editor.apply();
+                            String objectId = user.getObjectId();
+                            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                            intent.putExtra("objectId", objectId);
+                            startActivity(intent);
+                            finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "用户不存在", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(LoginActivity.this,"失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

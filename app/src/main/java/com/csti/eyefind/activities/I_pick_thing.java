@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.UUID;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.http.I;
@@ -54,7 +55,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 public class I_pick_thing extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static final int sTAKE_PHOTO1 = 1;
     public static final int sTAKE_PHOTO2 = 2;
-    private File photo1_File = null, photo2_File = null;
+    private File photo1_File = null, photo2_File = null, minPhoto_File;
     private Uri imageUri;
     private ImageView addphoto1;
     private ImageView addphoto2;
@@ -75,6 +76,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     private String mPickedDate;//拾取日期
     private String mUserAccount;//用户账号//学号
     private int mOption = 0;//转交他人（暂存门卫）
+    final LostItem lostItem = new LostItem();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +84,8 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_i_pick_thing);
 
         Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
-        final LostItem lostItem = new LostItem();
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
         actionBar.setSubtitle("添加拾取物信息");
 
 
@@ -155,9 +156,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                             && !(mPickedDate.equals("添加拾取时间")) && mOption != 0 && photo1_File != null && photo2_File != null) {
 
                         if (!(mTel.equals("")) || !(mQQ.equals("")) || !(mWeChat.equals(""))) {
-                            push_information(lostItem, mName, mLabel, mFounder, mTel, mQQ,
-                                    mWeChat, mPickedPlace, mPickedDate, mUserAccount, mOption,
-                                    photo1_File, photo2_File);
+                            push_information();
 
                         } else {
                             showDialog("请完善您的联系方式！", null, I_pick_thing.this);
@@ -175,9 +174,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //所有信息上传云端
-    private void push_information(final LostItem lostItem, String mName, String mLabel, String mFounder, String mTel, String mQQ,
-                                  String mWeChat, String mPickedPlace, String mPickedDate, String mUserAccount, int mOption,
-                                  File photo1_File, File photo2_File) {
+    private void push_information() {
         lostItem.setName(mName);
         lostItem.setLabel(mLabel);
         lostItem.setFounder(mFounder);
@@ -190,11 +187,13 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         lostItem.setOption(mOption);
 
 
-        String filePath_mp3 = photo1_File.toString();
-        String filePath_lrc = photo2_File.toString();
-        final String[] filePaths = new String[2];
-        filePaths[0] = filePath_mp3;
-        filePaths[1] = filePath_lrc;
+        String filePath_1 = photo1_File.toString();
+        String filePath_2 = photo2_File.toString();
+        String filePath_3 = minPhoto_File.toString();
+        final String[] filePaths = new String[3];
+        filePaths[0] = filePath_1;
+        filePaths[1] = filePath_2;
+        filePaths[2] = filePath_3;
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
             public void onSuccess(List<BmobFile> list, List<String> list1) {
@@ -202,19 +201,11 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     //do something
                     lostItem.setImageA(list.get(0));
                     lostItem.setImageB(list.get(1));
-                    lostItem.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String s, BmobException e) {
-                            if (e == null) {
-                                Toast.makeText(I_pick_thing.this, "添加数据成功", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                //Toast.makeText(I_pick_thing.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                Log.d("I_pick_thing", "添加数据失败" + e.getMessage());
-                            }
-                        }
-                    });
+                    lostItem.setmImage_Thumbnail(list.get(2));
+                    savePost();
+
                 }
+
             }
 
             @Override
@@ -225,14 +216,35 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 progressDialo.incrementProgressBy(i);
                 progressDialo.show();
 
-
             }
 
             @Override
             public void onError(int i, String s) {
 
             }
+
+            private void savePost() {
+                if (BmobUser.isLogin()) {
+                    //添加一对一关联，用户关联帖子
+                    lostItem.setmPerson(BmobUser.getCurrentUser(Person.class));
+                    lostItem.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(I_pick_thing.this, "添加数据成功", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(I_pick_thing.this, "添加数据失败", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(I_pick_thing.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+
         });
+
 
     }
 
@@ -248,7 +260,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
 
 
     //显示提示框
-    private static void showDialog(String title, String Message, Context context) {
+    public static void showDialog(String title, String Message, Context context) {
         AlertDialog.Builder dia = new AlertDialog.Builder(context);
         dia.setTitle(title);
         dia.setMessage(Message);
@@ -287,7 +299,9 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     try {
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        compressPhoto(bitmap, photo1_File);
+                        compressPhoto(bitmap, photo1_File, 800);
+                        minPhoto_File=photo1_File;
+                        compressPhoto(bitmap, minPhoto_File, 200);
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -300,7 +314,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     try {
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        compressPhoto(bitmap, photo2_File);
+                        compressPhoto(bitmap, photo2_File, 800);
                         addphoto2.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -310,9 +324,9 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //图片压缩
-    private static void compressPhoto(Bitmap bitmap, File photoFile) {
-        float ratio = 800f / bitmap.getHeight();
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * ratio), 800, false);
+    private static void compressPhoto(Bitmap bitmap, File photoFile, float size) {
+        float ratio = size / bitmap.getHeight();
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * ratio), (int) size, false);
         try {
             FileOutputStream fos = new FileOutputStream(photoFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -355,11 +369,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, flag_TAKE_PHOTO);//TAKE_PHOTO是自己定义的静态常量，为1
         return outputImage;
-
-    }
-
-    //图片上传云端
-    private void push_Photo(File photo_file, LostItem lostItem) {
 
     }
 
