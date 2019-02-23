@@ -46,7 +46,9 @@ public class ImageLoader {
                                 lostItem.setPickedDate(_lostItem.getPickedDate());
                                 lostItem.setPickedPlace(_lostItem.getPickedPlace());
                                 lostItem.setUpdatedAt(_lostItem.getUpdatedAt());
-                                lostItem.setBitmapA(getBitmap(_lostItem.getImageA().getUrl()));
+                                if(_lostItem.getThumbnail()!=null) {
+                                    lostItem.setThumbnail(getBitmap(_lostItem.getImageThumbnail().getUrl()));
+                                }
                                 mLostItems.add(lostItem);
                             }
                             mNetworkHandler.sendEmptyMessage(0);
