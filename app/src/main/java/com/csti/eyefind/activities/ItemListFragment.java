@@ -66,7 +66,9 @@ public class ItemListFragment extends Fragment {
             if(isPositionTip(position)) {
                 return;
             }
-            mImageView.setImageBitmap(lostItem.getBitmapA());
+            if(lostItem.getThumbnail()!=null) {
+                mImageView.setImageBitmap(lostItem.getThumbnail());
+            }
             mNameTextView.setText(lostItem.getName());
 
             mDateTextView.setText(getStringFromTime(lostItem.getTimeFromUpdate()));
