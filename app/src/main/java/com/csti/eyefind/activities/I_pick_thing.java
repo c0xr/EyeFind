@@ -299,8 +299,8 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     try {
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        compressPhoto(bitmap, photo1_File, 800);
                         minPhoto_File=photo1_File;
+                        compressPhoto(bitmap, photo1_File, 800);
                         compressPhoto(bitmap, minPhoto_File, 200);
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {

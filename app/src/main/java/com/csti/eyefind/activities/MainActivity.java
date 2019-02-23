@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
                             }
                         }
-
                     });
 */
 
@@ -95,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
 
-
         Button I_pick_thing = findViewById(R.id.I_pick_thing);
         I_pick_thing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,14 +113,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(OverviewActivity.newIntent(MainActivity.this));
             }
         });
-        //添加我的失物信息测试按钮
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, I_push_thing.class);
-                startActivity(intent);
-            }
-        });
+
+
+
+
+
+
+
+
+        /*
+       以下为发送通知测试代码
+
+         */
+        if(BmobUser.isLogin()){
+            Person user = BmobUser.getCurrentUser(Person.class);
+            BmobQuery<LostItem> query = new BmobQuery<>();
+            query.addWhereEqualTo("mPerson", user);
+            query.findObjects(new FindListener<LostItem>() {
+
+                @Override
+                public void done(List<LostItem> object,BmobException e) {
+                    if(e==null){
+                        Toast.makeText(MainActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+
+
+
     }
 
 }
