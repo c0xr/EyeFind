@@ -172,4 +172,13 @@ public class LostItem extends BmobObject {
     public void setImageB(BmobFile imageB) {
         mImageB = imageB;
     }
+
+    public Bitmap getThumbnail() {
+        return mThumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        mThumbnail = thumbnail;
+    }
+
 }

@@ -2,23 +2,26 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_card_external"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="12dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="0dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/click_effect">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +31,7 @@
                 android:id="@+id/bitmap_a"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
         </android.support.v7.widget.CardView>
 
         <TextView
@@ -49,7 +52,7 @@
 
         <TextView
             android:id="@+id/date_text_view"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"

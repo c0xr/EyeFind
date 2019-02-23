@@ -5,11 +5,10 @@
     <string name="title_notifications">我的信息</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="overview_activity_subtitle">查找你的物品</string>
-    <string name="overview_menu_help_title">帮助</string>
     <string-array name="indicator_strings">
         <item>手机</item>
         <item>书籍</item>
-        <item>钥匙"</item>
+        <item>钥匙</item>
         <item>磁卡</item>
         <item>包类</item>
         <item>耳机</item>
@@ -19,7 +18,21 @@
         <item>男</item>
         <item>女</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item_list_bottom_tip">没有找到你的物品?</string>
+    <string name="item_list_bottom_tip2">点击右侧按钮可提交挂失</string>
+    <string name="detail_item_picked_place">在这找到</string>
+    <string name="detail_item_date">找到于</string>
+    <string name="detail_item_tel">手机联系</string>
+    <string name="detail_item_qq">QQ</string>
+    <string name="detail_item_wechat">微信</string>
+    <string-array name="option_strings">
+        <item>3号楼</item>
+        <item>4号楼</item>
+        <item>汇文楼</item>
+        <item>2号楼</item>
+    </string-array>
+    <string name="detail_item_founder">热心同学</string>
+    <string name="detail_item_ok">这是我的物品</string>
+    <string name="detail_item_call">电话联系</string>
 </resources>

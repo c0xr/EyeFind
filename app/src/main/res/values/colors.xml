@@ -2,7 +2,8 @@
 <resources>
     <color name="shallow_blue">@android:color/holo_blue_dark</color>
     <color name="shallow_blue_light">@android:color/holo_blue_light</color>
-    <color name="white">#ffffff</color> <!-- 白色 -->
+    <color name="white">@android:color/white</color>
+    <color name="gray">#DCDCDC</color>
     <color name="ivory">#fffff0</color> <!-- 象牙色 -->
     <color name="lightyellow">#ffffe0</color> <!-- 亮黄色 -->
     <color name="yellow">#ffff00</color> <!-- 黄色 -->
@@ -96,7 +97,6 @@
     <color name="blueviolet">#8a2be2</color> <!-- 紫罗兰蓝色 -->
     <color name="lightskyblue">#87cefa</color> <!-- 亮天蓝色 -->
     <color name="skyblue">#87ceeb</color> <!-- 天蓝色 -->
-    <color name="gray">#808080</color> <!-- 灰色 -->
     <color name="grey">#808080</color> <!-- 灰色 -->
     <color name="olive">#808000</color> <!-- 橄榄色 -->
     <color name="purple">#800080</color> <!-- 紫色 -->

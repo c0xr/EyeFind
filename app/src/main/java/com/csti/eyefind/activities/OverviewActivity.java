@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import com.csti.eyefind.R;
 
@@ -35,6 +36,14 @@ public class OverviewActivity extends AppCompatActivity {
         ActionBar actionBar= getSupportActionBar();
         actionBar.setElevation(0);
         actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(OverviewActivity.this,I_pick_thing.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
