@@ -13,7 +13,12 @@ import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.util.Arrays;
+
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobInstallationManager;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -61,6 +66,17 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
                 public void done(String s, BmobException e) {
                     if (e == null) {
                         Toast.makeText(I_push_thing.this, "添加数据成功", Toast.LENGTH_SHORT).show();
+                        BmobInstallationManager.getInstance().subscribe(Arrays.asList(mLabel), new InstallationListener<BmobInstallation>() {
+                            @Override
+                            public void done(BmobInstallation bmobInstallation, BmobException e) {
+                                if (e == null) {
+                                    Toast.makeText(I_push_thing.this,"成功",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(I_push_thing.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                         finish();
                     } else {
                         Toast.makeText(I_push_thing.this, "添加数据失败", Toast.LENGTH_SHORT).show();

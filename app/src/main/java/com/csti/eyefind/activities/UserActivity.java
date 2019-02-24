@@ -13,9 +13,17 @@ import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobInstallationManager;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 
 public class UserActivity extends AppCompatActivity {
@@ -66,6 +74,35 @@ public class UserActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
                         editor.putString("objectId"," ");
                         editor.apply();
+                        Person user = BmobUser.getCurrentUser(Person.class);
+                        BmobQuery<LostItem> query = new BmobQuery<>();
+                        query.addWhereEqualTo("mPerson", user);
+                        query.findObjects(new FindListener<LostItem>() {
+
+                            @Override
+                            public void done(List<LostItem> object, BmobException e) {
+                                if(e==null){
+                                    //Toast.makeText(UserActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
+                                    String[] Lostthing=new String[object.size()];
+                                    for(int i=0;i<object.size();i++){
+                                        Lostthing[i]=object.get(i).getLabel();
+                                    }
+                                    BmobInstallationManager.getInstance().unsubscribe(Arrays.asList(Lostthing), new InstallationListener<BmobInstallation>() {
+                                        @Override
+                                        public void done(BmobInstallation bmobInstallation, BmobException e) {
+                                            if (e == null) {
+                                                //Toast.makeText(UserActivity.this, "批量取消订阅成功", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(UserActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(UserActivity.this,"失败",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        user.logOut();
                         finish();
                     }
                 });

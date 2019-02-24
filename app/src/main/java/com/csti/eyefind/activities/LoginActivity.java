@@ -13,10 +13,14 @@ import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.util.Arrays;
 import java.util.List;
 
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobInstallationManager;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -67,6 +71,38 @@ public class LoginActivity extends AppCompatActivity {
                         if (e == null) {
                             Person user = BmobUser.getCurrentUser(Person.class);
                             Toast.makeText(LoginActivity.this,"欢迎回来"+user.getmName(),Toast.LENGTH_SHORT).show();
+
+                            BmobQuery<LostItem> query = new BmobQuery<>();
+                            query.addWhereEqualTo("mPerson", user);
+                            query.findObjects(new FindListener<LostItem>() {
+                                @Override
+                                public void done(List<LostItem> object,BmobException e) {
+                                    if(e==null){
+                                        //Toast.makeText(LoginActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
+                                        String[] Lostthing=new String[object.size()];
+                                        for(int i=0;i<object.size();i++){
+                                            Lostthing[i]=object.get(i).getLabel();
+                                        }
+                                        BmobInstallationManager.getInstance().subscribe(Arrays.asList(Lostthing), new InstallationListener<BmobInstallation>() {
+                                            @Override
+                                            public void done(BmobInstallation bmobInstallation, BmobException e) {
+                                                if (e == null) {
+                                                    //Toast.makeText(LoginActivity.this, "批量订阅成功", Toast.LENGTH_SHORT).show();
+
+                                                } else {
+                                                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+
+
+                                    }else{
+                                        Toast.makeText(LoginActivity.this,"失败",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
                             editor=sharedPreferences.edit();
                             if (checkBox.isChecked()) {
                                 editor.putString("account",user.getUsername());/////////////////////////////////
