@@ -77,7 +77,7 @@ public class ItemListFragment extends Fragment {
             mPlaceTextView.setText(lostItem.getPickedPlace());
             if(position==mImageLoader.getSize()-1){
                 ViewGroup.MarginLayoutParams params=(ViewGroup.MarginLayoutParams) mCardView.getLayoutParams();
-                int px=dp2px(12,getActivity());
+                int px=MeasureUtil.dp2px(12,getActivity());
                 params.setMargins(0,px,0,px);
                 mCardView.setLayoutParams(params);
             }
@@ -87,7 +87,8 @@ public class ItemListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             int position=(int)v.getTag();
-            startActivity(DetailActivity.newIntent(getActivity(),mLostItems.get(position)));
+            startActivity(DetailActivity.newIntent(getActivity(), mAdapterType,
+                    mLostItems.get(position).getId()));
         }
     }
 
@@ -134,7 +135,7 @@ public class ItemListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mAdapterType=getArguments().getString(ARG_ADAPTER_TYPE);
         mNetworkHandler=new NetworkHandler();
-        mLostItems=new ArrayList<>();
+        mLostItems=LostItemLab.getInstance(getActivity()).getLostItems(mAdapterType);
         mImageLoader=new ImageLoader(mAdapterType,mNetworkHandler,mLostItems);
     }
 
@@ -150,6 +151,7 @@ public class ItemListFragment extends Fragment {
 
     private void updateUI(){
         if(mAdapter==null){
+            LostItemLab.getInstance(getActivity()).clearList(mAdapterType);
             mAdapter=new ItemListAdapter();
             mRecyclerView.setAdapter(mAdapter);
             mImageLoader.load();
@@ -159,7 +161,6 @@ public class ItemListFragment extends Fragment {
     }
 
     private class NetworkHandler extends Handler{
-        @TargetApi(Build.VERSION_CODES.N)
         @Override
         public void handleMessage(Message msg) {
             for(int i=0;i<mLostItems.size();i++){
@@ -169,22 +170,12 @@ public class ItemListFragment extends Fragment {
             Collections.sort(mLostItems,new Comparator<LostItem>() {
                 @Override
                 public int compare(LostItem o1, LostItem o2) {
-                    if(o1.getTimeFromUpdate()>o2.getTimeFromUpdate()){
-                        return 1;
-                    }else if(o1.getTimeFromUpdate()<o2.getTimeFromUpdate()){
-                        return -1;
-                    }
-                    return 0;
+                    return (int)(o1.getTimeFromUpdate()-o2.getTimeFromUpdate());
                 }
             });
             mLostItems.add(new LostItem());
             mAdapter.notifyItemRangeInserted(0,mLostItems.size());
         }
-    }
-
-    private int dp2px(int dip, Context context){
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(dip * scale + 0.5f);
     }
 
     private boolean isPositionTip(int position){
@@ -196,10 +187,8 @@ public class ItemListFragment extends Fragment {
     }
 
     private long getTimeFromUpdate(String s){
-        Log.d("mytag",s+" s");
         SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=f.parse(s,new ParsePosition(0));
-        Log.d("mytag",date+" date");
         long updateTime=date.getTime();
         Date date2=new Date();
         long presentTime=date2.getTime();
@@ -217,7 +206,6 @@ public class ItemListFragment extends Fragment {
         }else{
             s=time/86400+"天前";
         }
-        Log.d("mytag",time+" time");
         return s;
     }
 }

@@ -3,7 +3,6 @@ package com.csti.eyefind.activities;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
@@ -13,46 +12,42 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
-public class ImageLoader {
-    private String mAdapterType;
+public class ImageLoaderDetail {
     private Handler mNetworkHandler;
-    private List<LostItem> mLostItems;
-    private int mSize;
+    private String mObjectId;
+    private LostItem mLostItem;
 
-    public ImageLoader(String adapterType, Handler networkHandler, List<LostItem> lostItems) {
-        mAdapterType = adapterType;
+    public ImageLoaderDetail(Handler networkHandler,LostItem lostItem) {
         mNetworkHandler = networkHandler;
-        mLostItems = lostItems;
+        mLostItem = lostItem;
+        mObjectId=lostItem.getObjectId();
     }
 
     public void load(){
         BmobQuery<LostItem> bmobQuery=new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("mLabel",mAdapterType);
-        bmobQuery.findObjects(new FindListener<LostItem>() {
+        bmobQuery.getObject(mObjectId, new QueryListener<LostItem>() {
             @Override
-            public void done(final List<LostItem> list, BmobException e) {
+            public void done(final LostItem lostItem, BmobException e) {
                 if(e==null){
-                    mSize=list.size();
                     new Thread(){
                         @Override
                         public void run() {
-                            for(LostItem _lostItem:list){
-                                LostItem lostItem=new LostItem();
-                                lostItem.setName(_lostItem.getName());
-                                lostItem.setPickedDate(_lostItem.getPickedDate());
-                                lostItem.setPickedPlace(_lostItem.getPickedPlace());
-                                lostItem.setUpdatedAt(_lostItem.getUpdatedAt());
-                                lostItem.setObjectId(_lostItem.getObjectId());
-                                lostItem.setPerson(_lostItem.getPerson());
-                                if(_lostItem.getImageThumbnail()!=null) {
-                                    lostItem.setThumbnail(getBitmap(_lostItem.getImageThumbnail().getUrl()));
-                                }
-                                mLostItems.add(lostItem);
-                            }
+                            mLostItem.setPickedPlace(lostItem.getPickedPlace());
+                            mLostItem.setFounder(lostItem.getFounder());
+                            mLostItem.setPickedDate(lostItem.getPickedDate());
+                            mLostItem.setTel(lostItem.getTel());
+                            mLostItem.setQQ(lostItem.getQQ());
+                            mLostItem.setWeChat(lostItem.getWeChat());
+                            mLostItem.setOption(lostItem.getOption());
+                            mLostItem.setUserAccount(lostItem.getUserAccount());
+                            mLostItem.setBitmapA(getBitmap(lostItem.getImageA().getUrl()));
+                            mLostItem.setBitmapB(getBitmap(lostItem.getImageB().getUrl()));
                             mNetworkHandler.sendEmptyMessage(0);
                         }
                     }.start();
@@ -77,9 +72,5 @@ public class ImageLoader {
             e.printStackTrace();
         }
         return bitmap;
-    }
-
-    public int getSize() {
-        return mSize;
     }
 }

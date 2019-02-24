@@ -48,25 +48,9 @@ public class LostItem extends BmobObject {
         mId = UUID.randomUUID();
     }
 
-
-
-
-    public Person getmPerson() {
-        return mPerson;
-    }
-
-    public void setmThumbnail(Bitmap mThumbnail) {
-        this.mThumbnail = mThumbnail;
-    }
-
-    public Bitmap getmThumbnail() {
-        return mThumbnail;
-    }
-
     public void setmPerson(Person mPerson) {
         this.mPerson = mPerson;
     }
-
 
     public UUID getId() {
         return mId;
@@ -192,4 +176,11 @@ public class LostItem extends BmobObject {
         mThumbnail = thumbnail;
     }
 
+    public Person getPerson() {
+        return mPerson;
+    }
+
+    public void setPerson(Person person) {
+        mPerson = person;
+    }
 }
