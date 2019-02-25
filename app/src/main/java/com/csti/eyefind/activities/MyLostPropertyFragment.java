@@ -102,7 +102,7 @@ public class MyLostPropertyFragment extends Fragment {
         mVerticalListView.setLayoutManager(manager);
         mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
         mVerticalListView.setNestedScrollingEnabled(false);
-        mVerticalListView.getLayoutParams().height = getActivity().getWindowManager().getDefaultDisplay().getWidth() * 5;
+        mVerticalListView.getLayoutParams().height = getActivity().getWindowManager().getDefaultDisplay().getWidth() * 3;
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
     }
 
@@ -159,7 +159,7 @@ public class MyLostPropertyFragment extends Fragment {
 
     private List<MyLostProperty> initVerticalData(){
         mainVerticalList = new ArrayList<>();
-        for (int i = 0 ; i < 10 ; i++){
+        for (int i = 0 ; i < 13 ; i++){
             mainVerticalList.add(new MyLostProperty("name","introduce","NewYork","666", R.drawable.img5));
         }
         return mainVerticalList;
@@ -172,7 +172,7 @@ public class MyLostPropertyFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"你已经进入聪明人都看得见的失物具体界面",Toast.LENGTH_SHORT).show();
                 mVerticalListView.getLayoutParams().height += getActivity().getWindowManager().getDefaultDisplay().getWidth() * 5;
-                for (int i = 0 ; i < 10 ; i++){
+                for (int i = 0 ; i < 13 ; i++){
                     mainVerticalList.add(new MyLostProperty("失物名称","一些描述/介绍","失物标签","丢失日期", R.drawable.img6));
                 }
                 mVerticalListView.setAdapter(new VerticalListAdapter(mainVerticalList));

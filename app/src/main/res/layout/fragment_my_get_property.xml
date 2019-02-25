@@ -3,12 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MyGetPropertyFragment">
+    tools:context=".activities.MyLostPropertyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_prime_page_vertical_list"
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"/>
+
+            <Button
+                android:id="@+id/main_prime_page_add_more"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/shallow_blue"
+                android:text="点击加载更多"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

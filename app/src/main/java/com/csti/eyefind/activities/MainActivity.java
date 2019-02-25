@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 */
 
-                    //startActivity(new Intent(MainActivity.this, MyProperty.class));
+                    startActivity(new Intent(MainActivity.this, MyProperty.class));
                     return true;
                 case R.id.navigation_notifications:
                     SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
