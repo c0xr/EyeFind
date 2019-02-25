@@ -25,6 +25,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,9 +42,11 @@ import android.widget.Toast;
 import com.csti.eyefind.R;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,8 +69,8 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     public static final int sTAKE_PHOTO1 = 1;
     public static final int sTAKE_PHOTO2 = 2;
     private File photo1_File = null, photo2_File = null, minPhoto_File;
-    private int photo1_Flag = 0, photo2_Flag = 0;
-    private Uri imageUri;
+    private int photo1_Flag = 0, photo2_Flag = 0, minphoto_Flag = 0;
+    private Uri imageUri, minimageUri;
     private ImageView addphoto1;
     private ImageView addphoto2;
     private EditText pick_thing_name, pick_thing_place, pick_thing_people, pick_thing_tel, pick_thing_QQ, pick_thing_VX;
@@ -88,7 +91,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     private String mUserAccount;//用户账号//学号
     private int mOption = 0;//转交他人（暂存门卫）
     final LostItem lostItem = new LostItem();
-    private  String ID=null;//用于记录失物的objectId;
+    private String ID = null;//用于记录失物的objectId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +204,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (photo1_Flag == 1) {
                         photo1_File = takePhoto(lostItem.getId() + "addphoto1.jpg", sTAKE_PHOTO1);//拍照并获取图片真实路径
+
                     }
                     if (photo2_Flag == 1) {
                         photo2_File = takePhoto(lostItem.getId() + "addphoto2.jpg", sTAKE_PHOTO2);//拍照并获取图片真实路径
@@ -353,11 +357,30 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 if (resultCode == RESULT_OK) {
                     //如果成功
                     try {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            minPhoto_File = new File(getFilesDir(), lostItem.getId() + "minphoto.jpg");
+                        } else {
+                            minPhoto_File = new File(getExternalCacheDir(), lostItem.getId() + "minphoto.jpg");
+                        }
+                        Log.d("minphoto文件", minPhoto_File.toString());
+                        copyFile(photo1_File.toString(), minPhoto_File.toString());
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            minimageUri = FileProvider.getUriForFile(I_pick_thing.this, "com.csti.eyefind.fileprovider", minPhoto_File);//第一个参数是一个context对象，第二个参数是任意唯一的字符串，第三个参数是刚刚创建的File对象
+                            //Log.d("MainActivity", outputImage.toString() + "手机系统版本高于Android7.0");
+                        } else {
+                            //调用fromFile()方法将File对象转换成Uri对象，这个Uri对象标识着output_image.jpg这张图片的本地真实路径
+                            //Log.d("MainActivity", outputImage.toString() + "手机系统版本低于Android7.0");
+                            minimageUri = Uri.fromFile(minPhoto_File);
+                        }
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        minPhoto_File = photo1_File;
+                        Bitmap minbitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(minimageUri));
+                        //Toast.makeText(I_pick_thing.this,"路径"+imageUri.getPath(),Toast.LENGTH_LONG).show();
+                        Log.d("Uri名称", imageUri.toString());
+                        Log.d("photo文件", photo1_File.toString());
+                        //minPhoto_File = photo1_File;
                         compressPhoto(bitmap, photo1_File, 800);
-                        compressPhoto(bitmap, minPhoto_File, 200);
+                        compressPhoto(minbitmap, minPhoto_File, 200);
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -426,6 +449,68 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         startActivityForResult(intent, flag_TAKE_PHOTO);//TAKE_PHOTO是自己定义的静态常量，为1
         return outputImage;
 
+    }
+
+    /*
+    public void copyFile(String oldPath, String newPath) {
+        try {
+            int bytesum = 0;
+            int byteread = 0;
+            File oldfile = new File(oldPath);
+            if (!oldfile.exists()) { //文件不存在时
+                InputStream inStream = new FileInputStream(oldPath); //读入原文件
+                FileOutputStream fs = new FileOutputStream(newPath);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ( (byteread = inStream.read(buffer)) != -1) {
+                    bytesum += byteread; //字节数 文件大小
+                    //System.out.println(bytesum);
+                    fs.write(buffer, 0, byteread);
+                }
+                inStream.close();
+            }
+        }
+        catch (Exception e) {
+            //System.out.println("复制单个文件操作出错");
+            e.printStackTrace();
+
+        }
+}*/
+    public boolean copyFile(String oldPath$Name, String newPath$Name) {
+        try {
+            File oldFile = new File(oldPath$Name);
+            if (!oldFile.exists()) {
+                Log.e("--Method--", "copyFile:  oldFile not exist.");
+                return false;
+            } else if (!oldFile.isFile()) {
+                Log.e("--Method--", "copyFile:  oldFile not file.");
+                return false;
+            } else if (!oldFile.canRead()) {
+                Log.e("--Method--", "copyFile:  oldFile cannot read.");
+                return false;
+            }
+
+            /* 如果不需要打log，可以使用下面的语句
+            if (!oldFile.exists() || !oldFile.isFile() || !oldFile.canRead()) {
+                return false;
+            }
+            */
+
+            FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
+            FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
+            byte[] buffer = new byte[1024];
+            int byteRead;
+            while (-1 != (byteRead = fileInputStream.read(buffer))) {
+                fileOutputStream.write(buffer, 0, byteRead);
+            }
+            fileInputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
