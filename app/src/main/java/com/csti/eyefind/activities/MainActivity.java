@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
-                    final String objectId = preferences.getString("objectId", "0000");
+                    final String objectId = preferences.getString("objectId", "000");
                     //查找Person表里面id为3533107f3e的数据
                     BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
                     bmobQuery.getObject(objectId, new QueryListener<Person>() {
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                         public void done(Person object, BmobException e) {
                             if (e == null) {
                                 //进用户页面
-
                                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
                                 intent.putExtra("objectId", objectId);
                                 startActivity(intent);
@@ -128,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
                 String objectId = sharedPreferences.getString("objectId", "");
                 mUserAccount = sharedPreferences.getString("account", "");
-
-                if (!(objectId.equals(""))) {
+                if (!(objectId.equals(" "))) {
                     Intent intent = new Intent(MainActivity.this, I_pick_thing.class);
                     startActivity(intent);
                 }else {

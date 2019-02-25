@@ -161,12 +161,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         submit_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-//                String objectId = sharedPreferences.getString("objectId", "");
-//                mUserAccount = sharedPreferences.getString("account", "");
-                //根据账号是否在本地存在判断是否登录
-//                if (!(objectId.equals(" "))) {
                 mName = pick_thing_name.getText().toString();
                 mFounder = pick_thing_people.getText().toString();
                 mTel = pick_thing_tel.getText().toString();
@@ -178,9 +172,12 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                         && !(mPickedDate.equals("添加拾取时间")) && mOption != 0 && photo1_File != null && photo2_File != null) {
 
                     if (!(mTel.equals("")) || !(mQQ.equals("")) || !(mWeChat.equals(""))) {
-                        push_information();
-                        //Toast.makeText(I_pick_thing.this,"第三个地方"+lostItem.getObjectId(),Toast.LENGTH_SHORT).show();
-
+                        if(RegisterActivity.isNumeric(mTel)&&RegisterActivity.isNumeric(mQQ)) {
+                            push_information();
+                            //Toast.makeText(I_pick_thing.this,"第三个地方"+lostItem.getObjectId(),Toast.LENGTH_SHORT).show();
+                        }else{
+                            showDialog("请输入正确的电话或QQ号码",null,I_pick_thing.this);
+                        }
 
                     } else {
                         showDialog("请完善您的联系方式！", null, I_pick_thing.this);
@@ -188,9 +185,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 } else {
                     showDialog("拾取物信息不完善！", null, I_pick_thing.this);
                 }
-//                } else {
-//                    showDialog("请登录!", null, I_pick_thing.this);
-//                }
             }
         });
 
