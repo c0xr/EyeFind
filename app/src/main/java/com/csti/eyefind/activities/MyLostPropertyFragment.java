@@ -159,7 +159,7 @@ public class MyLostPropertyFragment extends Fragment {
                 public void onClick(View v) {
                     //item 点击事件
                     Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
-//                    startActivity(DetailActivity.newIntent(getActivity(),this.,mDatas.get(mListPosition).getId()));
+                    startActivity(DetailActivity.newIntent(getActivity(),"我捡的宝贝",mDatas.get(mListPosition).getId()));
                 }
             });
         }

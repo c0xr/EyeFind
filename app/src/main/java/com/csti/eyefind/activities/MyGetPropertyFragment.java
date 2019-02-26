@@ -158,7 +158,7 @@ public class MyGetPropertyFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //item 点击事件
-                    Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT).show();
                 }
             });
         }
