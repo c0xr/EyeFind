@@ -185,7 +185,14 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 } else {
                     showDialog("拾取物信息不完善！", null, I_pick_thing.this);
                 }
-            }
+//                if (Build.VERSION.SDK_INT >= 24) {
+//                    String string=getFilesDir().toString();
+//                    DeleteFileUtil.deleteDirectory(string);
+//                } else {
+//                   String string=getExternalCacheDir().toString();
+//                    DeleteFileUtil.deleteDirectory(string);
+//                }
+           }
         });
 
 
