@@ -91,7 +91,12 @@ public class DetailActivity extends AppCompatActivity {
                             AlertDialog.Builder builder=new AlertDialog.Builder(DetailActivity.this);
                             builder.setTitle("EyeFind")
                                     .setMessage("已确认该物品,等待对方确认")
-                                    .setPositiveButton("好的",null)
+                                    .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
                                     .create()
                                     .show();
                         }else{
