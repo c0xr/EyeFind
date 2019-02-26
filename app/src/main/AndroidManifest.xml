@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.NotificationActivity"></activity>
+        <activity android:name=".activities.MyLostDetailActivity"></activity>
+        <activity android:name=".activities.NotificationActivity" />
         <activity android:name=".activities.I_push_thing" />
         <activity android:name=".activities.MyProperty" />
         <activity android:name=".activities.RegisterActivity" />
@@ -70,7 +71,7 @@
         </service> <!-- 用于进程保活 -->
         <service
             android:name="cn.bmob.push.lib.service.PushNotifyService"
-            android:process=":bmobpush"></service>
+            android:process=":bmobpush" />
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter>

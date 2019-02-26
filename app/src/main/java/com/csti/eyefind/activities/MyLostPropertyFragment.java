@@ -1,6 +1,7 @@
 package com.csti.eyefind.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -23,8 +24,10 @@ import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -77,10 +80,11 @@ public class MyLostPropertyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapterType = getArguments().getString(ARG_ADAPTER_TYPE);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            mAdapterType = getArguments().getString(ARG_ADAPTER_TYPE);
+            Log.v("123123",mAdapterType + "---666");
         }
     }
 
@@ -158,8 +162,9 @@ public class MyLostPropertyFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //item 点击事件
-                    Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
-                    startActivity(DetailActivity.newIntent(getActivity(),this.,mDatas.get(mListPosition).getId()));
+//                    Log.v("123123",getArguments().getString(ARG_ADAPTER_TYPE) + "");
+//                    startActivity(DetailActivity.newIntent(getActivity(), "我捡的宝贝",
+//                            mDatas.get(mListPosition).getId()));
                 }
             });
         }

@@ -2,6 +2,7 @@ package com.csti.eyefind.activities;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import cn.bmob.v3.BmobObject;
