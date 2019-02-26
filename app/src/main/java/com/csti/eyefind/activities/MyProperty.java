@@ -53,8 +53,8 @@ public class MyProperty extends AppCompatActivity {
         fragments = new ArrayList<>();
         listTextViews = new ArrayList<>();
 
-        listTitles.add("我捡的宝贝");
         listTitles.add("我丢的宝贝");
+        listTitles.add("我捡的宝贝");
 
         for (int i = 0; i < listTitles.size(); i++) {
             Fragment fragment = MyPropertyContentFragment.newInstance(i,listTitles.get(i));

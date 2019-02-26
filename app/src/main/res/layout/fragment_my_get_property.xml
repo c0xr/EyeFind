@@ -17,15 +17,16 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_prime_page_vertical_list"
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"/>
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/main_prime_page_add_more"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/shallow_blue"
-                android:text="点击加载更多"
-                android:textSize="30dp"/>
+                android:text="查看更多..."
+                android:textColor="@color/white"
+                android:textSize="15dp"/>
 
         </LinearLayout>
 

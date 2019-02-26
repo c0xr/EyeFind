@@ -67,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 */
-
-                    startActivity(new Intent(MainActivity.this, MyProperty.class));
+                    SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+                    String objectGetId = sharedPreferences.getString("objectId", "");
+                    mUserAccount = sharedPreferences.getString("account", "");
+                    if (!(objectGetId.equals(" "))) {
+                        startActivity(new Intent(MainActivity.this, MyProperty.class));
+                    }else {
+                        com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
+                    }
                     return true;
                 case R.id.navigation_notifications:
                     SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
