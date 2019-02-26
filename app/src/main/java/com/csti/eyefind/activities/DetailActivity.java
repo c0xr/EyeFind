@@ -1,5 +1,6 @@
 package com.csti.eyefind.activities;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -57,10 +58,13 @@ public class DetailActivity extends AppCompatActivity {
         return intent;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
 
         String adapterType=getIntent().getStringExtra(EXTRA_ADAPTER_TYPE);
         UUID id=(UUID) getIntent().getSerializableExtra(EXTRA_ID);
