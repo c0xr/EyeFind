@@ -64,6 +64,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
+
         String adapterType=getIntent().getStringExtra(EXTRA_ADAPTER_TYPE);
         UUID id=(UUID) getIntent().getSerializableExtra(EXTRA_ID);
         mLostItem=LostItemLab.getInstance(this).getLostItem(adapterType,id);
@@ -103,7 +105,6 @@ public class DetailActivity extends AppCompatActivity {
         findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
                 Intent intent=new Intent();
                 intent.setAction(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:"+mLostItem.getTel()));
