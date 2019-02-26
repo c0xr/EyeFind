@@ -58,13 +58,14 @@ public class DetailActivity extends AppCompatActivity {
         return intent;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
+        }
 
         String adapterType=getIntent().getStringExtra(EXTRA_ADAPTER_TYPE);
         UUID id=(UUID) getIntent().getSerializableExtra(EXTRA_ID);
