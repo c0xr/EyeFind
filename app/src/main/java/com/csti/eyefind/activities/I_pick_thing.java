@@ -269,7 +269,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
             private void savePost() {
                 if (BmobUser.isLogin()) {
                     //添加一对一关联，用户关联帖子
-                    lostItem.setmPerson(BmobUser.getCurrentUser(Person.class));
+                    lostItem.setPerson(BmobUser.getCurrentUser(Person.class));
                     lostItem.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {

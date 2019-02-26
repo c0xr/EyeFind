@@ -39,7 +39,6 @@ public class LostItemLab {
     public LostItem getLostItem(String adpterType,UUID id){
         for(LostItem lostItem:mMap.get(adpterType)){
             if(lostItem.getId().equals(id)){
-
                 return lostItem;
             }
         }

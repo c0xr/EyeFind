@@ -27,6 +27,20 @@ public class LostItem extends BmobObject {
     private String mUserAccount;//用户账号//学号
     private Person mPerson;//关联表用
     private long mTimeFromUpdate;
+    private boolean mIsConfirmed;//已领取
+
+    public LostItem() {
+        mId = UUID.randomUUID();
+        mIsConfirmed=false;
+    }
+
+    public boolean isConfirmed() {
+        return mIsConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        mIsConfirmed = confirmed;
+    }
 
     public BmobFile getImageThumbnail() {
         return mImageThumbnail;
@@ -42,14 +56,6 @@ public class LostItem extends BmobObject {
 
     public void setTimeFromUpdate(long timeFromUpdate) {
         mTimeFromUpdate = timeFromUpdate;
-    }
-
-    public LostItem() {
-        mId = UUID.randomUUID();
-    }
-
-    public void setmPerson(Person mPerson) {
-        this.mPerson = mPerson;
     }
 
     public UUID getId() {

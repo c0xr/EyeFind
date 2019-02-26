@@ -1,13 +1,19 @@
 package com.csti.eyefind.activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.service.autofill.BatchUpdates;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +21,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class DetailActivity extends AppCompatActivity {
     private final static String EXTRA_ID="id";
@@ -67,13 +79,31 @@ public class DetailActivity extends AppCompatActivity {
         findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mLostItem.setConfirmed(true);
+                mLostItem.update(new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            AlertDialog.Builder builder=new AlertDialog.Builder(DetailActivity.this);
+                            builder.setTitle("EyeFind")
+                                    .setMessage("已确认该物品,等待对方确认")
+                                    .setPositiveButton("好的",null)
+                                    .create()
+                                    .show();
+                        }else{
+                            Log.d("mytag",e+"");
+                        }
+                    }
+                });
             }
         });
         findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:"+mLostItem.getTel()));
+                startActivity(intent);
             }
         });
 
@@ -90,14 +120,18 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
-        ViewGroup.LayoutParams params=mImageB.getLayoutParams();
-        float ratio=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapB().getHeight();
-        params.width=(int)(mLostItem.getBitmapB().getWidth()*ratio);
+        ViewGroup.LayoutParams paramsA=mImageA.getLayoutParams();
+        float ratioA=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapA().getHeight();
+        paramsA.width=(int)(mLostItem.getBitmapA().getWidth()*ratioA);
 
-        mImageA.setLayoutParams(params);
+        mImageA.setLayoutParams(paramsA);
         mImageA.setImageBitmap(mLostItem.getBitmapA());
 
-        mImageB.setLayoutParams(params);
+        ViewGroup.LayoutParams paramsB=mImageB.getLayoutParams();
+        float ratioB=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapB().getHeight();
+        paramsB.width=(int)(mLostItem.getBitmapB().getWidth()*ratioB);
+
+        mImageB.setLayoutParams(paramsB);
         mImageB.setImageBitmap(mLostItem.getBitmapB());
 
         mName.setText(mLostItem.getName());
