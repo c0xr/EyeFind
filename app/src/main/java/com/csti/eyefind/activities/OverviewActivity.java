@@ -10,27 +10,35 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.csti.eyefind.R;
 
+import java.sql.Time;
+
 public class OverviewActivity extends AppCompatActivity {
+    private String mUserAccount;//用户账号//学号
+    private FragmentManager mFm;
+    private Fragment mFragment;
+    private MeasureUtil.Timer mTimer;
+
     public static Intent newIntent(Context packageContext){
         return new Intent(packageContext, OverviewActivity.class);
     }
-    private String mUserAccount;//用户账号//学号
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        FragmentManager fm=getSupportFragmentManager();
-        Fragment fragment=fm.findFragmentById(R.id.pager_fragment_contianer);
+        mFm=getSupportFragmentManager();
+        mFragment=mFm.findFragmentById(R.id.pager_fragment_contianer);
 
-        if (fragment == null) {
-            fragment=PagerFragment.newInstance();
-            fm.beginTransaction()
-                    .add(R.id.pager_fragment_contianer,fragment)
+        if (mFragment == null) {
+            mFragment=PagerFragment.newInstance();
+            mFm.beginTransaction()
+                    .add(R.id.pager_fragment_contianer,mFragment)
                     .commit();
         }
 
@@ -58,6 +66,22 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_overview,menu);
+        mTimer=new MeasureUtil.Timer(3000);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(!mTimer.isReady()){
+            return true;
+        }
+        mFm.beginTransaction()
+                .remove(mFragment)
+                .commit();
+        mFragment=PagerFragment.newInstance();
+        mFm.beginTransaction()
+                .add(R.id.pager_fragment_contianer,mFragment)
+                .commit();
         return true;
     }
 }

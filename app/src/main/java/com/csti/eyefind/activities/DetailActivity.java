@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.service.autofill.BatchUpdates;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -63,10 +64,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
-        }
-
         String adapterType=getIntent().getStringExtra(EXTRA_ADAPTER_TYPE);
         UUID id=(UUID) getIntent().getSerializableExtra(EXTRA_ID);
         mLostItem=LostItemLab.getInstance(this).getLostItem(adapterType,id);
@@ -111,10 +108,11 @@ public class DetailActivity extends AppCompatActivity {
         findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+mLostItem.getTel()));
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 0);
+                }else{
+                    callPhone();
+                }
             }
         });
 
@@ -152,5 +150,17 @@ public class DetailActivity extends AppCompatActivity {
         mTel.setText(mLostItem.getTel());
         mQQ.setText(mLostItem.getQQ());
         mWeChat.setText(mLostItem.getWeChat());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        callPhone();
+    }
+
+    private void callPhone(){
+        Intent intent=new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:"+mLostItem.getTel()));
+        startActivity(intent);
     }
 }
