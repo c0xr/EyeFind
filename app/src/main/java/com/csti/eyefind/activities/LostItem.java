@@ -26,6 +26,11 @@ public class LostItem extends BmobObject {
     private BmobFile mImageB;//图片bmob文件2
     private BmobFile mImageThumbnail;//bmob缩略图
     private String mUserAccount;//用户账号//学号
+
+    public boolean ismIsConfirmed() {
+        return mIsConfirmed;
+    }
+
     private Person mPerson;//关联表用
     private long mTimeFromUpdate;
     private boolean mIsConfirmed;//已领取

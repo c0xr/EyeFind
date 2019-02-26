@@ -237,10 +237,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         filePaths[1] = filePath_2;
         filePaths[2] = filePath_3;
 
-        ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
-        progressDialo.setTitle("信息正在上传");
-        progressDialo.setMessage("Loading...");
-        progressDialo.show();
 
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
@@ -257,7 +253,13 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onProgress(int i, int i1, int i2, int i3) {
-
+                if(BmobUser.isLogin()){
+                ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
+                progressDialo.setTitle("信息正在上传");
+                progressDialo.setMessage("Loading...");
+                progressDialo.setProgress(i);
+                progressDialo.show();
+                }
 
             }
 

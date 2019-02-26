@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -81,28 +82,37 @@ public class DetailActivity extends AppCompatActivity {
         findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLostItem.setConfirmed(true);
-                mLostItem.update(new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            AlertDialog.Builder builder=new AlertDialog.Builder(DetailActivity.this);
-                            builder.setTitle("EyeFind")
-                                    .setMessage("已确认该物品,等待对方确认")
-                                    .setPositiveButton("好的", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .create()
-                                    .show();
-                        }else{
-                            Toast.makeText(DetailActivity.this,"确认失败,请稍后重试", Toast.LENGTH_SHORT).show();
-                            Log.d("mytag",e+"");
-                        }
+                if (BmobUser.isLogin()){
+                    if (!mLostItem.ismIsConfirmed()) {
+                        I_pick_thing.showDialog("该物品目前已经有人认领，请联系拾取人确认，防止冒领", null, DetailActivity.this);
+                    } else {
+                        LostItem mlostItem1 = new LostItem();
+                        mlostItem1.setConfirmed(true);
+                        mlostItem1.update(mLostItem.getObjectId(), new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+                                    builder.setTitle("EyeFind")
+                                            .setMessage("已确认该物品,等待对方确认")
+                                            .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    finish();
+                                                }
+                                            })
+                                            .create()
+                                            .show();
+                                } else {
+                                    Toast.makeText(DetailActivity.this, "确认失败,请稍后重试", Toast.LENGTH_SHORT).show();
+                                    Log.d("mytag", e + "");
+                                }
+                            }
+                        });
                     }
-                });
+            }else{
+                    I_pick_thing.showDialog("请登录！",null,DetailActivity.this);
+                }
             }
         });
         findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {

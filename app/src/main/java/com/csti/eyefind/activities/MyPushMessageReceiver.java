@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
@@ -19,18 +20,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.bmob.push.PushConstants;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class MyPushMessageReceiver extends BroadcastReceiver {
     private final int pushId = 1;
     public static final String PRIMARY_CHANNEL = "default";
+    private LostItem mlostItem;
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
-        Intent intent1 = new Intent(context, NotificationActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, 0);
-        int  mNotificationId = hashCode();
+        Intent intent1=new Intent(context,NotificationActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(context, 0,intent1, 0);
         if(intent.getAction().equals(PushConstants.ACTION_MESSAGE)){
             //Log.d("bmob", "客户端收到推送内容："+intent.getStringExtra("msg"));
             String jsonStr = intent.getStringExtra(PushConstants.EXTRA_PUSH_MESSAGE_STRING);
@@ -46,6 +50,18 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            BmobQuery<LostItem>bmobQuery=new BmobQuery<>();
+            bmobQuery.getObject(objectId, new QueryListener<LostItem>() {
+                @Override
+                public void done(LostItem lostItem, BmobException e) {
+                    mlostItem=lostItem;
+                    Toast.makeText(context,mlostItem.getLabel(),Toast.LENGTH_LONG).show();
+                }
+            });
+//            Intent intent1=new Intent(context,NotificationActivity.class);
+//            PendingIntent pi = PendingIntent.getActivity(context, 0,DetailActivity.newIntent(context,mlostItem.getLabel(),mlostItem.getId()), 0);
+
             /*NotificationManager manager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             Notification notification= new Notification.Builder(context)
                     .setSmallIcon(R.mipmap.ic_launcher)//设置推送消息的图标
