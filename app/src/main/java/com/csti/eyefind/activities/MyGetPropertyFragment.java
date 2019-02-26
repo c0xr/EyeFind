@@ -3,9 +3,12 @@ package com.csti.eyefind.activities;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +22,18 @@ import com.csti.eyefind.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 
 public class MyGetPropertyFragment extends Fragment {
 
     private RecyclerView mHorizontalListView;//水平商品轮播图
     private RecyclerView mVerticalListView;//竖直商品轮播图
     private Button addMoreButton;//点击增加更多
-    private List<MyLostProperty> mainVerticalList;//竖直商品，点击增加10项
+    private List<PushLostItem> mainVerticalList;//竖直商品，点击增加10项
     private View primeView;//本界面布局
 
 
@@ -39,6 +47,19 @@ public class MyGetPropertyFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Bomb
+    private BmobQuery<PushLostItem> query;
+    private int length = 0;//原先列表长度 用于判断是否刷新
+    private int mAddTimes = 0;//记录连续点击次数
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if ( msg.what == 0x0 ){
+                setmVerticalListView();//配置竖直listView
+            }
+        }
+    };
 
     public MyGetPropertyFragment() {
         // Required empty public constructor
@@ -58,7 +79,7 @@ public class MyGetPropertyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         primeView = inflater.inflate(R.layout.fragment_my_get_property, container, false);
-        setmVerticalListView();//配置竖直listView
+        initVerticalData();
         addMore();
         return primeView;
     }
@@ -94,13 +115,13 @@ public class MyGetPropertyFragment extends Fragment {
 
     //与水平相同设置竖直
     public void setmVerticalListView() {
-        List<MyLostProperty> data = initVerticalData();
+        List<PushLostItem> data = mainVerticalList;
         mVerticalListView = (RecyclerView) primeView.findViewById(R.id.main_prime_page_vertical_list);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),1);
         mVerticalListView.setLayoutManager(manager);
         mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
         mVerticalListView.setNestedScrollingEnabled(false);
-        mVerticalListView.getLayoutParams().height = getActivity().getWindowManager().getDefaultDisplay().getWidth() * 3;
+        mVerticalListView.getLayoutParams().height = 250 * data.size();
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
     }
 
@@ -120,19 +141,19 @@ public class MyGetPropertyFragment extends Fragment {
             }
         }
 
-        private List<MyLostProperty> mDatas;
-        public VerticalListAdapter(List<MyLostProperty> data) {
+        private List<PushLostItem> mDatas;
+        public VerticalListAdapter(List<PushLostItem> data) {
             this.mDatas = data;
         }
 
         //③ 在Adapter中实现3个方法
         @Override
         public void onBindViewHolder(VH holder, int position) {
-            holder.name.setText(mDatas.get(position).getName());
-            holder.introduce.setText(mDatas.get(position).getIntroduce());
-            holder.place.setText(mDatas.get(position).getPlace());
-            holder.price.setText(mDatas.get(position).getPrice());
-            holder.image.setImageResource(mDatas.get(position).getImageId());
+            holder.name.setText("我的失物 " + position + 1 + ":");
+            holder.introduce.setText(mDatas.get(position).getmName());
+            holder.place.setText(mDatas.get(position).getmLabel());
+            holder.price.setText("");
+            holder.image.setImageResource(R.drawable.img7);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -155,23 +176,71 @@ public class MyGetPropertyFragment extends Fragment {
         }
     }
 
-    private List<MyLostProperty> initVerticalData(){
+    private void initVerticalData(){
+        Person user = BmobUser.getCurrentUser(Person.class);//先从云端读入数据
+        query = new BmobQuery<>();
+        query.addWhereEqualTo("mPerson", user);
         mainVerticalList = new ArrayList<>();
-        for (int i = 0 ; i < 13 ; i++){
-            mainVerticalList.add(new MyLostProperty("name","introduce","NewYork","666", R.drawable.img5));
-        }
-        return mainVerticalList;
+        query.findObjects(new FindListener<PushLostItem>() {
+            @Override
+            public void done(List<PushLostItem> object, BmobException e) {
+                if(e==null){
+                    for (int i = 0 ; i < object.size() ; i++){
+                        mainVerticalList.add(object.get(i));
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        new Thread(){
+            @Override
+            public void run() {
+                while (mainVerticalList.size() == length){
+                    try {
+                        sleep(200);
+                    }catch (Exception e){
+                        Toast.makeText(getActivity(),"信息获取失败 T.T ",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                try {
+                    sleep(300);
+                    Message msg = new Message();
+                    msg.what = 0x0;
+                    handler.sendMessage(msg);
+                    length = mainVerticalList.size();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
-
     private void addMore(){
+
+        Person user = BmobUser.getCurrentUser(Person.class);
+        BmobQuery<PushLostItem> query = new BmobQuery<>();
+        query.addWhereEqualTo("mPerson", user);
+        query.findObjects(new FindListener<PushLostItem>() {
+
+            @Override
+            public void done(List<PushLostItem> object, BmobException e) {
+                if(e==null){
+                    Toast.makeText(getActivity(), "成功"+object.size(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         addMoreButton = (Button) primeView.findViewById(R.id.main_prime_page_add_more);
         addMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"你已经进入聪明人都看得见的失物具体界面",Toast.LENGTH_SHORT).show();
-                mVerticalListView.getLayoutParams().height += getActivity().getWindowManager().getDefaultDisplay().getWidth() * 5;
+                mVerticalListView.getLayoutParams().height += 250 * 13;
                 for (int i = 0 ; i < 13 ; i++){
-                    mainVerticalList.add(new MyLostProperty("失物名称","一些描述/介绍","失物标签","丢失日期", R.drawable.img6));
+                    mainVerticalList.add(new PushLostItem());
                 }
                 mVerticalListView.setAdapter(new VerticalListAdapter(mainVerticalList));
             }
