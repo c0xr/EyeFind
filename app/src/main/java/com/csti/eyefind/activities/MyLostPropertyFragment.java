@@ -38,6 +38,8 @@ import cn.bmob.v3.listener.FindListener;
 
 
 public class MyLostPropertyFragment extends Fragment {
+    private final static String ARG_ADAPTER_TYPE="adapter type";
+    private String mAdapterType;
 
     private RecyclerView mHorizontalListView;//水平商品轮播图
     private RecyclerView mVerticalListView;//竖直商品轮播图
@@ -75,6 +77,7 @@ public class MyLostPropertyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAdapterType = getArguments().getString(ARG_ADAPTER_TYPE);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -149,14 +152,14 @@ public class MyLostPropertyFragment extends Fragment {
             holder.introduce.setText(mDatas.get(position).getName());
             holder.place.setText(mDatas.get(position).getPickedPlace());
             holder.price.setText(mDatas.get(position).getPickedDate());
-//            Log.v("123123",mDatas.get(position).getPickedDate() + "---1");
             holder.image.setImageBitmap(mDatas.get(position).getBitmapA());
-//            Log.v("123123",mDatas.get(position).getBitmapB() + "---2");
+            final int mListPosition = position;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //item 点击事件
-                    Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT).show();
+                    Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
+                    startActivity(DetailActivity.newIntent(getActivity(),this.,mDatas.get(mListPosition).getId()));
                 }
             });
         }
@@ -174,7 +177,17 @@ public class MyLostPropertyFragment extends Fragment {
         }
     }
 
-    
+    private void setBitmap(final LostItem lostItem){
+        new Thread(){
+            @Override
+            public void run() {
+                lostItem.setBitmapA(getPicture(lostItem.getImageA().getUrl()));
+                lostItem.setBitmapB(getPicture(lostItem.getImageB().getUrl()));
+                mainVerticalList.add(lostItem);
+            }
+        }.start();
+    }
+
     private void initVerticalData(){
         Person user = BmobUser.getCurrentUser(Person.class);//先从云端读入数据
         query = new BmobQuery<>();
@@ -185,11 +198,10 @@ public class MyLostPropertyFragment extends Fragment {
             public void done(List<LostItem> object, BmobException e) {
                 if(e==null){
                     for (int i = 0 ; i < object.size() ; i++){
-                        Log.v("123456",(object.get(i)).getBitmapA() + "---1");
-                        object.get(i).setBitmapA(getPicture((object.get(i).getImageA()).getUrl()));
-                        mainVerticalList.add(object.get(i));
+                        setBitmap(object.get(i));
                     }
                 }else{
+                        Log.v("123456",e.toString() + "---2---" + e.getErrorCode());
                     Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -249,22 +261,17 @@ public class MyLostPropertyFragment extends Fragment {
     public Bitmap getPicture(String path){
         Bitmap bm = null;
         try{
-            Log.v("123456",bm + "---19");
             URL url = new URL(path);
-            Log.v("123456",bm + "---29");
             URLConnection connection=url.openConnection();
-            Log.v("123456",bm + "---39");
             connection.connect();
             InputStream inputStream=connection.getInputStream();
             bm= BitmapFactory.decodeStream(inputStream);
-            Log.v("123456",bm + "---49");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.v("123456",bm + "---99");
-        return  bm;
+        return bm;
     }
 
 }
