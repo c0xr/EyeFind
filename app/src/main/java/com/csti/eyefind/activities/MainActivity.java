@@ -67,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 */
-                    SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                    String objectGetId = sharedPreferences.getString("objectId", "");
-                    mUserAccount = sharedPreferences.getString("account", "");
-                    if (!(objectGetId.equals(" "))) {
+//                    SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+//                    String objectGetId = sharedPreferences.getString("objectId", "");
+//                    mUserAccount = sharedPreferences.getString("account", "");
+//                    if (!(objectGetId.equals(" "))) {
+                    if(BmobUser.isLogin()) {
                         startActivity(new Intent(MainActivity.this, MyProperty.class));
                     }else {
                         com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
@@ -130,10 +131,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                String objectId = sharedPreferences.getString("objectId", "");
-                mUserAccount = sharedPreferences.getString("account", "");
-                if (!(objectId.equals(" "))) {
+//                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+//                String objectId = sharedPreferences.getString("objectId", "");
+//                mUserAccount = sharedPreferences.getString("account", "");
+//                if (!(objectId.equals(" "))) {
+                if(BmobUser.isLogin()){
                     Intent intent = new Intent(MainActivity.this, I_pick_thing.class);
                     startActivity(intent);
                 }else {
