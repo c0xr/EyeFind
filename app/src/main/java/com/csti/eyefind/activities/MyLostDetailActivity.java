@@ -113,5 +113,4 @@ public class MyLostDetailActivity extends AppCompatActivity {
         }
         return bm;
     }
-
 }

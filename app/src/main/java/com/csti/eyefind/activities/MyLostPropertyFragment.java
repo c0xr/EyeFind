@@ -1,6 +1,7 @@
 package com.csti.eyefind.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -158,8 +159,35 @@ public class MyLostPropertyFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //item 点击事件
-                    Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
-                    startActivity(DetailActivity.newIntent(getActivity(),"我捡的宝贝",mDatas.get(mListPosition).getId()));
+//                    Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
+//                    startActivity(DetailActivity.newIntent(getActivity(),"我捡的宝贝",mDatas.get(mListPosition).getId()));
+                    LostItem lostItem = mDatas.get(mListPosition);
+                    Intent intent = new Intent(getActivity(),MyLostDetailActivity.class);
+                    Bundle bundle = new Bundle();
+//                    private LostItem ;
+//                    private ImageView ;
+//                    private ImageView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    private TextView ;
+//                    bundle.putSerializable("mImageA", lostItem.getBitmapA());
+//                    bundle.putSerializable("mImageB", lostItem.getBitmapB());
+                    bundle.putSerializable("mName", lostItem.getName());
+                    bundle.putSerializable("mPlace", lostItem.getPickedPlace());
+                    bundle.putSerializable("mFounder", lostItem.getFounder());
+                    bundle.putSerializable("mDate", lostItem.getPickedDate());
+                    bundle.putSerializable("mTel", lostItem.getTel());
+                    bundle.putSerializable("mQQ", lostItem.getQQ());
+                    bundle.putSerializable("mWeChat", lostItem.getWeChat());
+                    bundle.putSerializable("bitmapA", lostItem.getImageA().getUrl());
+                    bundle.putSerializable("bitmapB", lostItem.getImageB().getUrl());
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
         }
