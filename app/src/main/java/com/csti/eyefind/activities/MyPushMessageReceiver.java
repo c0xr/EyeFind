@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import com.csti.eyefind.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.push.PushConstants;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -30,37 +32,40 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
     private final int pushId = 1;
     public static final String PRIMARY_CHANNEL = "default";
     private LostItem mlostItem;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        Intent intent1=new Intent(context,NotificationActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(context, 0,intent1, 0);
-        if(intent.getAction().equals(PushConstants.ACTION_MESSAGE)){
+
+        if (intent.getAction().equals(PushConstants.ACTION_MESSAGE)) {
             //Log.d("bmob", "客户端收到推送内容："+intent.getStringExtra("msg"));
             String jsonStr = intent.getStringExtra(PushConstants.EXTRA_PUSH_MESSAGE_STRING);
             String real_info = null;
-            String objectId=null;
+            String objectId = null;
             //处理Json的数据，将其转化为正常string类型
             try {
-                JSONObject jsonObject=new JSONObject(jsonStr);
-                real_info=jsonObject.getString("alert");
-                objectId=real_info;
-                real_info=real_info.substring(0,real_info.indexOf("的")+1);
-                objectId=objectId.substring(objectId.indexOf("的")+1);
+                JSONObject jsonObject = new JSONObject(jsonStr);
+                real_info = jsonObject.getString("alert");
+                objectId = real_info;
+                real_info = real_info.substring(0, real_info.indexOf("的") + 1);
+                objectId = objectId.substring(objectId.indexOf("的") + 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            BmobQuery<LostItem>bmobQuery=new BmobQuery<>();
-            bmobQuery.getObject(objectId, new QueryListener<LostItem>() {
-                @Override
-                public void done(LostItem lostItem, BmobException e) {
-                    mlostItem=lostItem;
-                    Toast.makeText(context,mlostItem.getLabel(),Toast.LENGTH_LONG).show();
-                }
-            });
-//            Intent intent1=new Intent(context,NotificationActivity.class);
-//            PendingIntent pi = PendingIntent.getActivity(context, 0,DetailActivity.newIntent(context,mlostItem.getLabel(),mlostItem.getId()), 0);
+//            BmobQuery<LostItem> bmobQuery = new BmobQuery<>();
+////            bmobQuery.getObject(objectId, new QueryListener<LostItem>() {
+////                @Override
+////                public void done(LostItem lostItem, BmobException e) {
+////                    mlostItem = lostItem;
+////                    Toast.makeText(context, mlostItem.getLabel(), Toast.LENGTH_LONG).show();
+////                }
+////            });
+            Log.d("通知ID",objectId);
+            Intent intent1 = new Intent(context, NotificationActivity.class);
+            intent1.putExtra("objectid",objectId);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
             /*NotificationManager manager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             Notification notification= new Notification.Builder(context)
@@ -166,8 +171,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
             mNotificationManager.notify(pushId, notify);
 
-
-            Log.d("bmob", "客户端收到推送内容："+intent.getStringExtra("msg"));
+            Log.d("bmob", "客户端收到推送内容：" + intent.getStringExtra("msg"));
         }
     }
 }

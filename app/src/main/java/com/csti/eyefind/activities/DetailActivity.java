@@ -83,7 +83,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (BmobUser.isLogin()){
-                    if (!mLostItem.ismIsConfirmed()) {
+                    if (mLostItem.ismIsConfirmed()) {
                         I_pick_thing.showDialog("该物品目前已经有人认领，请联系拾取人确认，防止冒领", null, DetailActivity.this);
                     } else {
                         LostItem mlostItem1 = new LostItem();
