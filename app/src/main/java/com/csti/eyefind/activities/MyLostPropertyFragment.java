@@ -89,8 +89,8 @@ public class MyLostPropertyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         primeView = inflater.inflate(R.layout.fragment_my_lost_property, container, false);
-        initVerticalData();
         addMore();
+        initVerticalData();
         return primeView;
     }
 
