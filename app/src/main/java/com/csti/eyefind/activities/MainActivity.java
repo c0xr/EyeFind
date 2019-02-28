@@ -41,18 +41,6 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentTransaction transaction ;
-    private Fragment primeFragment;
-    private Fragment myFragment;
-//    private Runnable runnable = new Runnable() {
-//        @Override
-//        public void run() {
-////            myFragment.show
-//            FragmentTransaction myTransaction = getSupportFragmentManager().beginTransaction();
-//            myTransaction.replace(R.id.main_fragment, myFragment).commitAllowingStateLoss();
-//        }
-//    };
-
     private TextView mTextMessage;
     private String mUserAccount;//用户账号//学号
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -64,13 +52,21 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    primeFragment = new MainPrimeFragment();
-                    replace(primeFragment);
+                    replace(new MainPrimeFragment());
                     return true;
                 case R.id.navigation_dashboard:
                     if(BmobUser.isLogin()) {
-                        myFragment = new MainMyPropertyFragment();
-                        replace(myFragment);
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                try {
+                                    sleep(1000);
+                                    replace(new MainMyPropertyFragment());
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.start();
                     }else {
                         com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
                     }
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Fragment fragment = new MainPrimeFragment();
-
+        replace(fragment);
 //        transaction = getSupportFragmentManager().beginTransaction();
 //        primeFragment = new MainPrimeFragment();
 //        myFragment = new MainMyPropertyFragment();
@@ -128,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.replace(R.id.main_fragment,fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
