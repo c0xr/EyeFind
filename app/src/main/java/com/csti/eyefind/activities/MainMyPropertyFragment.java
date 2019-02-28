@@ -1,28 +1,27 @@
 package com.csti.eyefind.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyProperty extends AppCompatActivity {
-
+public class MainMyPropertyFragment extends Fragment {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -35,18 +34,74 @@ public class MyProperty extends AppCompatActivity {
     private List<Fragment> fragments;
     private List<TextView> listTextViews;
 
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+
+    private String TAG = "123456";
+
+    public MainMyPropertyFragment() {
+        // Required empty public constructor
+    }
+
+    public static MainMyPropertyFragment newInstance(String param1, String param2) {
+        MainMyPropertyFragment fragment = new MainMyPropertyFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+//        if (mViewPager != null){
+//            initData();
+//        }
+        Log.d(TAG, "onCreate: ");
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_property);
-        mViewPager = (ViewPager) findViewById(R.id.vp_view);
-        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_main_my_property, container, false);
+
+        mViewPager = (ViewPager) view.findViewById(R.id.vp_view);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
         initData();
         mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
+Log.d(TAG,"on View");
+        return view;
+    }
 
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 
     private void initData() {
@@ -66,7 +121,7 @@ public class MyProperty extends AppCompatActivity {
             mTabLayout.addTab(mTabLayout.newTab().setText(listTitles.get(i)));//添加tab选项
         }
 
-        FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+        FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return fragments.get(position);
@@ -88,5 +143,4 @@ public class MyProperty extends AppCompatActivity {
         mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
 
     }
-
 }

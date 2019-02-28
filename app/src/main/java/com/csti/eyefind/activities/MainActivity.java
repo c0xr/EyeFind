@@ -40,6 +40,16 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment myFragment = new MainMyPropertyFragment();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+//            myFragment.show
+            FragmentTransaction myTransaction = getSupportFragmentManager().beginTransaction();
+            myTransaction.replace(R.id.main_fragment, myFragment).commitAllowingStateLoss();
+        }
+    };
+
     private TextView mTextMessage;
     private String mUserAccount;//用户账号//学号
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+//                    myFragment.setVi
                     Fragment fragment = new MainPrimeFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.main_fragment, fragment).commitAllowingStateLoss();
@@ -77,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
 //                    mUserAccount = sharedPreferences.getString("account", "");
 //                    if (!(objectGetId.equals(" "))) {
                     if(BmobUser.isLogin()) {
-                        startActivity(new Intent(MainActivity.this, MyProperty.class));
+                        runnable.run();
+//                        startActivity(new Intent(MainActivity.this, MyProperty.class));
                     }else {
                         com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
                     }
