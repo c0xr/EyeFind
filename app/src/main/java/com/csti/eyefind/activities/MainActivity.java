@@ -99,27 +99,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        Fragment fragment = new MainPrimeFragment();
-//        replace(fragment);
 
+        replace();
+
+    }
+
+    private void replace() {
         transaction = getSupportFragmentManager().beginTransaction();
         primeFragment = new MainPrimeFragment();
         myFragment = new MainMyPropertyFragment();
         transaction.add(R.id.main_fragment,primeFragment);
         transaction.add(R.id.main_fragment,myFragment);
         transaction.hide(myFragment).show(primeFragment).commit();
-
-
-    }
-
-    private void replace(Fragment fragment) {
-        FragmentManager manager=getSupportFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction();
-        transaction.replace(R.id.main_fragment,fragment);
-        transaction.commit();
     }
 
 }
