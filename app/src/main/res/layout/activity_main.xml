@@ -12,19 +12,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/I_will_find"
+        <FrameLayout
+            android:id="@+id/main_fragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="我要找东西"/>
-
-        <Button
-            android:id="@+id/I_pick_thing"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="我捡到了东西"/>
+            android:layout_weight="1"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"

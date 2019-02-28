@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    Fragment fragment = new MainPrimeFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.main_fragment, fragment).commitAllowingStateLoss();
                     //mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
@@ -110,50 +115,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
 
-        BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
-            @Override
-            public void done(BmobInstallation bmobInstallation, BmobException e) {
-                if (e == null) {
-                    //Toast.makeText(MainActivity.this, "该设备已经在设备表注册", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        // 启动推送服务
-        BmobPush.startWork(this);
-
-
-        final Button I_pick_thing = findViewById(R.id.I_pick_thing);
-        I_pick_thing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-//                String objectId = sharedPreferences.getString("objectId", "");
-//                mUserAccount = sharedPreferences.getString("account", "");
-//                if (!(objectId.equals(" "))) {
-                if(BmobUser.isLogin()){
-                    Intent intent = new Intent(MainActivity.this, I_pick_thing.class);
-                    startActivity(intent);
-                }else {
-                    com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
-                }
-
-            }
-        });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Fragment fragment = new MainPrimeFragment();
 
-        //test
-        findViewById(R.id.I_will_find).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(OverviewActivity.newIntent(MainActivity.this));
-            }
-        });
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment, fragment).commitAllowingStateLoss();
 
     }
 
