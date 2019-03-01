@@ -100,10 +100,6 @@ public class ImageLoader {
         return bitmap;
     }
 
-    public int getSize() {
-        return mSize;
-    }
-
     private long getTimeFromUpdate(String s){
         SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=f.parse(s,new ParsePosition(0));

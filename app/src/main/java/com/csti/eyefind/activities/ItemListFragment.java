@@ -75,7 +75,7 @@ public class ItemListFragment extends Fragment {
             mDateTextView.setText(getStringFromTime(lostItem.getTimeFromUpdate()));
 
             mPlaceTextView.setText(lostItem.getPickedPlace());
-            if(position==mImageLoader.getSize()-1){
+            if(position==mLostItems.size()-2){
                 ViewGroup.MarginLayoutParams params=(ViewGroup.MarginLayoutParams) mCardView.getLayoutParams();
                 int px=MeasureUtil.dp2px(12,getActivity());
                 params.setMargins(0,px,0,px);
@@ -151,18 +151,19 @@ public class ItemListFragment extends Fragment {
 
     private void updateUI(){
         if(mAdapter==null){
-            LostItemLab.getInstance(getActivity()).clearList(mAdapterType);
             mAdapter=new ItemListAdapter();
             mRecyclerView.setAdapter(mAdapter);
-            mImageLoader.load();
+            if(mLostItems.size()==0) {
+                mImageLoader.load();
+            }else{
+                mAdapter.notifyDataSetChanged();
+            }
         }else{
             mAdapter.notifyDataSetChanged();
         }
     }
 
     private class NetworkHandler extends Handler{
-        private int i=0;
-
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -175,7 +176,7 @@ public class ItemListFragment extends Fragment {
     }
 
     private boolean isPositionTip(int position){
-        return position==mImageLoader.getSize();
+        return position==mLostItems.size()-1;
     }
 
     private boolean isViewTypeTip(int viewType){
