@@ -155,11 +155,7 @@ public class ItemListFragment extends Fragment {
             mRecyclerView.setAdapter(mAdapter);
             if(mLostItems.size()==0) {
                 mImageLoader.load();
-            }else{
-                mAdapter.notifyDataSetChanged();
             }
-        }else{
-            mAdapter.notifyDataSetChanged();
         }
     }
 

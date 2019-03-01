@@ -1,9 +1,12 @@
 package com.csti.eyefind.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.csti.eyefind.R;
 
@@ -41,6 +45,8 @@ public class MainPrimeFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private VideoView mVideoView;
 
     public MainPrimeFragment() {
         // Required empty public constructor
@@ -94,8 +100,7 @@ public class MainPrimeFragment extends Fragment {
         BmobPush.startWork(getActivity());
 
 
-        final Button I_pick_thing = view.findViewById(R.id.I_pick_thing);
-        I_pick_thing.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.I_pick_thing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -120,6 +125,12 @@ public class MainPrimeFragment extends Fragment {
                 startActivity(OverviewActivity.newIntent(getActivity()));
             }
         });
+
+        //视频
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
+        }
+        mVideoView=view.findViewById(R.id.videoView);
 
         return view;
     }
@@ -150,5 +161,12 @@ public class MainPrimeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.s10;
+        mVideoView.setVideoPath(path);
+        mVideoView.start();
     }
 }
