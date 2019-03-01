@@ -122,7 +122,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 //Toast.makeText(I_pick_thing.this,checkedId+"",Toast.LENGTH_SHORT).show();
-                mOption = checkedId;
+                mOption = checkedId-1;
             }
         });
 
@@ -237,6 +237,12 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         filePaths[1] = filePath_2;
         filePaths[2] = filePath_3;
 
+        if(BmobUser.isLogin()){
+            ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
+            progressDialo.setTitle("信息正在上传");
+            progressDialo.setMessage("Loading...");
+            progressDialo.show();
+        }
 
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
@@ -253,13 +259,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onProgress(int i, int i1, int i2, int i3) {
-                if(BmobUser.isLogin()){
-                ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
-                progressDialo.setTitle("信息正在上传");
-                progressDialo.setMessage("Loading...");
-                progressDialo.setProgress(i);
-                progressDialo.show();
-                }
+
 
             }
 
@@ -382,8 +382,8 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                         Log.d("Uri名称", imageUri.toString());
                         Log.d("photo文件", photo1_File.toString());
                         //minPhoto_File = photo1_File;
-                        compressPhoto(bitmap, photo1_File, 800);
-                        compressPhoto(minbitmap, minPhoto_File, 200);
+                        compressPhoto(bitmap, photo1_File, 2000,70);
+                        compressPhoto(minbitmap, minPhoto_File, 800,50);
                         addphoto1.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -396,7 +396,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     try {
                         //调用BitmapFactory的decodeStream（）方法将output_image.jpg解析成Bitmap对象，然后把它设置到ImageView中显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        compressPhoto(bitmap, photo2_File, 800);
+                        compressPhoto(bitmap, photo2_File, 2000,70);
                         addphoto2.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -406,12 +406,12 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //图片压缩
-    private static void compressPhoto(Bitmap bitmap, File photoFile, float size) {
+    private static void compressPhoto(Bitmap bitmap, File photoFile, float size,int quality) {
         float ratio = size / bitmap.getHeight();
         bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * ratio), (int) size, false);
         try {
             FileOutputStream fos = new FileOutputStream(photoFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, fos);
             fos.flush();
             fos.close();
         } catch (IOException e) {

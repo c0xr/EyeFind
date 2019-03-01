@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,10 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mWeChat;
     private ImageLoaderDetail mImageLoaderDetail;
     private NetworkHandler mNetworkHandler;
+    private TextView mOption;
+    private String[] mOptionStrings;
+    private String mOptionPrefix;
+    private LinearLayout mOptionLayout;
 
     public static Intent newIntent(Context packageContext,String adapterType,UUID id){
         Intent intent=new Intent(packageContext,DetailActivity.class);
@@ -78,6 +83,11 @@ public class DetailActivity extends AppCompatActivity {
         mTel=findViewById(R.id.tel_text_view);
         mQQ=findViewById(R.id.qq_text_view);
         mWeChat=findViewById(R.id.wechat_text_view);
+        mOption=findViewById(R.id.option);
+        mOptionLayout=findViewById(R.id.option_layout);
+
+        mOptionStrings=getResources().getStringArray(R.array.option_strings);
+        mOptionPrefix=getResources().getString(R.string.detail_option_prefix);
 
         findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +108,7 @@ public class DetailActivity extends AppCompatActivity {
                                             .setPositiveButton("好的", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    finish();
+
                                                 }
                                             })
                                             .create()
@@ -140,14 +150,14 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateUI(){
         ViewGroup.LayoutParams paramsA=mImageA.getLayoutParams();
-        float ratioA=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapA().getHeight();
+        float ratioA=(float) MeasureUtil.dp2px(400,this)/mLostItem.getBitmapA().getHeight();
         paramsA.width=(int)(mLostItem.getBitmapA().getWidth()*ratioA);
 
         mImageA.setLayoutParams(paramsA);
         mImageA.setImageBitmap(mLostItem.getBitmapA());
 
         ViewGroup.LayoutParams paramsB=mImageB.getLayoutParams();
-        float ratioB=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapB().getHeight();
+        float ratioB=(float) MeasureUtil.dp2px(400,this)/mLostItem.getBitmapB().getHeight();
         paramsB.width=(int)(mLostItem.getBitmapB().getWidth()*ratioB);
 
         mImageB.setLayoutParams(paramsB);
@@ -160,6 +170,11 @@ public class DetailActivity extends AppCompatActivity {
         mTel.setText(mLostItem.getTel());
         mQQ.setText(mLostItem.getQQ());
         mWeChat.setText(mLostItem.getWeChat());
+        int op=mLostItem.getOption();
+        if(op!=mOptionStrings.length-1){
+            mOption.setText(mOptionPrefix+mOptionStrings[op]);
+            mOptionLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

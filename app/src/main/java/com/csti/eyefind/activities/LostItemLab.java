@@ -46,8 +46,6 @@ public class LostItemLab {
     }
 
     public void clearList(String adapterType){
-        if(mMap.get(adapterType).size()!=0) {
-            mMap.get(adapterType).clear();
-        }
+        mMap.get(adapterType).clear();
     }
 }
