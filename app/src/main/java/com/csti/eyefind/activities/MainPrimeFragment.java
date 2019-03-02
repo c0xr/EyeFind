@@ -46,8 +46,6 @@ public class MainPrimeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private VideoView mVideoView;
-
     public MainPrimeFragment() {
         // Required empty public constructor
     }
@@ -126,12 +124,6 @@ public class MainPrimeFragment extends Fragment {
             }
         });
 
-        //视频
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
-        }
-        mVideoView=view.findViewById(R.id.videoView);
-
         return view;
     }
 
@@ -161,12 +153,5 @@ public class MainPrimeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.s10;
-        mVideoView.setVideoPath(path);
-        mVideoView.start();
     }
 }
