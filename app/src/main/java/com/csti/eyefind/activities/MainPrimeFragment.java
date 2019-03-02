@@ -46,6 +46,8 @@ public class MainPrimeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private VideoView mVideoView;
+
     public MainPrimeFragment() {
         // Required empty public constructor
     }
@@ -123,6 +125,12 @@ public class MainPrimeFragment extends Fragment {
                 startActivity(OverviewActivity.newIntent(getActivity()));
             }
         });
+
+        //视频
+        mVideoView=view.findViewById(R.id.videoView);
+        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.s10;
+        mVideoView.setVideoPath(path);
+        mVideoView.start();
 
         return view;
     }
