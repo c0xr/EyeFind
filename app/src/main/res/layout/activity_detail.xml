@@ -8,13 +8,13 @@
     <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="0dp">
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="400dp"
             android:layout_marginStart="@dimen/detail_activity_margin_outline"
             android:layout_marginTop="@dimen/detail_activity_margin_outline"
             android:layout_marginEnd="@dimen/detail_activity_margin_outline"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -44,7 +44,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="16dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
 
@@ -64,13 +64,40 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/detail_activity_margin_outline"
             android:layout_marginTop="@dimen/detail_activity_margin"
-            android:layout_marginEnd="@dimen/detail_activity_margin_outline"
+            android:layout_marginEnd="8dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/option_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             tools:text="名称" />
+
+        <LinearLayout
+            android:id="@+id/option_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/detail_activity_margin"
+            android:layout_marginEnd="@dimen/detail_activity_margin_outline"
+            android:layout_marginBottom="@dimen/detail_activity_margin"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_check_circle_black_24dp" />
+
+            <TextView
+                android:id="@+id/option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                tools:text="4号楼" />
+        </LinearLayout>
 
         <View
             android:id="@+id/divider"

@@ -75,7 +75,7 @@ public class ItemListFragment extends Fragment {
             mDateTextView.setText(getStringFromTime(lostItem.getTimeFromUpdate()));
 
             mPlaceTextView.setText(lostItem.getPickedPlace());
-            if(position==mImageLoader.getSize()-1){
+            if(position==mLostItems.size()-2){
                 ViewGroup.MarginLayoutParams params=(ViewGroup.MarginLayoutParams) mCardView.getLayoutParams();
                 int px=MeasureUtil.dp2px(12,getActivity());
                 params.setMargins(0,px,0,px);
@@ -151,48 +151,32 @@ public class ItemListFragment extends Fragment {
 
     private void updateUI(){
         if(mAdapter==null){
-            LostItemLab.getInstance(getActivity()).clearList(mAdapterType);
             mAdapter=new ItemListAdapter();
             mRecyclerView.setAdapter(mAdapter);
-            mImageLoader.load();
-        }else{
-            mAdapter.notifyDataSetChanged();
+            if(mLostItems.size()==0) {
+                mImageLoader.load();
+            }
         }
     }
 
     private class NetworkHandler extends Handler{
         @Override
         public void handleMessage(Message msg) {
-            for(int i=0;i<mLostItems.size();i++){
-                LostItem lostItem=mLostItems.get(i);
-                lostItem.setTimeFromUpdate(getTimeFromUpdate(lostItem.getUpdatedAt()));
+            switch (msg.what){
+                case 0:
+                    mAdapter.notifyItemRangeInserted(0,mLostItems.size());
+                case 1:
+                    mAdapter.notifyDataSetChanged();
             }
-            Collections.sort(mLostItems,new Comparator<LostItem>() {
-                @Override
-                public int compare(LostItem o1, LostItem o2) {
-                    return (int)(o1.getTimeFromUpdate()-o2.getTimeFromUpdate());
-                }
-            });
-            mLostItems.add(new LostItem());
-            mAdapter.notifyItemRangeInserted(0,mLostItems.size());
         }
     }
 
     private boolean isPositionTip(int position){
-        return position==mImageLoader.getSize();
+        return position==mLostItems.size()-1;
     }
 
     private boolean isViewTypeTip(int viewType){
         return viewType==VIEW_TYPE_TIP;
-    }
-
-    private long getTimeFromUpdate(String s){
-        SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date=f.parse(s,new ParsePosition(0));
-        long updateTime=date.getTime();
-        Date date2=new Date();
-        long presentTime=date2.getTime();
-        return (presentTime-updateTime)/1000;
     }
 
     private String getStringFromTime(long time){

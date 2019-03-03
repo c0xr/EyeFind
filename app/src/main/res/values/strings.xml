@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">EyeFind</string>
-    <string name="title_home">首页</string>
+    <string name="title_home">云挂失</string>
     <string name="title_dashboard">代办事项</string>
     <string name="title_notifications">我的信息</string>
     <string name="title_activity_splash">SplashActivity</string>
@@ -31,8 +31,10 @@
         <item>4号楼</item>
         <item>汇文楼</item>
         <item>2号楼</item>
+        <item>无</item>
     </string-array>
     <string name="detail_item_founder">热心同学</string>
     <string name="detail_item_ok">这是我的物品</string>
     <string name="detail_item_call">电话联系</string>
+    <string name="detail_option_prefix">已转交</string>
 </resources>

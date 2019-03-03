@@ -1,20 +1,29 @@
 package com.csti.eyefind.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.csti.eyefind.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +47,10 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FragmentTransaction transaction ;
+    private Fragment primeFragment ;
+    private Fragment myFragment ;
+
     private TextView mTextMessage;
     private String mUserAccount;//用户账号//学号
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -45,34 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_home);
+                    transaction.hide(myFragment).show(primeFragment).commit();
+//                    replace(new MainPrimeFragment());
                     return true;
                 case R.id.navigation_dashboard:
-                    /*一对多表查询
-                    Person user = BmobUser.getCurrentUser(Person.class);
-                    BmobQuery<LostItem> query = new BmobQuery<>();
-                    query.addWhereEqualTo("mPerson", user);
-                    query.findObjects(new FindListener<LostItem>() {
-
-                        @Override
-                        public void done(List<LostItem> object,BmobException e) {
-                            if(e==null){
-                                Toast.makeText(MainActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
-
-                            }else{
-                                Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-*/
-//                    SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-//                    String objectGetId = sharedPreferences.getString("objectId", "");
-//                    mUserAccount = sharedPreferences.getString("account", "");
-//                    if (!(objectGetId.equals(" "))) {
                     if(BmobUser.isLogin()) {
-                        startActivity(new Intent(MainActivity.this, MyProperty.class));
+                        transaction.hide(primeFragment).show(myFragment).commit();
                     }else {
                         com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
                     }
@@ -110,51 +105,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Bmob.initialize(this, "a744c289f17c26d9df110a2fa115feaf");
-
-        BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
-            @Override
-            public void done(BmobInstallation bmobInstallation, BmobException e) {
-                if (e == null) {
-                    //Toast.makeText(MainActivity.this, "该设备已经在设备表注册", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        // 启动推送服务
-        BmobPush.startWork(this);
-
-
-        final Button I_pick_thing = findViewById(R.id.I_pick_thing);
-        I_pick_thing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-//                String objectId = sharedPreferences.getString("objectId", "");
-//                mUserAccount = sharedPreferences.getString("account", "");
-//                if (!(objectId.equals(" "))) {
-                if(BmobUser.isLogin()){
-                    Intent intent = new Intent(MainActivity.this, I_pick_thing.class);
-                    startActivity(intent);
-                }else {
-                    com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
-                }
-
-            }
-        });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        //test
-        findViewById(R.id.I_will_find).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(OverviewActivity.newIntent(MainActivity.this));
-            }
-        });
-
+        replace();
     }
 
+    private void replace() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        primeFragment = new MainPrimeFragment();
+        myFragment = new MainMyPropertyFragment();
+        transaction.add(R.id.main_fragment,primeFragment);
+        transaction.add(R.id.main_fragment,myFragment);
+        transaction.hide(myFragment).show(primeFragment).commit();
+    }
 }
