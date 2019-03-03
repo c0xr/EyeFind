@@ -17,6 +17,8 @@ import com.csti.eyefind.R;
 
 import java.sql.Time;
 
+import cn.bmob.v3.BmobUser;
+
 public class OverviewActivity extends AppCompatActivity {
     private String mUserAccount;//用户账号//学号
     private FragmentManager mFm;
@@ -49,13 +51,10 @@ public class OverviewActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                String objectId = sharedPreferences.getString("objectId", "");
-                mUserAccount = sharedPreferences.getString("account", "");
-                if (!(objectId.equals(" "))) {
+                if(BmobUser.isLogin()){
                     Intent intent=new Intent(OverviewActivity.this,I_push_thing.class);
                     startActivity(intent);
-                }else {
+                }else{
                     com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, OverviewActivity.this);
                 }
 
