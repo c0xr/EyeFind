@@ -39,7 +39,7 @@
 
                         <ImageView
                             android:id="@+id/bitmap_a"
-                            android:layout_width="350dp"
+                            android:layout_width="300dp"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY" />
 
@@ -54,7 +54,7 @@
 
                         <ImageView
                             android:id="@+id/bitmap_b"
-                            android:layout_width="350dp"
+                            android:layout_width="300dp"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY" />
 
@@ -338,6 +338,18 @@
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/view4"
                 tools:text="csdacasv" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/detail_activity_margin_outline"
+                android:layout_marginTop="@dimen/detail_activity_margin"
+                android:layout_marginEnd="@dimen/detail_activity_margin_outline"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qq_text_view" />
 
         </android.support.constraint.ConstraintLayout>
 
