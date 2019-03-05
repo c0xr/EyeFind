@@ -40,18 +40,14 @@ import cn.bmob.v3.listener.FindListener;
 
 public class MyLostPropertyFragment extends Fragment {
 
-    private RecyclerView mHorizontalListView;//水平商品轮播图
     private RecyclerView mVerticalListView;//竖直商品轮播图
     private Button addMoreButton;//点击增加更多
     private List<LostItem> mainVerticalList;//竖直商品，点击增加10项
     private View primeView;//本界面布局
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -156,24 +152,9 @@ public class MyLostPropertyFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //item 点击事件
-//                    Log.v("123123",this + "---  --->" + mDatas.get(mListPosition).getId());
-//                    startActivity(DetailActivity.newIntent(getActivity(),"我捡的宝贝",mDatas.get(mListPosition).getId()));
                     LostItem lostItem = mDatas.get(mListPosition);
                     Intent intent = new Intent(getActivity(),MyLostDetailActivity.class);
                     Bundle bundle = new Bundle();
-//                    private LostItem ;
-//                    private ImageView ;
-//                    private ImageView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    private TextView ;
-//                    bundle.putSerializable("mImageA", lostItem.getBitmapA());
-//                    bundle.putSerializable("mImageB", lostItem.getBitmapB());
                     bundle.putSerializable("mName", lostItem.getName());
                     bundle.putSerializable("mPlace", lostItem.getPickedPlace());
                     bundle.putSerializable("mFounder", lostItem.getFounder());

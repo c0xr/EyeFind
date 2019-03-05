@@ -76,17 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment homePageFragment;
     private Fragment LogInFragment;
 
-    private TextView mTextMessage;
     private String objectId;//用户账号//学号
-
-//    Handler handler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (msg.what == 0x0){
-//                transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
-//            }
-//        }
-//    };
 
     private Person person;
     private BottomNavigationView navigation;
@@ -100,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     transaction.hide(myFragment).hide(homePageFragment).hide(LogInFragment).show(primeFragment).commit();
-//                    replace(new MainPrimeFragment());
                     return true;
                 case R.id.navigation_dashboard:
                     if(BmobUser.isLogin()) {
@@ -118,16 +107,9 @@ public class MainActivity extends AppCompatActivity {
                             if (e == null) {
                                 //进用户页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
-//                                Intent intent = new Intent(MainActivity.this, UserActivity.class);
-//                                intent.putExtra("objectId", objectId);
-//                                startActivity(intent);
-                                //Toast.makeText(MainActivity.this,"查询成功",Toast.LENGTH_SHORT).show();
                             } else {
                                 //进登录页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
-                                //Toast.makeText(MainActivity.this,"查询失败：" + e.getMessage(),Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                                startActivity(intent);
                             }
                         }
                     });

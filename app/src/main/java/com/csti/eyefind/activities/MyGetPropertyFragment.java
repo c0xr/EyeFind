@@ -30,19 +30,14 @@ import cn.bmob.v3.listener.FindListener;
 
 public class MyGetPropertyFragment extends Fragment {
 
-    private RecyclerView mHorizontalListView;//水平商品轮播图
     private RecyclerView mVerticalListView;//竖直商品轮播图
     private Button addMoreButton;//点击增加更多
     private List<PushLostItem> mainVerticalList;//竖直商品，点击增加10项
     private View primeView;//本界面布局
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -84,23 +79,11 @@ public class MyGetPropertyFragment extends Fragment {
         return primeView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
 
     @Override
     public void onDetach() {
