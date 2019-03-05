@@ -34,6 +34,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -41,6 +43,8 @@ import cn.bmob.v3.listener.UpdateListener;
 public class DetailActivity extends AppCompatActivity {
     private final static String EXTRA_ID="id";
     private final static String EXTRA_ADAPTER_TYPE="adapter type";
+    private final static String EXTRA_OBJECT_ID="object id";
+    private final static String EXTRA_FROM_LIST="from list";
     private LostItem mLostItem;
     private ImageView mImageA;
     private ImageView mImageB;
@@ -58,10 +62,18 @@ public class DetailActivity extends AppCompatActivity {
     private String mOptionPrefix;
     private LinearLayout mOptionLayout;
 
-    public static Intent newIntent(Context packageContext,String adapterType,UUID id){
+    public static Intent newIntent(Context packageContext,String adapterType,UUID id,boolean fromList){
         Intent intent=new Intent(packageContext,DetailActivity.class);
         intent.putExtra(EXTRA_ADAPTER_TYPE,adapterType);
         intent.putExtra(EXTRA_ID,id);
+        intent.putExtra(EXTRA_FROM_LIST,fromList);
+        return intent;
+    }
+
+    public static Intent newIntent(Context packageContext,String objectId,boolean fromList){
+        Intent intent=new Intent(packageContext,DetailActivity.class);
+        intent.putExtra(EXTRA_OBJECT_ID,objectId);
+        intent.putExtra(EXTRA_FROM_LIST,fromList);
         return intent;
     }
 
@@ -72,7 +84,15 @@ public class DetailActivity extends AppCompatActivity {
 
         String adapterType=getIntent().getStringExtra(EXTRA_ADAPTER_TYPE);
         UUID id=(UUID) getIntent().getSerializableExtra(EXTRA_ID);
-        mLostItem=LostItemLab.getInstance(this).getLostItem(adapterType,id);
+        String objectId=getIntent().getStringExtra(EXTRA_OBJECT_ID);
+        boolean fromList=getIntent().getBooleanExtra(EXTRA_FROM_LIST,false);
+
+        if(fromList) {
+            mLostItem = LostItemLab.getInstance(this).getLostItem(adapterType, id);
+        }else {
+            mLostItem=new LostItem();
+            mLostItem.setObjectId(objectId);
+        }
 
         mImageA=findViewById(R.id.bitmap_a);
         mImageB=findViewById(R.id.bitmap_b);

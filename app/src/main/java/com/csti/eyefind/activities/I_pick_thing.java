@@ -121,7 +121,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         pick_thing_option.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //Toast.makeText(I_pick_thing.this,checkedId+"",Toast.LENGTH_SHORT).show();
                 mOption = checkedId-1;
             }
         });
@@ -185,13 +184,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 } else {
                     showDialog("拾取物信息不完善！", null, I_pick_thing.this);
                 }
-//                if (Build.VERSION.SDK_INT >= 24) {
-//                    String string=getFilesDir().toString();
-//                    DeleteFileUtil.deleteDirectory(string);
-//                } else {
-//                   String string=getExternalCacheDir().toString();
-//                    DeleteFileUtil.deleteDirectory(string);
-//                }
            }
         });
 
@@ -236,14 +228,13 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         filePaths[0] = filePath_1;
         filePaths[1] = filePath_2;
         filePaths[2] = filePath_3;
-
-//        if(BmobUser.isLogin()){
-//            ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
-//            progressDialo.setTitle("信息正在上传");
-//            progressDialo.setMessage("Loading...");
-//            progressDialo.show();
-//        }
-
+ if(BmobUser.isLogin()){
+     ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
+     progressDialo.setTitle("信息正在上传");
+     progressDialo.setMessage("Loading...");
+     //progressDialo.setProgress(i);
+     progressDialo.show();
+ }
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
             public void onSuccess(List<BmobFile> list, List<String> list1) {
@@ -255,14 +246,9 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                     savePost();
                 }
             }
-
             @Override
             public void onProgress(int i, int i1, int i2, int i3) {
-                ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
-                progressDialo.setTitle("信息正在上传");
-                progressDialo.setMessage("Loading...");
-                progressDialo.setProgress(i);
-                progressDialo.show();
+
             }
 
             @Override
@@ -455,32 +441,6 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         return outputImage;
 
     }
-
-    /*
-    public void copyFile(String oldPath, String newPath) {
-        try {
-            int bytesum = 0;
-            int byteread = 0;
-            File oldfile = new File(oldPath);
-            if (!oldfile.exists()) { //文件不存在时
-                InputStream inStream = new FileInputStream(oldPath); //读入原文件
-                FileOutputStream fs = new FileOutputStream(newPath);
-                byte[] buffer = new byte[1024];
-                int length;
-                while ( (byteread = inStream.read(buffer)) != -1) {
-                    bytesum += byteread; //字节数 文件大小
-                    //System.out.println(bytesum);
-                    fs.write(buffer, 0, byteread);
-                }
-                inStream.close();
-            }
-        }
-        catch (Exception e) {
-            //System.out.println("复制单个文件操作出错");
-            e.printStackTrace();
-
-        }
-}*/
     public boolean copyFile(String oldPath$Name, String newPath$Name) {
         try {
             File oldFile = new File(oldPath$Name);

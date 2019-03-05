@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,6 @@ public class MainPrimeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_main_prime, container, false);
         Bmob.initialize(getActivity(), "a744c289f17c26d9df110a2fa115feaf");
-
         BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
             @Override
             public void done(BmobInstallation bmobInstallation, BmobException e) {
@@ -77,6 +77,7 @@ public class MainPrimeFragment extends Fragment {
                     //Toast.makeText(MainActivity.this, "该设备已经在设备表注册", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("你妈死了",e.getMessage());
                 }
             }
         });
