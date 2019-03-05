@@ -144,7 +144,7 @@ public class MyLostPropertyFragment extends Fragment {
         @Override
         public void onBindViewHolder(VH holder, int position) {
             holder.name.setText(mDatas.get(position).getName());
-            holder.introduce.setText(mDatas.get(position).getName());
+            holder.introduce.setText(mDatas.get(position).getLabel());
             holder.place.setText(mDatas.get(position).getPickedPlace());
             holder.price.setText(mDatas.get(position).getPickedDate());
             holder.image.setImageBitmap(mDatas.get(position).getBitmapA());

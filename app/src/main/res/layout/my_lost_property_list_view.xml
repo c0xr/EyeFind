@@ -19,7 +19,7 @@
 
             <ImageView
                 android:id="@+id/main_prime_vertical_list_view_image"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:paddingBottom="5dp"
                 android:scaleType="fitXY"/>
@@ -29,13 +29,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/main_prime_vertical_list_view_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:textSize="17dp"
+                    android:textSize="20dp"
                     android:layout_weight="2"/>
 
                 <TextView
@@ -45,19 +46,27 @@
                     android:textSize="15dp"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:id="@+id/main_prime_vertical_list_view_place"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:textSize="10dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/main_prime_vertical_list_view_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:textSize="10dp"
-                    android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/main_prime_vertical_list_view_place"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="10dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/main_prime_vertical_list_view_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="10dp"
+                        android:gravity="right"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
