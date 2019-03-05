@@ -222,6 +222,7 @@ public class MyGetPropertyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 initVerticalData();
+                initVerticalData();
             }
         });
     }
