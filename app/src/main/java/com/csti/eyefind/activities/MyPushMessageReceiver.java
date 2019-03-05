@@ -56,116 +56,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
                 e.printStackTrace();
             }
             Log.d("通知ID",objectId);
-//            Intent intent1 = new Intent(context, NotificationActivity.class);
-//            intent1.putExtra("objectid",objectId);
-//            PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-            /*NotificationManager manager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            Notification notification= new Notification.Builder(context)
-                    .setSmallIcon(R.mipmap.ic_launcher)//设置推送消息的图标
-                    .setContentTitle("EyeFind") //设置推送标题
-                    .setContentText(real_info)
-                    //.setChannelId("zhuhai")//适配8.0
-                    .setAutoCancel(true)
-                    .setContentIntent(pi)
-                    .build();//设置推送内容
-            manager.notify(1,notification);//设置通知栏
-            */
-            /*
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-            } else {
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-            }
-            builder.setContentTitle("EyeFind")
-                    .setTicker(real_info)
-                    .setContentText(real_info)
-                    .setContentIntent(pi)
-                    .setChannelId("zhuhai")//适配8.0
-                    .setAutoCancel(true);//用户点击就自动消失
-                    //.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo));
-            //适配8.0
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if(Build.VERSION.SDK_INT >= 26){
-                NotificationChannel channel = new NotificationChannel("zhuhai", "EyeFind", NotificationManager.IMPORTANCE_HIGH);
-                builder.setChannelId("zhuhai");
-                manager.createNotificationChannel(channel);
-            }
-            manager.notify(mNotificationId, builder.build());//每次改变mNotificationId的值才能在通知栏产生盖楼的效果
-*/
-
-/*
-            private final int pushId = 1;
-            public static final String PRIMARY_CHANNEL = "default";
-
-            NotificationManager mNotificationManager = (NotificationManager) Utils.getContext().getSystemService(Utils.getContext().NOTIFICATION_SERVICE);
-            NotificationCompat.Builder mBuilder;
-            //判断是否是8.0Android.O
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel chan1 = new NotificationChannel(PRIMARY_CHANNEL,
-                        "Primary Channel", NotificationManager.IMPORTANCE_DEFAULT);
-                chan1.setLightColor(Color.GREEN);
-                chan1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-                mNotificationManager.createNotificationChannel(chan1);
-                mBuilder = new NotificationCompat.Builder(Utils.getContext(), PRIMARY_CHANNEL);
-            } else {
-                mBuilder = new NotificationCompat.Builder(Utils.getContext());
-            }
-            Intent notificationIntent = new Intent(Utils.getContext(), MainActivity.class);
-            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent intent = PendingIntent.getActivity(Utils.getContext(), 0,
-                    notificationIntent, 0);
-            mBuilder.setContentTitle(senderStr)//设置通知栏标题
-                    .setContentText(contentStr)//设置通知栏内容
-                    .setContentIntent(intent) //设置通知栏点击意图
-//                .setNumber(++pushNum) //设置通知集合的数量
-                    .setTicker(senderStr + ":" + contentStr) //通知首次出现在通知栏，带上升动画效果的
-                    .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                    .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-                    .setSmallIcon(R.mipmap.ic_launcher);//设置通知小ICON
-            Notification notify = mBuilder.build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
-            mNotificationManager.notify(pushId, notify);
-*/
-           /* NotificationManager notificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);+
-
-            String id = "channel_01";
-            CharSequence name = context.getString(R.string.app_name);
-            String description = real_info;
-            if(Build.VERSION.SDK_INT >= 26){
-                NotificationChannel notificationChannel =
-                        new NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH);
-            }*/
-/*
-           NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-            NotificationCompat.Builder mBuilder;
-            //判断是否是8.0Android.O
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel chan1 = new NotificationChannel(PRIMARY_CHANNEL,
-                        "Primary Channel", NotificationManager.IMPORTANCE_DEFAULT);
-                chan1.setLightColor(Color.GREEN);
-                chan1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-                mNotificationManager.createNotificationChannel(chan1);
-                mBuilder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL);
-            } else {
-                mBuilder = new NotificationCompat.Builder(context);
-            }
-            mBuilder.setContentTitle("EyeFind")//设置通知栏标题
-                    .setContentText(real_info)//设置通知栏内容
-                    .setContentIntent(pi) //设置通知栏点击意图
-//                .setNumber(++pushNum) //设置通知集合的数量
-                    .setTicker(real_info) //通知首次出现在通知栏，带上升动画效果的
-                    .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                    .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-                    .setSmallIcon(R.mipmap.ic_launcher);//设置通知小ICON
-            Notification notify = mBuilder.build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
-            mNotificationManager.notify(pushId, notify);
-*/
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
@@ -174,13 +65,11 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
                 }
             }
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            //Intent notificationIntent = new Intent(context, MainActivity.class);
             Intent intent1 =DetailActivity.newIntent(context,objectId,false);
             intent1.putExtra("objectid", objectId);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-            //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-            builder.setContentTitle("通知标题")//设置通知栏标题
+            builder.setContentTitle("失物提交信息")//设置通知栏标题
                     .setContentIntent(pi) //设置通知栏点击意图
                     .setContentText(real_info)
                     .setTicker(real_info) //通知首次出现在通知栏，带上升动画效果的
