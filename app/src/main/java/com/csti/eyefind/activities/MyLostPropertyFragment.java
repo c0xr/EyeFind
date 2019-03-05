@@ -39,8 +39,6 @@ import cn.bmob.v3.listener.FindListener;
 
 
 public class MyLostPropertyFragment extends Fragment {
-    private final static String ARG_ADAPTER_TYPE="adapter type";
-    private String mAdapterType;
 
     private RecyclerView mHorizontalListView;//水平商品轮播图
     private RecyclerView mVerticalListView;//竖直商品轮播图
@@ -71,6 +69,7 @@ public class MyLostPropertyFragment extends Fragment {
             }
         }
     };
+
     public MyLostPropertyFragment() {
         // Required empty public constructor
     }
@@ -78,7 +77,6 @@ public class MyLostPropertyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapterType = getArguments().getString(ARG_ADAPTER_TYPE);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -290,13 +288,15 @@ public class MyLostPropertyFragment extends Fragment {
         Bitmap bm = null;
         try{
             URL url = new URL(path);
-            URLConnection connection=url.openConnection();
+            URLConnection connection = url.openConnection();
             connection.connect();
-            InputStream inputStream=connection.getInputStream();
-            bm= BitmapFactory.decodeStream(inputStream);
+            InputStream inputStream = connection.getInputStream();
+            bm = BitmapFactory.decodeStream(inputStream);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e){
             e.printStackTrace();
         }
         return bm;

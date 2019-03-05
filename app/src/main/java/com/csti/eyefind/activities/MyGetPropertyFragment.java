@@ -215,34 +215,13 @@ public class MyGetPropertyFragment extends Fragment {
             }
         }.start();
     }
+
     private void addMore(){
-
-        Person user = BmobUser.getCurrentUser(Person.class);
-        BmobQuery<PushLostItem> query = new BmobQuery<>();
-        query.addWhereEqualTo("mPerson", user);
-        query.findObjects(new FindListener<PushLostItem>() {
-
-            @Override
-            public void done(List<PushLostItem> object, BmobException e) {
-                if(e==null){
-                    Toast.makeText(getActivity(), "成功"+object.size(),Toast.LENGTH_SHORT).show();
-
-                }else{
-                    Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         addMoreButton = (Button) primeView.findViewById(R.id.main_prime_page_add_more);
         addMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"你已经进入聪明人都看得见的失物具体界面",Toast.LENGTH_SHORT).show();
-                mVerticalListView.getLayoutParams().height += 250 * 13;
-                for (int i = 0 ; i < 13 ; i++){
-                    mainVerticalList.add(new PushLostItem());
-                }
-                mVerticalListView.setAdapter(new VerticalListAdapter(mainVerticalList));
+                initVerticalData();
             }
         });
     }
