@@ -32,6 +32,9 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
     private final int pushId = 1;
     public static final String PRIMARY_CHANNEL = "default";
     private LostItem mlostItem;
+    private static final int PUSH_NOTIFICATION_ID = (0x001);
+    private static final String PUSH_CHANNEL_ID = "PUSH_NOTIFY_ID";
+    private static final String PUSH_CHANNEL_NAME = "PUSH_NOTIFY_NAME";
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -52,19 +55,10 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-//            BmobQuery<LostItem> bmobQuery = new BmobQuery<>();
-////            bmobQuery.getObject(objectId, new QueryListener<LostItem>() {
-////                @Override
-////                public void done(LostItem lostItem, BmobException e) {
-////                    mlostItem = lostItem;
-////                    Toast.makeText(context, mlostItem.getLabel(), Toast.LENGTH_LONG).show();
-////                }
-////            });
             Log.d("通知ID",objectId);
-            Intent intent1 = new Intent(context, NotificationActivity.class);
-            intent1.putExtra("objectid",objectId);
-            PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+//            Intent intent1 = new Intent(context, NotificationActivity.class);
+//            intent1.putExtra("objectid",objectId);
+//            PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
             /*NotificationManager manager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
@@ -137,7 +131,8 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             mNotificationManager.notify(pushId, notify);
 */
            /* NotificationManager notificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);+
+
             String id = "channel_01";
             CharSequence name = context.getString(R.string.app_name);
             String description = real_info;
@@ -145,8 +140,8 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
                 NotificationChannel notificationChannel =
                         new NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH);
             }*/
-
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+/*
+           NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder mBuilder;
             //判断是否是8.0Android.O
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -170,6 +165,35 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             Notification notify = mBuilder.build();
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
             mNotificationManager.notify(pushId, notify);
+*/
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+                if (notificationManager != null) {
+                    notificationManager.createNotificationChannel(channel);
+                }
+            }
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            //Intent notificationIntent = new Intent(context, MainActivity.class);
+            Intent intent1 =DetailActivity.newIntent(context,objectId,false);
+            intent1.putExtra("objectid", objectId);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+            //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+            builder.setContentTitle("通知标题")//设置通知栏标题
+                    .setContentIntent(pi) //设置通知栏点击意图
+                    .setContentText(real_info)
+                    .setTicker(real_info) //通知首次出现在通知栏，带上升动画效果的
+                    .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                    .setSmallIcon(R.mipmap.ic_launcher)//设置通知小ICON
+                    .setChannelId(PUSH_CHANNEL_ID)
+                    .setDefaults(Notification.DEFAULT_ALL);
+
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            if (notificationManager != null) {
+                notificationManager.notify(PUSH_NOTIFICATION_ID, notification);
+            }
 
             Log.d("bmob", "客户端收到推送内容：" + intent.getStringExtra("msg"));
         }

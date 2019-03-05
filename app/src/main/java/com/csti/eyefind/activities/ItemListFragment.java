@@ -88,7 +88,7 @@ public class ItemListFragment extends Fragment {
         public void onClick(View v) {
             int position=(int)v.getTag();
             startActivity(DetailActivity.newIntent(getActivity(), mAdapterType,
-                    mLostItems.get(position).getId()));
+                    mLostItems.get(position).getId(),true));
         }
     }
 

@@ -59,7 +59,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_detail);
         mImageA=findViewById(R.id.bitmap_a);
         mImageB=findViewById(R.id.bitmap_b);
         mName=findViewById(R.id.name_text_view);
@@ -88,7 +88,7 @@ public class NotificationActivity extends AppCompatActivity {
 
             }
         });
-        findViewById(R.id.call_button1).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.call_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -98,7 +98,7 @@ public class NotificationActivity extends AppCompatActivity {
                 }
             }
         });
-        findViewById(R.id.ok_button1).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (BmobUser.isLogin()){
