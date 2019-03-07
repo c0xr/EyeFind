@@ -100,19 +100,19 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     //查找Person表里面id为3533107f3e的数据
-                    BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
-                    bmobQuery.getObject(objectId, new QueryListener<Person>() {
-                        @Override
-                        public void done(Person object, BmobException e) {
-                            if (e == null) {
+//                    BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
+//                    bmobQuery.getObject(objectId, new QueryListener<Person>() {
+//                        @Override
+//                        public void done(Person object, BmobException e) {
+                            if (objectId !=" ") {
                                 //进用户页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
                             } else {
                                 //进登录页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
                             }
-                        }
-                    });
+//                        }
+//                    });
                     return true;
             }
             return false;
