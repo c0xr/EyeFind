@@ -45,7 +45,9 @@ public class LostItemLab {
         return null;
     }
 
-    public void clearList(String adapterType){
-        mMap.get(adapterType).clear();
+    public void clearAll(){
+        for(List<LostItem> list:mMap.values()){
+            list.clear();
+        }
     }
 }

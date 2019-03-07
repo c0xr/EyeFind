@@ -10,6 +10,6 @@
         </shape>
     </item>
     <item android:state_pressed="true">
-        <color android:color="@color/shallow_blue_light"/>
+        <color android:color="#007FA8"/>
     </item>
 </selector>

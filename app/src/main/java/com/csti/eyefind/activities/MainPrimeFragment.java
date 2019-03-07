@@ -77,7 +77,6 @@ public class MainPrimeFragment extends Fragment {
                     //Toast.makeText(MainActivity.this, "该设备已经在设备表注册", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("你妈死了",e.getMessage());
                 }
             }
         });

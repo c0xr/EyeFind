@@ -74,6 +74,7 @@ public class OverviewActivity extends AppCompatActivity {
         if(!mTimer.isReady()){
             return true;
         }
+        LostItemLab.getInstance(this).clearAll();
         mFm.beginTransaction()
                 .remove(mFragment)
                 .commit();
