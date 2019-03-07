@@ -111,12 +111,6 @@ public class MainPrimeFragment extends Fragment {
             }
         });
 
-        //视频
-        mVideoView = view.findViewById(R.id.videoView);
-        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.s10;
-        mVideoView.setVideoPath(path);
-        mVideoView.start();
-
         return view;
     }
 
