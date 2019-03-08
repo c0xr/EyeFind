@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.csti.eyefind.R;
 
@@ -24,6 +25,9 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    //视频
+    private MyVideoView mSignUpVideoView;
+
     private EditText register_name, register_college, register_major, register_id, register_password, register_password1;
     Spinner register_sex;
     private String input_sex;
@@ -55,6 +59,15 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setSubtitle("注册");
+
+
+        //视频
+        mSignUpVideoView = (MyVideoView) findViewById(R.id.videoView_log_up);
+        mSignUpVideoView.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight();
+        String path = "android.resource://" + this.getPackageName() + "/" + R.raw.sighup;
+        mSignUpVideoView.setVideoPath(path);
+        mSignUpVideoView.start();
+
         register_name = findViewById(R.id.register_name);
         register_sex = findViewById(R.id.register_sex);
         register_college = findViewById(R.id.register_college);

@@ -208,7 +208,6 @@ public class MyLostPropertyFragment extends Fragment {
                         setBitmap(object.get(i));
                     }
                 }else{
-                        Log.v("123456",e.toString() + "---2---" + e.getErrorCode());
                     Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
                 }
             }
