@@ -20,6 +20,7 @@ import com.csti.eyefind.R;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
@@ -139,8 +140,10 @@ public class MyHomePageFragment extends Fragment {
                                 }
                             }
                         });
-                        user.logOut();
-                        ((MainActivity)getActivity()).changeToLogInFragment();
+                        BmobUser.logOut();
+                        Log.d("123123","text");
+                        ((MainActivity) Objects.requireNonNull(getActivity())).setObjectId(null);
+                        ((MainActivity) Objects.requireNonNull(getActivity())).changeToLogInFragment();
                     }
                 });
                 dia.setNegativeButton("取消",null);

@@ -1,6 +1,7 @@
 package com.csti.eyefind.activities;
 
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -67,6 +68,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         String path = "android.resource://" + this.getPackageName() + "/" + R.raw.sighup;
         mSignUpVideoView.setVideoPath(path);
         mSignUpVideoView.start();
+        mSignUpVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
 
         register_name = findViewById(R.id.register_name);
         register_sex = findViewById(R.id.register_sex);
