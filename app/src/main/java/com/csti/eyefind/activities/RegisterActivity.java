@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setSubtitle("注册");
+        actionBar.hide();
 
 
         //视频
