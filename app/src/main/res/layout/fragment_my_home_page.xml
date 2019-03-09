@@ -22,7 +22,9 @@
         android:layout_height="match_parent"
         android:background="@drawable/card_shape"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:paddingStart="12dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -158,8 +160,10 @@
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/shape_button"
             android:text="退出登录"
+            android:textColor="@android:color/background_light"
             android:textSize="20sp" />
 
     </LinearLayout>

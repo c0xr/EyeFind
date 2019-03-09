@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.csti.eyefind">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,43 +16,54 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.MyLostDetailActivity"></activity>
-        <activity
-            android:name=".activities.NotificationActivity"
-            android:parentActivityName=".activities.OverviewActivity"/>
-        <activity
-            android:name=".activities.I_push_thing"
-            android:parentActivityName=".activities.OverviewActivity"/>
-        <activity android:name=".activities.MyProperty" />
-        <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.UserActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity
-            android:name=".activities.I_pick_thing"
-            android:parentActivityName=".activities.MainActivity"/>
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:allowBackup="true">
+
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.OverviewActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.DetailActivity"
-            android:parentActivityName=".activities.OverviewActivity" />
+            android:parentActivityName=".activities.OverviewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:parentActivityName=".activities.OverviewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.I_push_thing"
+            android:parentActivityName=".activities.OverviewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.I_pick_thing"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activities.MyProperty" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.RegisterActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UserActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.MyLostDetailActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
@@ -107,6 +119,7 @@
         </receiver>
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
     </application>
 
 </manifest>
