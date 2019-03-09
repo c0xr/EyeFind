@@ -40,8 +40,6 @@ public class MainPrimeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private VideoView mVideoView;
-
     public MainPrimeFragment() {
         // Required empty public constructor
     }

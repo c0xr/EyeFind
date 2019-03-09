@@ -349,7 +349,7 @@
                 android:background="?android:attr/listDivider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/qq_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/wechat_text_view"/>
 
         </android.support.constraint.ConstraintLayout>
 

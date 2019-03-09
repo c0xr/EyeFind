@@ -10,12 +10,6 @@ import android.widget.LinearLayout;
 
 import com.csti.eyefind.R;
 
-/**I add this activity to be a animation for our project,
- * if you have other ideas, you can change it freely!
- *
- * Author： FishInWater
- */
-
 public class SplashActivity extends Activity {
 
     private final int SPLASH_DISPLAY_TIME_LENGH = 0;//设置闪屏时间三秒

@@ -1,80 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ivory"
-    android:orientation="vertical"
     tools:context=".activities.UserActivity">
 
-    <ImageView
+    <com.csti.eyefind.activities.MyVideoView
+        android:id="@+id/videoView_log_up"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:scaleType="fitXY"
-        android:src="@drawable/user_interface" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="姓名:"
-            android:textSize="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:gravity="center">
 
-        <EditText
-            android:id="@+id/register_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="请输入姓名"
-            android:textColor="@color/red" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:background="@drawable/shape_button"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="注册"
+                android:textSize="40dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="性别:"
-            android:textSize="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/register_sex"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="姓名:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
 
-        </Spinner>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/register_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="请输入姓名"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="学院:"
-            android:textSize="20dp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="性别:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+            <Spinner
+                android:id="@+id/register_sex"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white">
+
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="学院:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
 
 
             <EditText
@@ -84,124 +110,138 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:hint="请输入学院"
-                android:textColor="@color/goldenrod" />
-    </LinearLayout>
+                android:textColorHint="@color/white"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="专业:"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/register_major"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="请输入专业"
-            android:textColor="@color/green" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="学号:"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/register_id"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="请输入学号"
-            android:textColor="@color/blue"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="密码:"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/register_password"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
-            android:textColor="@color/blue"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="密码:"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/register_password1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="请确认密码"
-            android:inputType="textPassword"
-            android:textColor="@color/blue"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5">
-
-        <Button
-            android:id="@+id/register_push"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:text="提交"
-            android:textColor="@color/red"
-            android:textSize="24dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="专业:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/register_major"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="请输入专业"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="学号:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/register_id"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="请输入学号"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="密码:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="密码:"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/register_password1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="请确认密码"
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:padding="15dp">
+
+            <Button
+                android:id="@+id/register_push"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/shape_button"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
