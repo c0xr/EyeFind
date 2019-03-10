@@ -45,30 +45,13 @@
                 android:gravity="left|center"
                 android:hint="物品名称" />
 
-            <LinearLayout
-                android:layout_width="160dp"
+            <Spinner
+                android:id="@+id/indicator_thing"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
+                android:layout_margin="5dp">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="分类"
-                    android:textAlignment="viewStart"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
-
-                <Spinner
-                    android:id="@+id/indicator_thing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                </Spinner>
-            </LinearLayout>
+            </Spinner>
 
         </LinearLayout>
 
@@ -86,7 +69,7 @@
 
             <Button
                 android:id="@+id/find_time"
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_marginStart="0dp"
@@ -153,13 +136,14 @@
             android:id="@+id/pick_thing_option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:checkedButton="@id/radio_button">
 
             <RadioButton
+                android:id="@+id/radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="true"
                 android:text="无" />
 
             <RadioButton

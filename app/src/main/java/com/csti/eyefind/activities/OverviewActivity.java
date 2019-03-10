@@ -65,23 +65,26 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_overview,menu);
-        mTimer=new MeasureUtil.Timer(3000);
+        mTimer=new MeasureUtil.Timer(1000);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(!mTimer.isReady()){
+        if(item.getItemId()==R.id.refresh) {
+            if (!mTimer.isReady()) {
+                return true;
+            }
+            LostItemLab.getInstance(this).clearAll();
+            mFm.beginTransaction()
+                    .remove(mFragment)
+                    .commit();
+            mFragment = PagerFragment.newInstance();
+            mFm.beginTransaction()
+                    .add(R.id.pager_fragment_contianer, mFragment)
+                    .commit();
             return true;
         }
-        LostItemLab.getInstance(this).clearAll();
-        mFm.beginTransaction()
-                .remove(mFragment)
-                .commit();
-        mFragment=PagerFragment.newInstance();
-        mFm.beginTransaction()
-                .add(R.id.pager_fragment_contianer,mFragment)
-                .commit();
-        return true;
+        return false;
     }
 }
