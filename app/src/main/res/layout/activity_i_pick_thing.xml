@@ -219,7 +219,7 @@
                 android:background="@drawable/shape_button"
                 android:text="提交"
                 android:textColor="@android:color/background_light"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </android.support.constraint.ConstraintLayout>
 

@@ -1,10 +1,17 @@
 package com.csti.eyefind.activities;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -48,13 +55,27 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v) {
                 mName=push_lostitem.getText().toString();
                 if(!(mName.equals(""))){
-                    savePost();
+                    startAnimationB();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            savePost();
+                        }
+                    },300);
                 }else{
                     I_pick_thing.showDialog("请输入物品名称！",null,I_push_thing.this);
                 }
             }
         });
 
+        ViewTreeObserver vto = push.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                push.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                startAnimationA();
+            }
+        });
     }
     private void savePost() {
         if (BmobUser.isLogin()) {
@@ -105,5 +126,50 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void startAnimationA(){
+        int endX=push.getLeft();
+        int startX=endX+400;
+        int endY=push.getTop();
+        int midY=endY-200;
+        push.setVisibility(View.VISIBLE);
+        ObjectAnimator animatorX = ObjectAnimator
+                .ofFloat(push, "x", startX, endX)
+                .setDuration(700);
+
+        ObjectAnimator animatorYA = ObjectAnimator
+                .ofFloat(push, "y", endY, midY)
+                .setDuration(350);
+        animatorYA.setInterpolator(new DecelerateInterpolator());
+
+        ObjectAnimator animatorYB = ObjectAnimator
+                .ofFloat(push, "y", midY, endY)
+                .setDuration(350);
+        animatorYB.setInterpolator(new BounceInterpolator());
+        animatorYB.setStartDelay(350);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorX,animatorYA,animatorYB);
+        animatorSet.start();
+    }
+
+    private void startAnimationB(){
+        int startX=push.getLeft();
+        int endX=startX+400;
+        push.setVisibility(View.VISIBLE);
+        ObjectAnimator animatorX = ObjectAnimator
+                .ofFloat(push, "x", startX, endX)
+                .setDuration(300);
+        animatorX.setInterpolator(new AccelerateInterpolator());
+
+        ObjectAnimator animatorR = ObjectAnimator
+                .ofFloat(push, "rotation", 0, 360)
+                .setDuration(300);
+        animatorX.setInterpolator(new AccelerateInterpolator());
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorX,animatorR);
+        animatorSet.start();
     }
 }
