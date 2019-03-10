@@ -1,5 +1,6 @@
 package com.csti.eyefind.activities;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
     private Spinner indicator_push_thing;
     private ArrayAdapter<CharSequence> adapter;
     private EditText push_lostitem;
-    private ImageButton push;
+    private FloatingActionButton push;
     private String mName;//名称
     private String mLabel;//标签(类别)
     private PushLostItem pushLostItem=new PushLostItem();
