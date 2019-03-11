@@ -8,9 +8,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csti.eyefind.R;
 
@@ -21,20 +25,22 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.UUID;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+
 public class MyLostDetailActivity extends AppCompatActivity {
     private final static String EXTRA_ID="id";
     private final static String EXTRA_ADAPTER_TYPE="adapter type";
 
     private ImageView mImageA;
     private ImageView mImageB;
-    private TextView mName;
-    private TextView mPlace;
-    private TextView mFounder;
-    private TextView mDate;
-    private TextView mTel;
-    private TextView mQQ;
-    private TextView mWeChat;
+    private TextView mName, mPlace, mFounder, mDate, mTel, mQQ, mWeChat;
     private ImageLoaderDetail mImageLoaderDetail;
+    private String objectId;
+
+    private CardView findLoser;
+    private TextView mPropertyState;
+
 
     private Bitmap bitmap[] = new Bitmap[2];
 
@@ -52,6 +58,7 @@ public class MyLostDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lost_detail);
         getProperty();
+        iniClick();
     }
 
     private void getProperty(){
@@ -70,6 +77,9 @@ public class MyLostDetailActivity extends AppCompatActivity {
         mQQ = findViewById(R.id.qq_text_view);
         mWeChat = findViewById(R.id.wechat_text_view);
 
+        mPropertyState = (TextView) findViewById(R.id.ok_button);
+        findLoser = findViewById(R.id.cardView2);
+
 //        ViewGroup.LayoutParams params=mImageB.getLayoutParams();
 //        float ratio=(float) MeasureUtil.dp2px(300,this)/mLostItem.getBitmapB().getHeight();
 //        params.width=(int)(mLostItem.getBitmapB().getWidth()*ratio);
@@ -82,6 +92,7 @@ public class MyLostDetailActivity extends AppCompatActivity {
         mTel.setText(intent.getStringExtra("mTel"));
         mQQ.setText(intent.getStringExtra("mQQ"));
         mWeChat.setText(intent.getStringExtra("mWeChat"));
+        objectId = intent.getStringExtra("objectId");
     }
 
     private void setBitmap(final String s1 , final String s2){
@@ -112,5 +123,28 @@ public class MyLostDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return bm;
+    }
+
+    private void iniClick(){
+        findLoser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final LostItem p2 = new LostItem();
+                p2.setObjectId(objectId);
+                p2.delete(new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Toast.makeText(MyLostDetailActivity.this,"物品移除成功！",Toast.LENGTH_SHORT).show();
+                            mPropertyState.setText("状态：已认领");
+                        }else{
+                            Toast.makeText(MyLostDetailActivity.this,"删除失败，请检查网络",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+            }
+        });
     }
 }

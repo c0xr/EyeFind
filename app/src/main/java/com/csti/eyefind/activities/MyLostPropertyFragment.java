@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 
-public class MyLostPropertyFragment extends Fragment {
+public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mVerticalListView;//竖直商品轮播图
     private Button addMoreButton;//点击增加更多
@@ -57,11 +58,15 @@ public class MyLostPropertyFragment extends Fragment {
     private BmobQuery<LostItem> query;
     private int length = 0;//原先列表长度 用于判断是否刷新
     private int mAddTimes = 0;//记录连续点击次数
+    private SwipeRefreshLayout swipeRefreshLayout;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             if ( msg.what == 0x0 ){
                 setmVerticalListView();//配置竖直listView
+                if (swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         }
     };
@@ -84,7 +89,7 @@ public class MyLostPropertyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         primeView = inflater.inflate(R.layout.fragment_my_lost_property, container, false);
-        addMore();
+        reFlesh();
         initVerticalData();
         return primeView;
     }
@@ -102,6 +107,11 @@ public class MyLostPropertyFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onRefresh() {
+        initVerticalData();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -110,11 +120,6 @@ public class MyLostPropertyFragment extends Fragment {
     //与水平相同设置竖直
     public void setmVerticalListView() {
         List<LostItem> data = mainVerticalList;
-        mVerticalListView = (RecyclerView) primeView.findViewById(R.id.main_prime_page_vertical_list);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),1);
-        mVerticalListView.setLayoutManager(manager);
-        mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
-        mVerticalListView.setNestedScrollingEnabled(false);
         mVerticalListView.getLayoutParams().height = 250 * data.size() ;
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
     }
@@ -164,6 +169,7 @@ public class MyLostPropertyFragment extends Fragment {
                     bundle.putSerializable("mWeChat", lostItem.getWeChat());
                     bundle.putSerializable("bitmapA", lostItem.getImageA().getUrl());
                     bundle.putSerializable("bitmapB", lostItem.getImageB().getUrl());
+                    bundle.putSerializable("objectId", lostItem.getObjectId());
 
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -191,77 +197,52 @@ public class MyLostPropertyFragment extends Fragment {
                 lostItem.setBitmapA(getPicture(lostItem.getImageA().getUrl()));
                 lostItem.setBitmapB(getPicture(lostItem.getImageB().getUrl()));
                 mainVerticalList.add(lostItem);
+                Message msg = new Message();
+                msg.what = 0x0;
+                handler.sendMessage(msg);
+                length = mainVerticalList.size();
             }
         }.start();
     }
 
     private void initVerticalData(){
+        mVerticalListView = (RecyclerView) primeView.findViewById(R.id.main_prime_page_vertical_list);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),1);
+        mVerticalListView.setLayoutManager(manager);
+        mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
+        mVerticalListView.setNestedScrollingEnabled(false);
+
         Person user = BmobUser.getCurrentUser(Person.class);//先从云端读入数据
         query = new BmobQuery<>();
         query.addWhereEqualTo("mPerson", user);
-        mainVerticalList = new ArrayList<>();
         query.findObjects(new FindListener<LostItem>() {
             @Override
-            public void done(List<LostItem> object, BmobException e) {
+            public void done(final List<LostItem> object, BmobException e) {
                 if(e==null){
-                    for (int i = 0 ; i < object.size() ; i++){
-                        setBitmap(object.get(i));
-                    }
+                    mainVerticalList = new ArrayList<>();
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                for (int i = 0 ; i < object.size() ; i++){
+                                    setBitmap(object.get(i));
+                                    sleep(300);
+                                }
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }else{
-                    Toast.makeText(getActivity(), "失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "请检查网络设置",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        new Thread(){
-            @Override
-            public void run() {
-                while (mainVerticalList.size() == length){
-                    try {
-                        sleep(200);
-                    }catch (Exception e){
-                        Toast.makeText(getActivity(),"信息获取失败 T.T ",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                try {
-                    sleep(300);
-                    Message msg = new Message();
-                    msg.what = 0x0;
-                    handler.sendMessage(msg);
-                    length = mainVerticalList.size();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
-    private void addMore(){
-        addMoreButton = (Button) primeView.findViewById(R.id.main_prime_page_add_more);
-        LostItem mNewLostOne = new LostItem();
-        addMoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAddTimes == 0){
-                    initVerticalData();
-                }else if(mAddTimes == 3){
-                    Toast.makeText(getActivity(), "不要老戳宝宝 宝宝痛痛！",Toast.LENGTH_SHORT).show();
-                    addMoreButton.setClickable(false);
-                }
-                mAddTimes ++;
-                new Thread(){
-                    @Override
-                    public void run() {
-                        try {
-                            sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        mAddTimes = 0;
-                        addMoreButton.setClickable(true);
-                    }
-                }.start();
-            }
-        });
+    private void reFlesh(){
+        swipeRefreshLayout = primeView.findViewById(R.id.my_lost_swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     public Bitmap getPicture(String path){

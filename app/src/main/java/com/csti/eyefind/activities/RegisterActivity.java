@@ -61,20 +61,20 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
-        //视频
-        mSignUpVideoView = (MyVideoView) findViewById(R.id.videoView_log_up);
-        mSignUpVideoView.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight();
-        String path = "android.resource://" + this.getPackageName() + "/" + R.raw.sighup;
-        mSignUpVideoView.setVideoPath(path);
-        mSignUpVideoView.start();
-        mSignUpVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-                mp.setLooping(true);
-            }
-        });
+//
+//        //视频
+//        mSignUpVideoView = (MyVideoView) findViewById(R.id.videoView_log_up);
+//        mSignUpVideoView.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight();
+//        String path = "android.resource://" + this.getPackageName() + "/" + R.raw.sighup;
+//        mSignUpVideoView.setVideoPath(path);
+//        mSignUpVideoView.start();
+//        mSignUpVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mp.start();
+//                mp.setLooping(true);
+//            }
+//        });
 
         register_name = findViewById(R.id.register_name);
         register_sex = findViewById(R.id.register_sex);
