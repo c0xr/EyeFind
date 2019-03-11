@@ -143,7 +143,7 @@ public class MyGetPropertyFragment extends Fragment implements SwipeRefreshLayou
         List<PushLostItem> data = mainVerticalList;
         mVerticalListView.getLayoutParams().height = 250 * data.size();
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
-//        firstLoadAnimation();
+        firstLoadAnimation();
 //        mVerticalListView.setItemAnimator(new SlideInLeftAnimator());
 // or recyclerView.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
 //        mVerticalListView.setItemAnimator(animator);
@@ -315,18 +315,18 @@ public class MyGetPropertyFragment extends Fragment implements SwipeRefreshLayou
                             @Override
                             public void run() {
                                 for (int i = 0 ; i < object.size() ; i++){
-                                    try {
+//                                    try {
                                         final PushLostItem lostItem = object.get(i);
                                         mainVerticalList.add(lostItem);
                                         length = mainVerticalList.size();
-                                        Message msg = new Message();
-                                        msg.what = 0x0;
-                                        handler.sendMessage(msg);
-                                        sleep(300);
-                                    } catch (InterruptedException e1) {
-                                        e1.printStackTrace();
-                                    }
+//                                        sleep(300);
+//                                    } catch (InterruptedException e1) {
+//                                        e1.printStackTrace();
+//                                    }
                                 }
+                                Message msg = new Message();
+                                msg.what = 0x0;
+                                handler.sendMessage(msg);
                             }
                         }.start();
                 }else{

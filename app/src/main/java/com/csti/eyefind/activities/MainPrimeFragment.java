@@ -81,7 +81,6 @@ public class MainPrimeFragment extends Fragment {
         // 启动推送服务
         BmobPush.startWork(getActivity());
 
-
         view.findViewById(R.id.I_pick_thing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

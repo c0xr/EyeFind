@@ -23,17 +23,13 @@ import java.util.List;
 
 public class MyProperty extends AppCompatActivity {
 
-
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-    private LayoutInflater mInflater;
-    private List<String> mTitleList = new ArrayList<>();//页卡标题集合
-    private View view1, view2, view3, view4, view5;//页卡视图
-    private List<View> mViewList = new ArrayList<>();//页卡视图集合
     private List<String> listTitles;
     private List<Fragment> fragments;
     private List<TextView> listTextViews;
+
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override

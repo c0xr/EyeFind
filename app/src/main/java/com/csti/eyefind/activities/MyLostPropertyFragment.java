@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -122,6 +123,7 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
         List<LostItem> data = mainVerticalList;
         mVerticalListView.getLayoutParams().height = 250 * data.size() ;
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
+        firstLoadAnimation();
     }
 
     class VerticalListAdapter extends RecyclerView.Adapter<VerticalListAdapter.VH>{
@@ -190,17 +192,24 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
         }
     }
 
-    private void setBitmap(final LostItem lostItem){
+    private void setBitmap(final LostItem lostItem, final int size){
         new Thread(){
             @Override
             public void run() {
                 lostItem.setBitmapA(getPicture(lostItem.getImageA().getUrl()));
                 lostItem.setBitmapB(getPicture(lostItem.getImageB().getUrl()));
                 mainVerticalList.add(lostItem);
-                Message msg = new Message();
-                msg.what = 0x0;
-                handler.sendMessage(msg);
                 length = mainVerticalList.size();
+                if (length == size){
+                    try {
+                        sleep(300);
+                        Message msg = new Message();
+                        msg.what = 0x0;
+                        handler.sendMessage(msg);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }.start();
     }
@@ -223,14 +232,13 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
                     new Thread(){
                         @Override
                         public void run() {
-                            try {
+//                            try {
                                 for (int i = 0 ; i < object.size() ; i++){
-                                    setBitmap(object.get(i));
-                                    sleep(300);
+                                    setBitmap(object.get(i),object.size());
                                 }
-                            } catch (InterruptedException e1) {
-                                e1.printStackTrace();
-                            }
+//                            } catch (InterruptedException e1) {
+//                                e1.printStackTrace();
+//                            }
                         }
                     }.start();
                 }else{
@@ -261,6 +269,29 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
             e.printStackTrace();
         }
         return bm;
+    }
+
+    private void firstLoadAnimation(){
+        //首次加载这种比较有效
+        mVerticalListView.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+
+                    @Override
+                    public boolean onPreDraw() {
+                        mVerticalListView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        final int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+                        for (int i = 0; i < mVerticalListView.getChildCount(); i++) {
+                            View v = mVerticalListView.getChildAt(i);
+                            v.setTranslationX(screenWidth);
+                            v.animate().translationX(0)
+                                    .setDuration(1200)
+                                    .setStartDelay(i * 100)
+                                    .start();
+                        }
+
+                        return true;
+                    }
+                });
     }
 
 }
