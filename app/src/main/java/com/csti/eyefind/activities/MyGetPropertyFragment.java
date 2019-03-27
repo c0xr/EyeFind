@@ -354,7 +354,7 @@ public class MyGetPropertyFragment extends Fragment implements SwipeRefreshLayou
                             View v = mVerticalListView.getChildAt(i);
                             v.setTranslationX(screenWidth);
                             v.animate().translationX(0)
-                                    .setDuration(1200)
+                                    .setDuration(600)
                                     .setStartDelay(i * 100)
                                     .start();
                         }

@@ -1,6 +1,7 @@
 package com.csti.eyefind.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,14 @@ import com.csti.eyefind.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.push.BmobPush;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobInstallationManager;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.InstallationListener;
+import cn.bmob.v3.exception.BmobException;
 
 public class MainMyPropertyFragment extends Fragment {
 
@@ -77,12 +86,44 @@ public class MainMyPropertyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_my_property, container, false);
 
+        Bmob.initialize(getActivity(), "a744c289f17c26d9df110a2fa115feaf");
+        BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
+            @Override
+            public void done(BmobInstallation bmobInstallation, BmobException e) {
+                if (e == null) {
+                    //Toast.makeText(MainActivity.this, "该设备已经在设备表注册", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        // 启动推送服务
+        BmobPush.startWork(getActivity());
+
+        view.findViewById(R.id.I_pick_thing).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+//                String objectId = sharedPreferences.getString("objectId", "");
+//                mUserAccount = sharedPreferences.getString("account", "");
+//                if (!(objectId.equals(" "))) {
+                if(BmobUser.isLogin()){
+                    Intent intent = new Intent(getActivity(), I_pick_thing.class);
+                    startActivity(intent);
+                }else {
+                    com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, getActivity());
+                }
+
+            }
+        });
+
         mViewPager = (ViewPager) view.findViewById(R.id.vp_view);
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
         initData();
         mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
-Log.d(TAG,"on View");
+        Log.d(TAG,"on View");
         return view;
     }
 

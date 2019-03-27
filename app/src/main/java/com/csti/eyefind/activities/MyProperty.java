@@ -42,7 +42,6 @@ public class MyProperty extends AppCompatActivity {
         initData();
         mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
 
-
     }
 
     private void initData() {
@@ -53,12 +52,12 @@ public class MyProperty extends AppCompatActivity {
         listTitles.add("我丢的宝贝");
         listTitles.add("我捡的宝贝");
 
-        for (int i = 0; i < listTitles.size(); i++) {
-            Fragment fragment = MyPropertyContentFragment.newInstance(i,listTitles.get(i));
+        for ( int i = 0; i < listTitles.size(); i++ ) {
+            Fragment fragment = MyPropertyContentFragment.newInstance(i, listTitles.get(i));
             fragments.add(fragment);
         }
         //mTabLayout.setTabMode(TabLayout.SCROLL_AXIS_HORIZONTAL);//设置tab模式，当前为系统默认模式
-        for (int i=0;i<listTitles.size();i++){
+        for ( int i = 0; i < listTitles.size(); i++ ){
             mTabLayout.addTab(mTabLayout.newTab().setText(listTitles.get(i)));//添加tab选项
         }
 

@@ -90,6 +90,13 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         primeView = inflater.inflate(R.layout.fragment_my_lost_property, container, false);
+
+        mVerticalListView = (RecyclerView) primeView.findViewById(R.id.main_prime_page_vertical_list);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),1);
+        mVerticalListView.setLayoutManager(manager);
+        mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
+        mVerticalListView.setNestedScrollingEnabled(true);
+
         reFlesh();
         initVerticalData();
         return primeView;
@@ -121,7 +128,6 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
     //与水平相同设置竖直
     public void setmVerticalListView() {
         List<LostItem> data = mainVerticalList;
-        mVerticalListView.getLayoutParams().height = 250 * data.size() ;
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
         firstLoadAnimation();
     }
@@ -154,7 +160,7 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
             holder.introduce.setText(mDatas.get(position).getLabel());
             holder.place.setText(mDatas.get(position).getPickedPlace());
             holder.price.setText(mDatas.get(position).getPickedDate());
-            holder.image.setImageBitmap(mDatas.get(position).getBitmapA());
+            holder.image.setImageBitmap(mDatas.get(position).getThumbnail());
             final int mListPosition = position;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -196,8 +202,7 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
         new Thread(){
             @Override
             public void run() {
-                lostItem.setBitmapA(getPicture(lostItem.getImageA().getUrl()));
-                lostItem.setBitmapB(getPicture(lostItem.getImageB().getUrl()));
+                lostItem.setThumbnail(getPicture(lostItem.getImageThumbnail().getUrl()));
                 mainVerticalList.add(lostItem);
                 length = mainVerticalList.size();
                 if (length == size){
@@ -215,11 +220,6 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
     }
 
     private void initVerticalData(){
-        mVerticalListView = (RecyclerView) primeView.findViewById(R.id.main_prime_page_vertical_list);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),1);
-        mVerticalListView.setLayoutManager(manager);
-        mVerticalListView.setHasFixedSize(true);//设置recycler不可滑动
-        mVerticalListView.setNestedScrollingEnabled(false);
 
         Person user = BmobUser.getCurrentUser(Person.class);//先从云端读入数据
         query = new BmobQuery<>();
@@ -284,7 +284,7 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
                             View v = mVerticalListView.getChildAt(i);
                             v.setTranslationX(screenWidth);
                             v.animate().translationX(0)
-                                    .setDuration(1200)
+                                    .setDuration(600)
                                     .setStartDelay(i * 100)
                                     .start();
                         }

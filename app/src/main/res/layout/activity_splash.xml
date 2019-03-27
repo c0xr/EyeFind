@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/shallow_blue_light"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/animation_screen"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#0ff">
+    <TextView
+        android:id="@+id/splash_tv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:text="EyeFind"
+        android:textSize="50dp"
+        android:gravity="center"
+        android:textColor="@color/white"/>
 
-        <ImageView
-            android:id="@+id/open_screen_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/start_page"
-            android:scaleType="fitXY"/>
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/open_screen_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/lost"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

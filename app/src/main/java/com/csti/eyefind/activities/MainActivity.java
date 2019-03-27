@@ -11,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment myFragment ;
     private Fragment homePageFragment;
     private Fragment LogInFragment;
+    private ActionBar actionBar;
 
     private String objectId;//用户账号//学号
 
@@ -90,10 +92,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     transaction.hide(myFragment).hide(homePageFragment).hide(LogInFragment).show(primeFragment).commit();
+                    actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
                     return true;
                 case R.id.navigation_dashboard:
                     if(BmobUser.isLogin()) {
                         transaction.hide(primeFragment).hide(homePageFragment).hide(LogInFragment).show(myFragment).commit();
+                        actionBar.setSubtitle("我的世界");
                     }else {
                         com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
                     }
@@ -107,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
                             if ( !objectId.equals(" ") ) {
                                 //进用户页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
+                                actionBar.setSubtitle("用户中心");
                             } else {
                                 //进登录页面
                                 transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
+                                actionBar.setSubtitle("请登录");
                             }
 //                        }
 //                    });
@@ -130,13 +136,17 @@ public class MainActivity extends AppCompatActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
+
         replace();
 
     }
 
     private void replace() {
         transaction = getSupportFragmentManager().beginTransaction();
-        primeFragment = new MainPrimeFragment();
+        primeFragment = new MainOverviewFragment();
         myFragment = new MainMyPropertyFragment();
         homePageFragment = new MyHomePageFragment();
         LogInFragment = new MyLogInFragment();

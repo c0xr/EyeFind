@@ -15,6 +15,7 @@ import com.csti.eyefind.R;
 
 
 public class MyPropertyContentFragment extends Fragment {
+
     private View view;
     private static final String KEY = "title";
     private TextView tvContent;
@@ -22,6 +23,7 @@ public class MyPropertyContentFragment extends Fragment {
             new MyGetPropertyFragment(),
             new MyLostPropertyFragment(),
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,8 +32,8 @@ public class MyPropertyContentFragment extends Fragment {
         tvContent = (TextView) view.findViewById(R.id.tv_content);
         String string = getArguments().getString(KEY);
         tvContent.setText(string);
-        tvContent.setTextColor(Color.BLUE);
-        tvContent.setTextSize(30);
+        tvContent.setTextColor(Color.RED);
+        tvContent.setTextSize(150);
         return view;
     }
 
@@ -45,4 +47,5 @@ public class MyPropertyContentFragment extends Fragment {
 
         return fragments[i];
     }
+
 }
