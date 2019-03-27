@@ -179,7 +179,7 @@ public class MyLogInFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        view.findViewById(R.id.textView5).getLayoutParams().height = getActivity().getWindowManager().getDefaultDisplay().getHeight()/2;
         return view;
     }
 

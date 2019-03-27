@@ -158,6 +158,7 @@ public class MyHomePageFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.textView7).getLayoutParams().height = getActivity().getWindowManager().getDefaultDisplay().getHeight()/2;
         return view;
     }
 

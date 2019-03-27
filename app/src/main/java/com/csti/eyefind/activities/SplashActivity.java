@@ -146,7 +146,7 @@ public class SplashActivity extends Activity {
         imageView.setVisibility(View.VISIBLE);
         ObjectAnimator animatorX = ObjectAnimator
                 .ofFloat(imageView, "x", startX, endX)
-                .setDuration(700);
+                .setDuration(1000);
 
         ObjectAnimator animatorYA = ObjectAnimator
                 .ofFloat(imageView, "y", endY, midY)
@@ -157,7 +157,7 @@ public class SplashActivity extends Activity {
                 .ofFloat(imageView, "y", midY, endY)
                 .setDuration(700);
         animatorYB.setInterpolator(new BounceInterpolator());
-        animatorYB.setStartDelay(300);
+        animatorYB.setStartDelay(400);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animatorX,animatorYA,animatorYB);
