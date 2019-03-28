@@ -181,7 +181,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 }
             }
         });
-
     }
 
     @Override
@@ -268,4 +267,5 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         }
         return true;
     }
+
 }

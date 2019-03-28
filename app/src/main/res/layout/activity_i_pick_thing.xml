@@ -6,6 +6,245 @@
     android:layout_height="match_parent"
     tools:context=".activities.I_pick_thing">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="基本信息"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/pick_thing_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:hint="物品名称" />
+
+                    <Spinner
+                        android:id="@+id/indicator_thing"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp">
+
+                    </Spinner>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/pick_thing_people"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="姓名" />
+
+                    <Button
+                        android:id="@+id/find_time"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="@drawable/shape_button"
+                        android:gravity="center"
+                        android:text="拾取时间"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/pick_thing_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="拾取地点" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="联系方式"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/pick_thing_tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:hint="电话" />
+
+                    <EditText
+                        android:id="@+id/pick_thing_QQ"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:hint="QQ" />
+
+                    <EditText
+                        android:id="@+id/pick_thing_VX"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:hint="微信" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="转交方式"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <RadioGroup
+                    android:id="@+id/pick_thing_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@id/radio_button">
+
+                    <RadioButton
+                        android:id="@+id/radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="无" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="3号楼" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="4号楼" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="汇文楼" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2号楼" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="照片"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/addphoto1"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:paddingLeft="6dp"
+                                android:src="@drawable/add" />
+
+                            <ImageView
+                                android:id="@+id/addphoto2"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:layout_toRightOf="@id/addphoto1"
+                                android:paddingLeft="6dp"
+                                android:src="@drawable/add"
+                                tools:layout_editor_absoluteX="126dp" />
+                        </LinearLayout>
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <Button
+                        android:id="@+id/submit_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/shape_button"
+                        android:text="提交"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/datePicker_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
     <!--<android.support.v7.widget.Toolbar-->
     <!--android:id="@+id/toolbar"-->
     <!--android:layout_width="match_parent"-->
@@ -14,223 +253,5 @@
 
     <!--</android.support.v7.widget.Toolbar>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="基本信息"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/pick_thing_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:hint="物品名称" />
-
-            <Spinner
-                android:id="@+id/indicator_thing"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp">
-
-            </Spinner>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/pick_thing_people"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="姓名" />
-
-            <Button
-                android:id="@+id/find_time"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="@drawable/shape_button"
-                android:gravity="center"
-                android:text="拾取时间"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/pick_thing_place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="拾取地点" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="联系方式"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/pick_thing_tel"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="电话" />
-
-            <EditText
-                android:id="@+id/pick_thing_QQ"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="QQ" />
-
-            <EditText
-                android:id="@+id/pick_thing_VX"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="微信" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="转交方式"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-
-        <RadioGroup
-            android:id="@+id/pick_thing_option"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@id/radio_button">
-
-            <RadioButton
-                android:id="@+id/radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="无" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3号楼" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4号楼" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="汇文楼" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2号楼" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="照片"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/addphoto1"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:paddingLeft="6dp"
-                    android:src="@drawable/add" />
-
-                <ImageView
-                    android:id="@+id/addphoto2"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_toRightOf="@id/addphoto1"
-                    android:paddingLeft="6dp"
-                    android:src="@drawable/add"
-                    tools:layout_editor_absoluteX="126dp" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/submit_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/shape_button"
-                android:text="提交"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/datePicker_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-    </FrameLayout>
 
 </RelativeLayout>

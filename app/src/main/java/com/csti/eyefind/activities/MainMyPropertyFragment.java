@@ -1,11 +1,14 @@
 package com.csti.eyefind.activities;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +47,7 @@ public class MainMyPropertyFragment extends Fragment {
     private List<String> listTitles;
     private List<Fragment> fragments;
     private List<TextView> listTextViews;
+    private FloatingActionButton mFab;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -100,6 +106,7 @@ public class MainMyPropertyFragment extends Fragment {
         // 启动推送服务
         BmobPush.startWork(getActivity());
 
+        mFab= view.findViewById(R.id.fab);
         view.findViewById(R.id.I_pick_thing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +130,6 @@ public class MainMyPropertyFragment extends Fragment {
 
         initData();
         mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
-        Log.d(TAG,"on View");
         return view;
     }
 
@@ -183,5 +189,37 @@ public class MainMyPropertyFragment extends Fragment {
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        startAnimationA();
+    }
+
+    private void startAnimationA(){
+        int endX=mFab.getLeft();
+        int startX=endX+400;
+        int endY=mFab.getTop();
+        int midY=endY-200;
+        mFab.setVisibility(View.VISIBLE);
+        ObjectAnimator animatorX = ObjectAnimator
+                .ofFloat(mFab, "x", startX, endX)
+                .setDuration(700);
+
+        ObjectAnimator animatorYA = ObjectAnimator
+                .ofFloat(mFab, "y", endY, midY)
+                .setDuration(350);
+        animatorYA.setInterpolator(new DecelerateInterpolator());
+
+        ObjectAnimator animatorYB = ObjectAnimator
+                .ofFloat(mFab, "y", midY, endY)
+                .setDuration(350);
+        animatorYB.setInterpolator(new BounceInterpolator());
+        animatorYB.setStartDelay(350);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorX,animatorYA,animatorYB);
+        animatorSet.start();
     }
 }
