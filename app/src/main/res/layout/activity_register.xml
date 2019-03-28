@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.UserActivity">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/videoView_log_up"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/sighup"
-        android:scaleType="fitXY"
-        android:layout_alignParentBottom="true"/>
-
     <!--<ScrollView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent">-->
@@ -33,11 +25,9 @@
 
                 <TextView
                     android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/shape_button"
+                    android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="注册"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="25dp" />
 
             </LinearLayout>
@@ -54,7 +44,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="姓名:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <EditText
@@ -64,8 +54,8 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:hint="请输入姓名"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white" />
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey" />
             </LinearLayout>
 
             <LinearLayout
@@ -80,7 +70,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="性别:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <Spinner
@@ -88,8 +78,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:outlineAmbientShadowColor="@color/white"
-                    android:outlineSpotShadowColor="@color/white">
+                    android:outlineAmbientShadowColor="@color/black"
+                    android:outlineSpotShadowColor="@color/grey">
 
                 </Spinner>
 
@@ -107,7 +97,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="学院:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
 
@@ -118,8 +108,8 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:hint="请输入学院"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white" />
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey" />
 
             </LinearLayout>
 
@@ -135,7 +125,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="专业:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <EditText
@@ -145,8 +135,8 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:hint="请输入专业"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white" />
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey" />
 
             </LinearLayout>
 
@@ -162,7 +152,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="学号:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <EditText
@@ -172,8 +162,8 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:hint="请输入学号"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
                     android:textSize="20dp" />
 
             </LinearLayout>
@@ -190,7 +180,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="密码:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <EditText
@@ -201,8 +191,8 @@
                     android:gravity="center"
                     android:hint="请输入密码"
                     android:inputType="textPassword"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
                     android:textSize="20dp" />
 
             </LinearLayout>
@@ -219,7 +209,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center"
                     android:text="密码:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <EditText
@@ -230,8 +220,8 @@
                     android:gravity="center"
                     android:hint="请确认密码"
                     android:inputType="textPassword"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
                     android:textSize="20dp" />
 
             </LinearLayout>

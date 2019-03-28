@@ -9,100 +9,121 @@
     android:paddingRight="10dp"
     tools:context=".activities.LoginActivity">
 
-        <LinearLayout
-            android:id="@+id/LogInLinearLayout"
+    <LinearLayout
+        android:id="@+id/LogInLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:elevation="10dp"
-            android:orientation="vertical"
-            android:padding="12dp">
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/log_in"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="请输入你的学号："
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/account"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="请设置你的密码："
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/grey"
+                android:background="#00000000"
+                android:text="没有账号？注册" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_toStartOf="@+id/log_in_bottom"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider"/>
+
+        <RelativeLayout
+            android:id="@+id/log_in_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#00000000"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="学号："
+                    android:text="记住密码"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/account"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#00000000"
-                android:orientation="horizontal">
-
-                <TextView
+                <CheckBox
+                    android:id="@+id/remember_pass"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="密码："
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:inputType="textPassword" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/login"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/shape_button"
                 android:text="登 录"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="记住密码" />
-
-                    <CheckBox
-                        android:id="@+id/remember_pass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:background="#00000000"
-                    android:text="没有账号？注册" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
