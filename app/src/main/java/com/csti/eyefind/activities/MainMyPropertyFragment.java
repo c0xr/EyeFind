@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csti.eyefind.R;
+import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ import cn.bmob.v3.exception.BmobException;
 public class MainMyPropertyFragment extends Fragment {
 
     private TabLayout mTabLayout;
+    private SlidingTabLayout slidingTabLayout;
+    private String s;
     private ViewPager mViewPager;
 
     private LayoutInflater mInflater;
@@ -126,10 +129,11 @@ public class MainMyPropertyFragment extends Fragment {
         });
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_view);
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        slidingTabLayout=view.findViewById(R.id.indicator);
+//        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
         initData();
-        mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
+//        mTabLayout.setTabMode (TabLayout.MODE_FIXED);//平均分配铺满
         return view;
     }
 
@@ -163,9 +167,9 @@ public class MainMyPropertyFragment extends Fragment {
             Fragment fragment = MyPropertyContentFragment.newInstance(i,listTitles.get(i));
             fragments.add(fragment);
         }
-        //mTabLayout.setTabMode(TabLayout.SCROLL_AXIS_HORIZONTAL);//设置tab模式，当前为系统默认模式
+//        mTabLayout.setTabMode(TabLayout.SCROLL_AXIS_HORIZONTAL);//设置tab模式，当前为系统默认模式
         for (int i=0;i<listTitles.size();i++){
-            mTabLayout.addTab(mTabLayout.newTab().setText(listTitles.get(i)));//添加tab选项
+//            mTabLayout.addTab(mTabLayout.newTab().setText(listTitles.get(i)));//添加tab选项
         }
 
         FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getFragmentManager()) {
@@ -185,9 +189,10 @@ public class MainMyPropertyFragment extends Fragment {
             }
         };
         mViewPager.setAdapter(mAdapter);
+        slidingTabLayout.setViewPager(mViewPager,new String[]{"提交的失物","拾取的失物"});
 
-        mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
+//        mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
+//        mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
 
     }
 

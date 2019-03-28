@@ -13,6 +13,7 @@
         <item>包类</item>
         <item>耳机</item>
         <item>移动电源</item>
+        <item>其他</item>
     </string-array>
     <string-array name="register_strings">
         <item>男</item>
@@ -37,4 +38,5 @@
     <string name="detail_item_ok">这是我的</string>
     <string name="detail_item_call">电话联系</string>
     <string name="detail_option_prefix">已转交</string>
+    <string name="log_in">登录 EyeFind</string>
 </resources>
