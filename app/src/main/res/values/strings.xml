@@ -34,7 +34,7 @@
         <item>无</item>
     </string-array>
     <string name="detail_item_founder">热心同学</string>
-    <string name="detail_item_ok">这是我的物品</string>
+    <string name="detail_item_ok">这是我的</string>
     <string name="detail_item_call">电话联系</string>
     <string name="detail_option_prefix">已转交</string>
 </resources>
