@@ -115,67 +115,63 @@ public class MyLogInFragment extends Fragment {
                     public void done(Person bmobUser, BmobException e) {
                         if (e == null) {
                             Person user = BmobUser.getCurrentUser(Person.class);
-                            Toast.makeText(getActivity(),"欢迎回来"+user.getmName(),Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(getActivity(), "欢迎回来" + user.getmName(), Toast.LENGTH_SHORT).show();
                             BmobQuery<LostItem> query = new BmobQuery<>();
                             query.addWhereEqualTo("mPerson", user);
                             query.findObjects(new FindListener<LostItem>() {
                                 @Override
                                 public void done(List<LostItem> object, BmobException e) {
-                                    if(e==null){
+                                    if (e == null) {
                                         //Toast.makeText(LoginActivity.this,"成功"+object.size(),Toast.LENGTH_SHORT).show();
                                         String[] Lostthing = new String[object.size()];
-                                        for(int i=0;i<object.size();i++){
-                                            Lostthing[i]=object.get(i).getLabel();
+                                        for (int i = 0; i < object.size(); i++) {
+                                            Lostthing[i] = object.get(i).getLabel();
                                         }
                                         BmobInstallationManager.getInstance().subscribe(Arrays.asList(Lostthing), new InstallationListener<BmobInstallation>() {
                                             @Override
                                             public void done(BmobInstallation bmobInstallation, BmobException e) {
                                                 if (e == null) {
                                                     //Toast.makeText(LoginActivity.this, "批量订阅成功", Toast.LENGTH_SHORT).show();
-
                                                 } else {
                                                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
-
-
-                                    }else{
-                                        Toast.makeText(getActivity(),"失败",Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "失败登陆的失败", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
 
-                            editor=sharedPreferences.edit();
+                            editor = sharedPreferences.edit();
                             if (checkBox.isChecked()) {
-                                editor.putString("account",user.getUsername());/////////////////////////////////
-                                editor.putString("password",user.getmPassword());
-                                editor.putBoolean("isremember",true);
-                            }else {
+                                editor.putString("account", user.getUsername());
+                                editor.putString("password", user.getmPassword());
+                                editor.putBoolean("isremember", true);
+                            } else {
                                 editor.clear();
                             }
                             editor.apply();
-                            MainActivity activity = (MainActivity)getActivity();
+                            MainActivity activity = (MainActivity) getActivity();
                             activity.setObjectId(user.getObjectId());
                             activity.setPerson(user);
-                            activity.changeToHomePageFragment();
+                            activity.changeToHomePageFragment();////////////////
                         } else {
-                            Toast.makeText(getActivity(),"失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                String objectId = ((MainActivity)getActivity()).getObjectId();
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("data",MODE_PRIVATE).edit();
-                editor.putString("objectId",objectId);
+                String objectId = ((MainActivity) getActivity()).getObjectId();
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putString("objectId", objectId);
                 editor.apply();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),RegisterActivity.class);
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(intent);
             }
         });

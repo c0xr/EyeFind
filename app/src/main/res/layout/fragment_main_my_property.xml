@@ -15,15 +15,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
+            <!--<android.support.design.widget.TabLayout-->
+                <!--android:id="@+id/tabs"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:tabIndicatorColor="@color/shallow_blue"-->
+                <!--app:tabSelectedTextColor="@color/shallow_blue"-->
+                <!--app:tabTextColor="#1d1c1d"-->
+                <!--android:background="#fff"-->
+                <!--app:tabMode="fixed"/>-->
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/indicator"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/shallow_blue"
-                app:tabSelectedTextColor="@color/shallow_blue"
-                app:tabTextColor="#1d1c1d"
-                android:background="#fff"
-                app:tabMode="fixed"/>
+                android:layout_height="48dp"
+                android:background="@color/shallow_blue"
+                android:elevation="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:tl_indicator_color="@color/shallow_blue_light"
+                app:tl_indicator_style="BLOCK" />
 
             <TextView
                 android:layout_width="match_parent"

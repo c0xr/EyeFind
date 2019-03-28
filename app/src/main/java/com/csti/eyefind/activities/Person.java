@@ -11,8 +11,6 @@ public class Person extends BmobUser{
     //private int mId;//学号                    ///变成了BmobUser的username
     private String mPassword;//用户密码       //不需要
 
-
-
     public String getmName() {
         return mName;
     }
