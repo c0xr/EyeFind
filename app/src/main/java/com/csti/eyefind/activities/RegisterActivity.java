@@ -164,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                             } else {
                                                 I_pick_thing.showDialog("请确认密码输入无误！", null, RegisterActivity.this);
                                             }
-
                                         }
 
                                     } else {
