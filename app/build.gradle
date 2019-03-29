@@ -32,10 +32,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha1'
-    implementation 'com.android.support:design:28.0.0-alpha1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:support-vector-drawable:28.0.0-alpha1'
+    implementation 'com.android.support:support-vector-drawable:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -47,9 +47,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     //view pager indicator
-    implementation 'com.android.support:support-v4:28.0.0-alpha1'
+    implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    implementation 'com.android.support:cardview-v7:28.0.0-alpha1'
+    implementation 'com.android.support:cardview-v7:28.0.0'
     //gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     //RecyclerView

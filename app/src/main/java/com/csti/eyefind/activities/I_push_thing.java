@@ -2,6 +2,7 @@ package com.csti.eyefind.activities;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -29,6 +30,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import es.dmoral.toasty.Toasty;
 
 public class I_push_thing extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner indicator_push_thing;
@@ -87,26 +89,26 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void done(String s, BmobException e) {
                     if (e == null) {
-                        Toast.makeText(I_push_thing.this, "添加数据成功", Toast.LENGTH_SHORT).show();
                         BmobInstallationManager.getInstance().subscribe(Arrays.asList(mLabel), new InstallationListener<BmobInstallation>() {
                             @Override
                             public void done(BmobInstallation bmobInstallation, BmobException e) {
                                 if (e == null) {
-                                    Toast.makeText(I_push_thing.this,"成功",Toast.LENGTH_SHORT).show();
+                                    Toasty.success(I_push_thing.this,"挂失提交成功",Toasty.LENGTH_SHORT).show();
+//                                    Toast.makeText(I_push_thing.this,"成功",Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(I_push_thing.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                    Toasty.error(I_push_thing.this,"挂失失物失败",Toasty.LENGTH_SHORT).show();
                                 }
                             }
                         });
 
                         finish();
                     } else {
-                        Toast.makeText(I_push_thing.this, "添加数据失败", Toast.LENGTH_SHORT).show();
+                        Toasty.error(I_push_thing.this,"提交失败，请检查网络",Toasty.LENGTH_SHORT).show();
                     }
                 }
             });
         } else {
-            Toast.makeText(I_push_thing.this, "请先登录", Toast.LENGTH_SHORT).show();
+            Toasty.error(I_push_thing.this,"请先登录",Toasty.LENGTH_SHORT).show();
         }
     }
     //初始化Spinner
@@ -128,6 +130,7 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    @SuppressLint("RestrictedApi")
     private void startAnimationA(){
         int endX=push.getLeft();
         int startX=endX+400;
@@ -154,6 +157,7 @@ public class I_push_thing extends AppCompatActivity implements AdapterView.OnIte
         animatorSet.start();
     }
 
+    @SuppressLint("RestrictedApi")
     private void startAnimationB(){
         int startX=push.getLeft();
         int endX=startX+400;

@@ -25,6 +25,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import es.dmoral.toasty.Toasty;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //视频
@@ -150,9 +151,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                                             public void done(Person user, BmobException e) {
                                                                 if (e == null) {
                                                                     finish();
-                                                                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                                                                    Toasty.success(RegisterActivity.this,"注册成功",Toasty.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(RegisterActivity.this, "注册失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                    Toasty.error(RegisterActivity.this,"注册失败",Toasty.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         });

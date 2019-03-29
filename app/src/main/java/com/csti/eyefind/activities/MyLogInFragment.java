@@ -29,6 +29,7 @@ import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -133,12 +134,12 @@ public class MyLogInFragment extends Fragment {
                                                 if (e == null) {
                                                     //Toast.makeText(LoginActivity.this, "批量订阅成功", Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Toasty.error(getActivity(),"登陆失败，请检查网络",Toasty.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                                     } else {
-                                        Toast.makeText(getActivity(), "失败登陆的失败", Toast.LENGTH_SHORT).show();
+                                        Toasty.error(getActivity(),"登陆失败，请检查网络",Toasty.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -158,7 +159,7 @@ public class MyLogInFragment extends Fragment {
                             activity.setPerson(user);
                             activity.changeToHomePageFragment();////////////////
                         } else {
-                            Toast.makeText(getActivity(), "失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(getActivity(),"登陆失败",Toasty.LENGTH_SHORT).show();
                         }
                     }
                 });

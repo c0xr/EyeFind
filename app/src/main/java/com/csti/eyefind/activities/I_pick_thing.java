@@ -64,6 +64,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import es.dmoral.toasty.Toasty;
 
 public class I_pick_thing extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static final int sTAKE_PHOTO1 = 1;
@@ -281,20 +282,20 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                                     @Override
                                     public void done(BmobException e) {
                                         if (e == null) {
-                                            // Toast.makeText(I_pick_thing.this, "成功", Toast.LENGTH_SHORT).show();;
+                                            Toasty.success(I_pick_thing.this,"失物信息添加成功",Toasty.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(I_pick_thing.this, "失败", Toast.LENGTH_SHORT).show();
+                                            Toasty.error(I_pick_thing.this,"失物信息添加失败",Toasty.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                                 finish();
                             } else {
-                                Toast.makeText(I_pick_thing.this, "添加数据失败", Toast.LENGTH_SHORT).show();
+                                Toasty.error(I_pick_thing.this,"失败请检查网络",Toasty.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(I_pick_thing.this, "请先登录", Toast.LENGTH_SHORT).show();
+                    Toasty.error(I_pick_thing.this,"请先登录",Toasty.LENGTH_SHORT).show();
                 }
             }
 
