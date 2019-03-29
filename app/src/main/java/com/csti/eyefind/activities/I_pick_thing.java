@@ -121,7 +121,11 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         pick_thing_option.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                mOption = checkedId-1;
+                if(checkedId!=R.id.radio_button) {
+                    mOption = checkedId - 1;
+                }else{
+                    mOption=0;
+                }
             }
         });
 
@@ -168,7 +172,7 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
                 mPickedPlace = pick_thing_place.getText().toString();
                 mPickedDate = find_time.getText().toString();
                 if (!(mName.equals("")) && !(mFounder.equals("")) && !(mPickedPlace.equals(""))
-                        && !(mPickedDate.equals("添加拾取时间")) && mOption != 0 && photo1_File != null && photo2_File != null) {
+                        && !(mPickedDate.equals("添加拾取时间")) && photo1_File != null && photo2_File != null) {
 
                     if (!(mTel.equals("")) || !(mQQ.equals("")) || !(mWeChat.equals(""))) {
                         if(RegisterActivity.isNumeric(mTel)&&RegisterActivity.isNumeric(mQQ)) {
