@@ -58,10 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
-//
 //        //视频
 //        mSignUpVideoView = (MyVideoView) findViewById(R.id.videoView_log_up);
 //        mSignUpVideoView.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight();

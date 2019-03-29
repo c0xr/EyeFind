@@ -68,6 +68,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.PushListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,15 +92,18 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    actionBar.setElevation(0);
                     transaction.hide(myFragment).hide(homePageFragment).hide(LogInFragment).show(primeFragment).commit();
-                    actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
                     return true;
                 case R.id.navigation_dashboard:
                     if(BmobUser.isLogin()) {
+                        actionBar.setElevation(0);
                         transaction.hide(primeFragment).hide(homePageFragment).hide(LogInFragment).show(myFragment).commit();
-                        actionBar.setSubtitle("我的世界");
                     }else {
-                        com.csti.eyefind.activities.I_pick_thing.showDialog("请登录!", null, MainActivity.this);
+                        Toasty.error(MainActivity.this,"请先登录",Toasty.LENGTH_SHORT).show();
+                        Message message = new Message();
+                        message.what = 0x0;
+                        handler.sendMessage(message);
                     }
                     return true;
                 case R.id.navigation_notifications:
@@ -108,15 +112,17 @@ public class MainActivity extends AppCompatActivity {
 //                    bmobQuery.getObject(objectId, new QueryListener<Person>() {
 //                        @Override
 //                        public void done(Person object, BmobException e) {
-                            if ( !objectId.equals(" ") ) {
-                                //进用户页面
-                                transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
-                                actionBar.setSubtitle("用户中心");
-                            } else {
-                                //进登录页面
-                                transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
-                                actionBar.setSubtitle("请登录");
-                            }
+                    if ( !objectId.equals(" ") ) {
+                        actionBar.setElevation(12);
+                        //进用户页面
+                        transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
+//                                actionBar.setSubtitle("用户中心");
+                    } else {
+                        //进登录页面
+                        actionBar.setElevation(12);
+                        transaction.hide(myFragment).hide(primeFragment).hide(homePageFragment).show(LogInFragment).commit();
+//                                actionBar.setSubtitle("请登录");
+                    }
 //                        }
 //                    });
                     return true;
@@ -125,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0x0){
+                navigation.setSelectedItemId(R.id.navigation_notifications);
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setElevation(0);
-        actionBar.setSubtitle(getResources().getString(R.string.overview_activity_subtitle));
 
         replace();
 

@@ -54,4 +54,6 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     //RecyclerView
     implementation 'jp.wasabeef:recyclerview-animators:2.2.7'
+    //toast
+    implementation 'com.github.GrenderG:Toasty:1.4.1'
 }

@@ -20,7 +20,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="@string/log_in"
             android:textColor="@color/black"
             android:textSize="25dp" />
@@ -29,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="请输入你的学号："
+            android:gravity="bottom"
+            android:text="账号"
             android:textSize="18sp" />
 
         <EditText
@@ -43,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="请设置你的密码："
+            android:gravity="bottom"
+            android:text="密码"
             android:textSize="18sp" />
 
         <EditText
