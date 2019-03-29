@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,7 @@ public class SplashActivity extends Activity {
     private int SHOW_SIZE_WIDTH = 0;
     private int SHOW_SIZE_HEIGHT = 0;
 
+    private String objectId = "000";
     private ImageView imageView;
     private TextView tv;
     private float i = 0,i2 = 0;//透明度
@@ -56,26 +58,37 @@ public class SplashActivity extends Activity {
 //        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
 
-        imageView = (ImageView) findViewById(R.id.open_screen_image);
-        tv = (TextView) findViewById(R.id.splash_tv);
-//        linearLayout = (LinearLayout) findViewById(R.id.animation_screen);
-//
-//        SCREEN_HEIGHT = getWindowManager().getDefaultDisplay().getHeight();
-//        SCREEN_WIDTH = getWindowManager().getDefaultDisplay().getWidth();
-//
-//        openAnimation();
-        jumpNextActivity();
-        tv.setAlpha(0);
-        tv.setTextSize(0);
 
-        ViewTreeObserver vto = imageView.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                startAnimationA();
-            }
-        });
+        SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
+        objectId = preferences.getString("objectId", "000");
+
+        if ( !objectId.equals("000") ){
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            SplashActivity.this.finish();
+        }else {
+            imageView = (ImageView) findViewById(R.id.open_screen_image);
+            tv = (TextView) findViewById(R.id.splash_tv);
+    //        linearLayout = (LinearLayout) findViewById(R.id.animation_screen);
+    //
+    //        SCREEN_HEIGHT = getWindowManager().getDefaultDisplay().getHeight();
+    //        SCREEN_WIDTH = getWindowManager().getDefaultDisplay().getWidth();
+    //
+    //        openAnimation();
+            jumpNextActivity();
+            tv.setAlpha(0);
+            tv.setTextSize(0);
+
+            ViewTreeObserver vto = imageView.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    startAnimationA();
+                }
+            });
+        }
+
+
 
     }
 

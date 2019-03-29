@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="@string/log_in"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,13 +31,14 @@
             android:layout_gravity="center_vertical"
             android:gravity="bottom"
             android:text="账号"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,13 +46,14 @@
             android:layout_gravity="center_vertical"
             android:gravity="bottom"
             android:text="密码"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:inputType="textPassword" />
 
         <LinearLayout

@@ -116,7 +116,7 @@ public class MyHomePageFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = getActivity().getSharedPreferences("data",MODE_PRIVATE).edit();
-                        editor.putString("objectId"," ");
+                        editor.putString("objectId","000");
                         editor.apply();
                         Person user = BmobUser.getCurrentUser(Person.class);
                         BmobQuery<LostItem> query = new BmobQuery<>();
@@ -147,7 +147,6 @@ public class MyHomePageFragment extends Fragment {
                             }
                         });
                         BmobUser.logOut();
-                        Log.d("123123","text");
                         ((MainActivity) Objects.requireNonNull(getActivity())).setObjectId(null);
                         ((MainActivity) Objects.requireNonNull(getActivity())).changeToLogInFragment();
                     }

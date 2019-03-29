@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 //                    bmobQuery.getObject(objectId, new QueryListener<Person>() {
 //                        @Override
 //                        public void done(Person object, BmobException e) {
-                    if ( !objectId.equals(" ") ) {
+//                    Log.d("123123", 1+objectId+1);
+                    if ( !objectId.equals("000") ) {
                         actionBar.setElevation(12);
                         //进用户页面
                         transaction.hide(myFragment).hide(primeFragment).hide(LogInFragment).show(homePageFragment).commit();
