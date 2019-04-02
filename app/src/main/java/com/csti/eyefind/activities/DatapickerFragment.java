@@ -31,7 +31,7 @@ public class DatapickerFragment extends Fragment {
     public static void showDatePickerDialog(Activity activity, final Button button, Calendar calendar) {
         // Calendar 需要这样来得到
         // Calendar calendar = Calendar.getInstance();
-        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
+        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来 S
         new DatePickerDialog(activity,
                 // 绑定监听器(How the parent is notified that the date is set.)
                 new DatePickerDialog.OnDateSetListener() {
@@ -39,7 +39,7 @@ public class DatapickerFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // 此处得到选择的时间，可以进行你想要的操作
-                        button.setText( + year + "年" + monthOfYear+1
+                        button.setText( + year + "年" + (monthOfYear+1)
                                 + "月" + dayOfMonth + "日");
                     }
                 }
