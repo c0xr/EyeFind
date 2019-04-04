@@ -144,7 +144,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Bmob.initialize(MainActivity.this, "a744c289f17c26d9df110a2fa115feaf");
+        BmobQuery<control> bmobQuery = new BmobQuery<control>();
+        bmobQuery.getObject("8ca87d03e4", new QueryListener<control>() {
+            @Override
+            public void done(control object,BmobException e) {
+                if(e==null){
+                    //toast("查询成功");
+                }else{
+                    //toast("查询失败：" + e.getMessage());
+                    I_pick_thing.showDialog("版本换了，开发者删库跑路了，告辞！", null, MainActivity.this);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(1000);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                            finish();
+                        }
+                    }.start();
+                }
+            }
+        });
         SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
         objectId = preferences.getString("objectId", "000");
 

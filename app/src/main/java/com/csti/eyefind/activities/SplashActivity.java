@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.csti.eyefind.R;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 public class SplashActivity extends Activity {
 
     private final int SPLASH_DISPLAY_TIME_LENGH = 2000;//设置闪屏时间三秒
@@ -57,7 +60,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 //        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
-
 
         SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
         objectId = preferences.getString("objectId", "000");
