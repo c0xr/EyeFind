@@ -11,17 +11,14 @@ This project is no longer in active development. Please refer to [TimberX](https
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen2.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen3.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen7.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen8.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen9.jpg" width="330" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen10.jpg" width="330" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen1.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen5.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen12.jpg" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen4.png" width="360" height="640">
-<img src="https://raw.githubusercontent.com/naman14/Timber/master/graphics/screen6.png" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/1.jpg" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/2.jpg" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/3.jpg" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/4.jpg" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/5.jpg" width="330" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/6.jpg" width="330" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/7.jpg" width="360" height="640">
+<img src="https://github.com/c0xr/EyeFind/blob/master/8.jpg" width="360" height="640">
 
 ## Features
 - Material design
@@ -65,3 +62,7 @@ namandwivedi14@gmail.com
 >This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
 
 >You should have received a copy of the GNU General Public License along with this app. If not, see <https://www.gnu.org/licenses/>.
+
+
+## download apk
+<img src="https://github.com/c0xr/EyeFind/blob/master/8.jpg" width="360" height="640">
