@@ -12,20 +12,28 @@ This project is no longer in active development. Please refer to [TimberX](https
 ## Screenshots
 #Running animation
 <img src="https://github.com/c0xr/EyeFind/blob/master/4.jpg" width="360" height="640">
+
 #Lost property interface
 <img src="https://github.com/c0xr/EyeFind/blob/master/7.jpg" width="360" height="640">
+
 #log in
 <img src="https://github.com/c0xr/EyeFind/blob/master/1.jpg" width="360" height="640">
+
 #User registration
 <img src="https://github.com/c0xr/EyeFind/blob/master/2.jpg" width="360" height="640">
+
 #Hanging lost items
 <img src="https://github.com/c0xr/EyeFind/blob/master/8.jpg" width="330" height="640">
+
 #Submit the items you picked
 <img src="https://github.com/c0xr/EyeFind/blob/master/6.jpg" width="330" height="640">
+
 #List of lost items lost by the user
 <img src="https://github.com/c0xr/EyeFind/blob/master/5.jpg" width="360" height="640">
+
 #List of items picked up by the user
 <img src="https://github.com/c0xr/EyeFind/blob/master/3.jpg" width="360" height="640">
+
 
 ## Features
 - Material design
