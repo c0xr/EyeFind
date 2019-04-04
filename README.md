@@ -10,21 +10,21 @@ This project is no longer in active development. Please refer to [TimberX](https
 <a href='https://f-droid.org/repository/browse/?fdid=naman14.timber'><img alt='Get it on F-Droid' src='https://guardianproject.info/wp-content/uploads/2014/07/logo-fdroid.png' height=60px/></a>
 
 ## Screenshots
->Running animation
+#Running animation
 <img src="https://github.com/c0xr/EyeFind/blob/master/4.jpg" width="360" height="640">
->Lost property interface
+#Lost property interface
 <img src="https://github.com/c0xr/EyeFind/blob/master/7.jpg" width="360" height="640">
->log in
+#log in
 <img src="https://github.com/c0xr/EyeFind/blob/master/1.jpg" width="360" height="640">
->User registration
+#User registration
 <img src="https://github.com/c0xr/EyeFind/blob/master/2.jpg" width="360" height="640">
->Hanging lost items
+#Hanging lost items
 <img src="https://github.com/c0xr/EyeFind/blob/master/8.jpg" width="330" height="640">
->Submit the items you picked
+#Submit the items you picked
 <img src="https://github.com/c0xr/EyeFind/blob/master/6.jpg" width="330" height="640">
->List of lost items lost by the user
+#List of lost items lost by the user
 <img src="https://github.com/c0xr/EyeFind/blob/master/5.jpg" width="360" height="640">
->List of items picked up by the user
+#List of items picked up by the user
 <img src="https://github.com/c0xr/EyeFind/blob/master/3.jpg" width="360" height="640">
 
 ## Features
@@ -71,4 +71,4 @@ Changelog is available [here](https://github.com/naman14/Timber/blob/master/Chan
 
 
 ## download apk
-<img src="https://github.com/c0xr/EyeFind/blob/master/qrcode.jpg" width="360" height="360">
+<img src="https://github.com/c0xr/EyeFind/blob/master/qrcode.png" width="360" height="360">
