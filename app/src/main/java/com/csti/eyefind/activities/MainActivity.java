@@ -1,8 +1,11 @@
 package com.csti.eyefind.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,6 +16,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -48,6 +52,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.csti.eyefind.R;
+import com.zhy.http.okhttp.BuildConfig;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -187,8 +192,9 @@ public class MainActivity extends AppCompatActivity {
 
                     replace();
                 }else{
-                    //toast("查询失败：" + e.getMessage());
+                    Toasty.info(MainActivity.this, "检测到新版本，正在下载更新").show();
                     showProgress(MainActivity.this.getWindow().getDecorView());
+                    //toast("查询失败：" + e.getMessage());
 //                    new Thread(){
 //                        @Override
 //                        public void run() {
@@ -207,6 +213,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 通过隐式意图调用系统安装程序安装APK
+     */
+    public void install(Context context, File file) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        // 由于没有在Activity环境下启动Activity,设置下面的标签
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //判读版本是否在7.0以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
+            Uri apkUri =
+                    FileProvider.getUriForFile(context, "com.xxx.xxx.fileprovider", file);
+            //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(file),
+                    "application/vnd.android.package-archive");
+        }
+        context.startActivity(intent);
+    }
+
+
+
     private void replace() {
         transaction = getSupportFragmentManager().beginTransaction();
         primeFragment = new MainOverviewFragment();
@@ -221,12 +253,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upLoadApk(String url){
-        Toasty.info(MainActivity.this, "检测到新版本，正在下载更新").show();
         OkHttpUtils//
                 .get()//
                 .url(url)//
                 .build()//
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "gson-2.2.1.jar")//
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "eyefind.apk")//
                 {
                     @Override
                     public void inProgress(float progress, long total, int id) {
@@ -239,14 +270,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Toasty.error(MainActivity.this, "更新失败，请检查网络").show();
+                        finish();
                     }
 
                     @Override
                     public void onResponse(File response, int id) {
 //                        response.
                         progressDialog02.dismiss();
-                        OpenFileTipDialog.openFiles(response.getPath(), MainActivity.this);
-//
+//                        OpenFileTipDialog.openFiles(response.getPath(), MainActivity.this);
+//                        installApk(response);
+                        install(MainActivity.this, response);
 //                        new Thread(){
 //                            @Override
 //                            public void run() {
@@ -260,6 +293,23 @@ public class MainActivity extends AppCompatActivity {
 //                        }.start();
                     }
                 });
+    }
+
+    private void installApk(File apkFile) {
+        Log.d("path", apkFile.getPath());
+        Intent install = new Intent(Intent.ACTION_VIEW);
+        install.addCategory(Intent.CATEGORY_DEFAULT);
+        install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //判读版本是否在7.0以上
+            Uri apkUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID+".provider",apkFile);
+            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            Uri apkUri =Uri.fromFile(apkFile                                                                                                               );
+            install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+//            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        startActivity(install);
     }
 
     public void showProgress(View source){
