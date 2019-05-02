@@ -139,7 +139,6 @@ public class MyLostPropertyFragment extends Fragment implements SwipeRefreshLayo
             private final ImageView image;
             public VH(View v) {
                 super(v);
-                v.getLayoutParams().height = 250 ;
                 image = (ImageView) v.findViewById(R.id.main_prime_vertical_list_view_image);
                 name = (TextView) v.findViewById(R.id.main_prime_vertical_list_view_name);
                 introduce = (TextView) v.findViewById(R.id.main_prime_vertical_list_view_introduce);

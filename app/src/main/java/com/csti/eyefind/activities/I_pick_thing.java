@@ -233,13 +233,13 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         filePaths[0] = filePath_1;
         filePaths[1] = filePath_2;
         filePaths[2] = filePath_3;
- if(BmobUser.isLogin()){
-     ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
-     progressDialo.setTitle("信息正在上传");
-     progressDialo.setMessage("Loading...");
-     //progressDialo.setProgress(i);
-     progressDialo.show();
- }
+        if(BmobUser.isLogin()){
+            ProgressDialog progressDialo = new ProgressDialog(I_pick_thing.this);
+            progressDialo.setTitle("信息正在上传");
+            progressDialo.setMessage("Loading...");
+            //progressDialo.setProgress(i);
+            progressDialo.show();
+        }
         BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
             @Override
             public void onSuccess(List<BmobFile> list, List<String> list1) {
@@ -444,8 +444,8 @@ public class I_pick_thing extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, flag_TAKE_PHOTO);//TAKE_PHOTO是自己定义的静态常量，为1
         return outputImage;
-
     }
+
     public boolean copyFile(String oldPath$Name, String newPath$Name) {
         try {
             File oldFile = new File(oldPath$Name);

@@ -141,7 +141,6 @@ public class MyGetPropertyFragment extends Fragment implements SwipeRefreshLayou
         animator.setMoveDuration(1000);
         animator.setChangeDuration(1000);
         List<PushLostItem> data = mainVerticalList;
-        mVerticalListView.getLayoutParams().height = 250 * data.size();
         mVerticalListView.setAdapter(new VerticalListAdapter(data));
         firstLoadAnimation();
 //        mVerticalListView.setItemAnimator(new SlideInLeftAnimator());
@@ -157,7 +156,6 @@ public class MyGetPropertyFragment extends Fragment implements SwipeRefreshLayou
             private final ImageView image;
             public VH(View v) {
                 super(v);
-                v.getLayoutParams().height = 250 ;
                 image = (ImageView) v.findViewById(R.id.main_prime_vertical_list_view_image);
                 name = (TextView) v.findViewById(R.id.main_prime_vertical_list_view_name);
                 introduce = (TextView) v.findViewById(R.id.main_prime_vertical_list_view_introduce);
